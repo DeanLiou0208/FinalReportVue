@@ -1,11 +1,19 @@
 <template>
-  <div class="container"><router-view></router-view></div> 
+<navbar></navbar>
+<hr>
+<div class="container"><router-view></router-view></div> 
+
+ 
+
+
+
 </template>
   
 <script setup >
- 
+import Navbar from './components/Navbar.vue'
+
 </script>
   
-<style>
+<style scoped>
   
 </style>
