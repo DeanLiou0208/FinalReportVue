@@ -43,7 +43,7 @@
     
 </script>
     
-<style>
+<style scoped>
 /* 
     .nav-item-space {
   margin-right: 200px; /* 調整間距的數值根據你的需求 */

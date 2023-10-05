@@ -6,11 +6,12 @@ import Shop from './views/ShopView.vue'
 import Forum from './views/ForumView.vue'
 import Hospital from './views/HospitalView.vue'
 import Register from './views/RegisterView.vue'
-import PetPhoto from './views/PetPhotoView.vue'
 import PetPhotoViewVue from "./views/PetPhotoView.vue";
 import MemberLogin from "./views/MemberLoginView.vue";
 import MemberForgetPassword from "./views/MemberForgetPasswordView.vue";
 import MemberRegister from "./views/MemberRegisterView.vue";
+import ComLogin from "./views/ComLoginView.vue";
+import CumLogin from "./views/MemberLoginView.vue";
 
 
 const routes=
@@ -60,6 +61,11 @@ const routes=
     path : "/memberRegister",
     component : MemberRegister
 },
+{
+    path : "/companyLogin",
+    component : ComLogin
+},
+
 
 ]
 

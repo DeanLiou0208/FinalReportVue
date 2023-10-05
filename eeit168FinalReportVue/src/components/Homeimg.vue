@@ -41,6 +41,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 </script>
     
-<style>
+<style scoped>
 
 </style>
