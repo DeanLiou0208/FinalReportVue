@@ -1,27 +1,29 @@
 <template>
-  <div >
-    <div id="account">
+  <div class="login" >
+    
+    <div id="account" >
       帳號：<input type="text" id="accountInput" />
       <!-- onblur="checkAccount()" -->
       <div id="responseAccount"></div>
     </div>
 
-    <div id="password">
+    <div id="password" >
       密碼：<input type="password" id="passwordInput" />
       <!-- onblur="checkPassword()" -->
       <div id="responsePassword"></div>
     </div>
 
-    <div id="captcha">
+    <div id="captcha" >
       <div id="icon"><i class="fas fa-check" style="color: #4fa81f"></i></div>
       <div id="handle">
         <span></span>
       </div>
     </div>
 
-    <div id="responseMessage"></div>
+    <div id="responseMessage" ></div>
 
     <div><button id="submit" @click="submit">送出</button></div>
+  
   </div>
 </template>
 
@@ -103,12 +105,14 @@ export default {
 </script>
 
 <style>
-body {
+.login {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  flex-direction: column;
 }
+
 
 #captcha {
   --width: 200px;
@@ -218,7 +222,8 @@ body {
 
 #captcha {
   margin-left: auto;
-  margin-right: 40px; /* 设置右侧外边距，例如 20px */
+  margin-top: 5%;
+  margin-right: 50%; /* 设置右侧外边距，例如 20px */
 }
 
 #icon {
@@ -236,20 +241,20 @@ body {
 #account {
   position: absolute;
   top: 25%; /* 调整垂直位置，可以根据需要修改 */
-  right: 3%;
+  right: 50%;
   width: 250px; /* 添加这行来设置宽度 */
 }
 
 #password {
   position: absolute;
-  top: 33%; /* 调整垂直位置，可以根据需要修改 */
-  right: 3%;
+  top: 40%; /* 调整垂直位置，可以根据需要修改 */
+  right: 50%;
   width: 250px; /* 添加这行来设置宽度 */
 }
 #submit {
   position: absolute;
-  top: 70%; /* 调整垂直位置，可以根据需要修改 */
-  right: 8%;
+  top: 110%; /* 调整垂直位置，可以根据需要修改 */
+  right: 55%;
 }
 #responseMessage {
   position: absolute;
@@ -261,4 +266,5 @@ body {
   color: red;
   font-size: 5px;
 }
+
 </style>

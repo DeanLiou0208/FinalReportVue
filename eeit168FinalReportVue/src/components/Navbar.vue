@@ -20,17 +20,22 @@
             <router-link class="nav-link" to="/petphoto">萌寵照片</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-item-space"  to="/hospital">寵物醫院</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link nav-link-small" to="/login">登入</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link nav-link-small" to="/register">註冊</router-link>
+            <router-link class="nav-link ml-3"  to="/hospital">寵物醫院</router-link>
           </li>
         </ul>
+        </div>
+            <div class="d-flex ">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <router-link class="nav-link nav-link-small" to="/login">登入</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link nav-link-small" to="/register">註冊</router-link>
+                </li>
+            </ul>
+            </div>
       </div>
-    </div>
+    
   </nav>
 </template>
     
@@ -39,9 +44,10 @@
 </script>
     
 <style>
+/* 
     .nav-item-space {
   margin-right: 200px; /* 調整間距的數值根據你的需求 */
-}
+/* } */
 .nav-link-small{
   font-size: 0.8rem; /* 調整圖標大小的數值根據你的需求 */
 }

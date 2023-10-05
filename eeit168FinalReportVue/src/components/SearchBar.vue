@@ -1,5 +1,5 @@
 <template>
-    <h1>Petphoto</h1>
+    <input type="text" name="" id="">    
 </template>
     
 <script setup >

@@ -16,13 +16,11 @@
 </template>
   
 <script setup >
-import Navbar from "./components/Navbar.vue"
+import Navbar from "./components/navbar.vue"
 
 
 </script>
   
 <style scoped>
-  /* .view{
-    height: 800px; width: 1200px;
-  } */
+
 </style>
