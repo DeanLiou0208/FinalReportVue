@@ -1,5 +1,7 @@
 <template>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" >
+  <!-- style="width: 400px; height: 300px;" -->
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -8,16 +10,16 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../assets/img/1.jpg" class="d-block w-100" alt="...">
+      <img src="../assets/img/1.jpg" class="d-block w-auto" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="../assets/img/2.jpg" class="d-block w-100" alt="...">
+      <img src="../assets/img/2.jpg" class="d-block w-auto" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="../assets/img/3.jpg" class="d-block w-100" alt="...">
+      <img src="../assets/img/3.jpg" class="d-block w-auto" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="../assets/img/4.jpg" class="d-block w-100" alt="...">
+      <img src="../assets/img/4.jpg" class="d-block w-auto" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -40,5 +42,5 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 </script>
     
 <style>
-    
+
 </style>

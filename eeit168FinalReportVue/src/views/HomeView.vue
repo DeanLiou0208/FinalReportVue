@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-  import homeimg from '../components/homeimg.vue'
+  import homeimg from '../components/Homeimg.vue'
 </script>
 
 <style scoped>
