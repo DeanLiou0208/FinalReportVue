@@ -8,6 +8,9 @@ import Hospital from './views/HospitalView.vue'
 import Register from './views/RegisterView.vue'
 import PetPhoto from './views/PetPhotoView.vue'
 import PetPhotoViewVue from "./views/PetPhotoView.vue";
+import MemberLogin from "./views/MemberLoginView.vue";
+import MemberForgetPassword from "./views/MemberForgetPasswordView.vue";
+import MemberRegister from "./views/MemberRegisterView.vue";
 
 
 const routes=
@@ -44,7 +47,19 @@ const routes=
 {
     path : "/petphoto",
     component : PetPhotoViewVue
-}
+},
+{
+    path : "/memberLogin",
+    component : MemberLogin
+},
+{
+    path : "/memberForgetPassword",
+    component : MemberForgetPassword
+},
+{
+    path : "/memberRegister",
+    component : MemberRegister
+},
 
 ]
 
