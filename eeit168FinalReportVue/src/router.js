@@ -1,4 +1,4 @@
-import { createWebHistory,createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import Home from './views/HomeView.vue'
 import Login from './views/LoginView.vue'
@@ -13,6 +13,8 @@ import MemberRegister from "./views/MemberRegisterView.vue";
 import ComLogin from "./views/ComLoginView.vue";
 import MemberInformation from "./views/MemberInformationView.vue";
 import PersonalPetView from "./views/PersonalPetView.vue";
+import Type from "./views/Type.vue";
+import Product from "./views/Product.vue";
 
 const routes=
 [
@@ -72,7 +74,12 @@ const routes=
 {
     path : "/personalPetView",
     component : PersonalPetView
+}, {
+  path: "/type",
+  component: Type
+  ,props: true
 },
+{ path: "/product/",name:"product", component: Product ,props: true},
 ]
 
 const router=createRouter({history:createWebHistory(),routes,})
