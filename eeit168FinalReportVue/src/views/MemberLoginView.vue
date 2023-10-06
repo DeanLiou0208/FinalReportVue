@@ -34,7 +34,7 @@
   })
 
   const addHandler = async () => {
-      const API_URL = `http://localhost:8080/pages/ajax/login`  //之後改路徑
+      const API_URL = `http://localhost:8080/pages/member/login`  //之後改路徑
       const response = await axios.post(API_URL, member.value)
       if (response.data.success) {
           alert(response.data.message)

@@ -11,8 +11,8 @@ import MemberLogin from "./views/MemberLoginView.vue";
 import MemberForgetPassword from "./views/MemberForgetPasswordView.vue";
 import MemberRegister from "./views/MemberRegisterView.vue";
 import ComLogin from "./views/ComLoginView.vue";
-import CumLogin from "./views/MemberLoginView.vue";
-
+import MemberInformation from "./views/MemberInformationView.vue";
+import PersonalPetView from "./views/PersonalPetView.vue";
 
 const routes=
 [
@@ -65,8 +65,14 @@ const routes=
     path : "/companyLogin",
     component : ComLogin
 },
-
-
+{
+    path : "/memberInformation",
+    component : MemberInformation
+},
+{
+    path : "/personalPetView",
+    component : PersonalPetView
+},
 ]
 
 const router=createRouter({history:createWebHistory(),routes,})
