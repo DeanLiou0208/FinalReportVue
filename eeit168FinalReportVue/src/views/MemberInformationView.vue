@@ -49,12 +49,13 @@
     import axios from "axios";
 
     const member = ref([]);
-    const account = reactive({
-        account :"firstmember",
-    });
+    // const account = reactive({
+    //     account :"",
+    // });
     const API_URL = `http://localhost:8080/pages/member/information`;  //之後改路徑
 
     async function selectInformation(){
+        const account = window.sessionStorage.getItem('loginsuccess')
         const response = await axios.post(API_URL, account);
         member.value = response.data;
         console.log(response.data)

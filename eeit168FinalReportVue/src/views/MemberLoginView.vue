@@ -12,10 +12,10 @@
         </div>
   
         <button class="btn btn-primary" type="button" @click="addHandler">登入</button>
-        <div>
-            <button class="btn btn-primary" type="button" @click="register">註冊</button>
-            <button class="btn btn-primary" type="button" @click="forget">忘記密碼</button>
-        </div>
+      </div>
+      <div>
+          <button class="btn btn-primary" type="button" @click="register">註冊</button>
+          <button class="btn btn-primary" type="button" @click="forget">忘記密碼</button>
       </div>
       <div class="col-3"></div>
     </div>
@@ -27,7 +27,6 @@
 
   import { useRouter } from 'vue-router';
   const router = useRouter()
-
   const member = reactive({
     "account" : "",
     "password" : "",
@@ -35,9 +34,10 @@
 
   const addHandler = async () => {
       const API_URL = `http://localhost:8080/pages/member/login`  //之後改路徑
-      const response = await axios.post(API_URL, member.value)
+      const response = await axios.post(API_URL, member)
       if (response.data.success) {
           alert(response.data.message)
+          sessionStorage.setItem("loginMember",response.data.account)
           router.push('/memberInformation');
       }
   }
