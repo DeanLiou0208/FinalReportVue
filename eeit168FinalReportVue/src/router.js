@@ -11,15 +11,12 @@ import MemberLogin from "./views/MemberLoginView.vue";
 import MemberForgetPassword from "./views/MemberForgetPasswordView.vue";
 import MemberRegister from "./views/MemberRegisterView.vue";
 import ComLogin from "./views/ComLoginView.vue";
-<<<<<<< Updated upstream
 import MemberInformation from "./views/MemberInformationView.vue";
 import PersonalPetView from "./views/PersonalPetView.vue";
 import Type from "./views/Type.vue";
 import Product from "./views/Product.vue";
-=======
 import ShopProduct from "./views/ProductPage.vue";
 
->>>>>>> Stashed changes
 
 const routes=
 [
@@ -80,19 +77,21 @@ const routes=
 {
     path : "/personalPetView",
     component : PersonalPetView
-}, {
-  path: "/type",
-  component: Type
-  ,props: true
+}, 
+{
+    path: "/type",
+    component: Type,
+    props: true
 },
-{ path: "/product/",name:"product", component: Product ,props: true},
-=======
+{   path: "/product/",
+    name:"product", 
+    component: Product ,
+    props: true
+},
+}
     path : "/shopproduct",
     component : ShopProduct
 }
-
-
->>>>>>> Stashed changes
 ]
 
 const router=createRouter({history:createWebHistory(),routes,})
