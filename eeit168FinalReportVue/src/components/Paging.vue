@@ -19,8 +19,8 @@
         thePage : Number
     })
 
-    console.log(props.totalPages)
-    console.log(props.thePage)
+    // console.log(props.totalPages)
+    // console.log(props.thePage)
 
     //定義父元件傳進來的事件名稱
     const emit = defineEmits(["childClick"])

@@ -1,5 +1,5 @@
 <template>
-    <input type="search"  @input="inputHandelr" v-model="keyword" placeholder="請開始您的搜尋" class="form-control mb-3">
+    <input type="search"  @focusout="inputHandelr" v-model="keyword" placeholder="請問客官今天要來點什麼?" class="form-control mb-3">
         
 </template>
     
