@@ -68,28 +68,74 @@
 </div>
 
   <hr>
+<div class="container ml-1">
 
-  <table>
-    <tbody class="shop-item container ml-1">
-      <tr v-for="{img, price , name, description, productId} in products" :key="products.productId">
-        <div class="card container ml-1" style="width: 18rem;">
-          <img :src="`${img}`" class="card-img-top" alt="Image">
-            <div class="card-body">
-              <h5 class="card-title">產品編號:{{productId}} 產品名稱:{{name}} </h5>
-              <h4 class="card-title">售價: {{price}} 元</h4>
-              <p class="card-text">{{ description }}</p>
-                <div class="container ml-1">
-              <RouterLink class="btn btn-primary" to="/shopproduct">去賣場</RouterLink>
-              <button class="btn btn-warning">
-                  <i class="bi bi-cart-plus-fill"> >加入購物車</i>
-              </button>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-4" v-for="{ img, price, name, description, productId } in products" :key="productId">
+      <div class="card container ml-2" style="width: 100%;">
+        <img :src="`${img}`" class="card-img-top" alt="Image">
+        <div class="card-body">
+          <h5 class="card-title">產品編號: {{ productId }} 產品名稱: {{ name }} </h5>
+          <h4 class="card-title">售價: {{ price }} 元</h4>
+          <p class="card-text">{{ description }}</p>
+          <div class="container ml-1">
+            <RouterLink class="btn btn-info" to="/shopproduct">去賣場</RouterLink>&nbsp
+            <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill" @click="showaddproduct"> >加入購物車</i></a>
+          </div>
         </div>
-    </tr> 
-  </tbody>
-</table>
+      </div>
+    </div>
+  </div>
+  
   <Paging :totalPages="totalPage" :thePage="datas.start + 1" @child-click="clickHandler"></Paging>
+</div>
+
+
+
+
+
+<!-- addshoppingCart互動元件 -->
+<div class="modal fade" id="addToShoppingCart" tabindex="-1" aria-labelledby="addToShoppingCartLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+  <!-- header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToShoppingCartLabel">購物車</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+  <!-- body -->
+      <div class="modal-body">
+        <div class="row">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card container ml-2" style="width: 100%;" >
+        <img src="" class="card-img-top" alt="Image">
+        <div class="card-body">
+          <h5 class="card-title">產品編號:  產品名稱:</h5>
+          <h4 class="card-title">售價:  元</h4>
+          <p class="card-text"></p>
+          <div class="container ml-1">
+            <RouterLink class="btn btn-info" to="/shopproduct">去賣場</RouterLink>&nbsp
+            <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill"> >加入購物車</i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+  <!-- footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">加入</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 </template>
     
 <script setup>
@@ -99,7 +145,7 @@
   import SearchBar from '../components/SearchBar.vue';
   import Paging from '../components/Paging.vue'
   import PageSize from '../components/PageSize.vue';
-  import AddToShoppingCart from '../components/AddToShoppingCart.vue'
+  
   
   const products = ref([]);//接產品清單的陣列
   const types = ref([]);//接type清單的陣列
@@ -142,7 +188,12 @@
   totalPage.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows);
   //取得所有產品算分頁
   };
+  
+  const showaddproduct = function(){
+    console.log()
+  }
 
+  //取得產品分類
   const loadType = async () =>{
     const response = await axios.get(URLTYPE,types);
     types.value = response.data;

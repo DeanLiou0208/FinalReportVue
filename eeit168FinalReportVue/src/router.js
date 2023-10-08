@@ -70,7 +70,6 @@ const routes=
     component : ComLogin
 },
 {
-<<<<<<< Updated upstream
     path : "/memberInformation",
     component : MemberInformation
 },
@@ -78,6 +77,7 @@ const routes=
     path : "/personalPetView",
     component : PersonalPetView
 }, 
+
 {
     path: "/type",
     component: Type,
@@ -88,10 +88,11 @@ const routes=
     component: Product ,
     props: true
 },
-}
+{
     path : "/shopproduct",
     component : ShopProduct
 }
+
 ]
 
 const router=createRouter({history:createWebHistory(),routes,})

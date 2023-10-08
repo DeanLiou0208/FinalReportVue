@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <header style="height: 120px;">
-        <div id="header">
-            <figure class="text-center">
+    <div class="container ml-1">
+        <header style="height: 200px;">
+        <div id="header" style="height: 120px;" >
+            <figure class="text-center container ml-1">
                 <blockquote class="blockquote">
                     <p>ABOUT PET ALL YOU LOVE.</p>
             </blockquote>
@@ -10,12 +10,15 @@
                     <cite title="Source Title">it has a dog.”</cite>
                 </figcaption>
             </figure>
-            <navbar></navbar>
         </div>
+            <div >
+            <navbar></navbar>
+            </div>
+        
         </header>
 
     <hr>
-        <div class="view">
+        <div class="view container ml-1">
             <router-view></router-view>
         </div> 
     <hr>

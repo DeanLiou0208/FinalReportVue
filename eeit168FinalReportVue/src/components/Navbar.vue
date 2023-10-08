@@ -8,19 +8,19 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link active" to="/home">首頁</router-link>
+            <router-link class="nav-link active nav-link-title" to="/home">首頁</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/shop">寵物商城</router-link>
+            <router-link class="nav-link nav-link-con" to="/shop">寵物商城</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/forum">寵物論壇</router-link>
+            <router-link class="nav-link nav-link-con" to="/forum">寵物論壇</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/petphoto">萌寵照片</router-link>
+            <router-link class="nav-link nav-link-con" to="/petphoto">萌寵照片</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link ml-3"  to="/hospital">寵物醫院</router-link>
+            <router-link class="nav-link nav-link-con ml-3 "  to="/hospital">寵物醫院</router-link>
           </li>
         </ul>
         </div>
@@ -50,6 +50,12 @@
 /* } */
 .nav-link-small{
   font-size: 0.8rem; /* 調整圖標大小的數值根據你的需求 */
+}
+.nav-link-con{
+  font-size: 1.2rem;
+}
+.nav-link-title{
+  font-size: 1.2rem;
 }
 
 </style>
