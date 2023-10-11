@@ -1,41 +1,40 @@
 <template>
-  <div class="login" >
-    
-    <div id="account" >
+  <div class="login">
+    <div id="account">
       帳號：<input type="text" id="accountInput" />
       <!-- onblur="checkAccount()" -->
       <div id="responseAccount"></div>
     </div>
 
-    <div id="password" >
+    <div id="password">
       密碼：<input type="password" id="passwordInput" />
       <!-- onblur="checkPassword()" -->
       <div id="responsePassword"></div>
     </div>
 
-    <div id="captcha" >
+    <div id="captcha">
       <div id="icon"><i class="fas fa-check" style="color: #4fa81f"></i></div>
       <div id="handle">
         <span></span>
       </div>
     </div>
-
-    <div id="responseMessage" ></div>
+   
+    <div id="responseMessage"></div>
 
     <div><button id="submit" @click="submit">送出</button></div>
-  
   </div>
 </template>
 
-<script >
-import { ref, onMounted } from "vue";
+<script>
+import { ref, onMounted, inject } from "vue";
 import axios from "axios";
 
 export default {
   setup() {
     const shouldMove = ref(false);
     const pass = ref(false);
-
+    const $cookies = inject("$cookies"); // 注入$cookies
+    const URL = import.meta.env.VITE_API_JAVAURL;
     const submit = () => {
       if (pass.value) {
         const account = document.getElementById("accountInput").value;
@@ -43,13 +42,21 @@ export default {
         const responseMessage = document.getElementById("responseMessage");
 
         axios
-          .post("http://localhost:8080/pet_web/login/login", {
+          .post(`${URL}pet_web/login/login`, {
             account: account,
             password: password,
           })
           .then((response) => {
             console.log(response.data);
             responseMessage.innerHTML = response.data.message;
+            if (response.data.success) {
+              $cookies.set("cookies", response.data);
+            }else{
+              pass.value=false;
+              captcha.classList.remove("passed");
+               document.querySelector("#captcha").style.setProperty("--moved", "0px");
+              
+            }
           })
           .catch((error) => {
             console.error(error);
@@ -58,7 +65,7 @@ export default {
         alert("請完成拼圖");
       }
     };
-
+   
     onMounted(() => {
       const captcha = document.querySelector("#captcha");
       const handle = document.querySelector("#handle");
@@ -84,7 +91,7 @@ export default {
         if (shouldMove.value) {
           const finalOffset = e.clientX - handle.getBoundingClientRect().left;
           console.log(finalOffset);
-          if (finalOffset >= 210 && finalOffset <= 230) {
+          if (finalOffset >= 405 && finalOffset <=425) {
             captcha.classList.add("passed");
             pass.value = true;
           } else {
@@ -113,10 +120,9 @@ export default {
   flex-direction: column;
 }
 
-
 #captcha {
-  --width: 200px;
-  --height: 130px;
+  --width: 400px;
+  --height: 260px;
   --puzzle-width: 40px;
   --puzzle-height: 40px;
   --offset-left: var(--width) * -1;
@@ -132,8 +138,8 @@ export default {
   position: absolute;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
   margin-right: 20px;
-  top: 40%;
-  right: 3%; 
+  top: 50%;
+  left: 35%;
 }
 
 #captcha::before,
@@ -228,7 +234,7 @@ export default {
 
 #icon {
   position: absolute;
-  top: calc(100% + 10px); /* 放在 #handle 下方并留出一些间距 */
+  top: calc(100% + 250px); /* 放在 #handle 下方并留出一些间距 */
   left: 50%;
   transform: translateX(-50%); /* 水平居中 */
   display: none;
@@ -240,21 +246,21 @@ export default {
 
 #account {
   position: absolute;
-  top: 25%; /* 调整垂直位置，可以根据需要修改 */
-  right: 50%;
+  top: 40%; /* 调整垂直位置，可以根据需要修改 */
+  left: 35%;
   width: 250px; /* 添加这行来设置宽度 */
 }
 
 #password {
   position: absolute;
-  top: 40%; /* 调整垂直位置，可以根据需要修改 */
-  right: 50%;
+  top: 50%; /* 调整垂直位置，可以根据需要修改 */
+  left: 35%;
   width: 250px; /* 添加这行来设置宽度 */
 }
 #submit {
   position: absolute;
-  top: 110%; /* 调整垂直位置，可以根据需要修改 */
-  right: 55%;
+  top: 104%; /* 调整垂直位置，可以根据需要修改 */
+  right: 25%;
 }
 #responseMessage {
   position: absolute;
@@ -266,5 +272,8 @@ export default {
   color: red;
   font-size: 5px;
 }
+#passwordInput,#accountInput{
+  width: 350px
 
+}
 </style>

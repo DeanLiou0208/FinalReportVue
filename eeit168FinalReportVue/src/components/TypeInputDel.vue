@@ -2,9 +2,9 @@
   <div>
     <div v-for="(item, index) in inputs" :key="index">
         <hr />
-      <div>size: <input type="text" v-model="item.size" /></div>
-      <div>price: <input type="text" v-model="item.price" /></div>
-      <div>inventory: <input type="text" v-model="item.inventory" /></div>
+      <div> <span>規格:&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" v-model="item.size"  disabled/></div>
+      <div> <span>價格:&nbsp;&nbsp;&nbsp;</span> <input type="text" v-model="item.price"   disabled/></div>
+      <div><span>庫存量 :</span><input type="text" v-model="item.inventory"  disabled/></div>
       <button @click="removeInput(index)">-</button>
     
     </div>
@@ -23,13 +23,14 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 /* 調整輸入框樣式 */
-input[type="text"] {
-  width: 100%; /* 使輸入框寬度充滿父容器 */
+input[type="text" ],[type="number"] {
+  width: 30%; /* 使輸入框寬度充滿父容器 */
   margin-bottom: 10px; /* 添加底部間隔 */
   padding: 5px; /* 添加內邊距以增加輸入框的間隔 */
   box-sizing: border-box; /* 保證內邊距不會使寬度超出 */
+  
 }
 
 /* 調整刪除按鈕樣式 */
@@ -40,4 +41,9 @@ button {
 hr {
   margin: 10px 0; /* 添加分隔線的間隔 */
 }
+span{
+  flex: auto;
+margin: 10px;
+padding: 10px;
+text-align: right;}
 </style>

@@ -4,10 +4,26 @@
     <div>商品分類: <input type="text" v-model="productCategory" /></div>
 
     <!-- 直接从 sessionStorage 获取数据 -->
-    <div>商品規格: <router-link to="/type">+</router-link></div>
-    <div v-for="(item, index) in inputsArray" :key="index">
-      {{ item.size }} - {{ item.price }} - {{ item.inventory }}
-    </div>
+    <div>商品規格: <router-link to="/type" @click="save()">+</router-link></div>
+  
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>筆數</th>
+        <th>規格</th>
+        <th>價格</th>
+        <th>庫存量</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr v-for="(item, index) in inputsArray" :key="index">
+      <td>{{ index+1 }}</td>
+      <td>{{ item.size }} </td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.inventory }}</td> 
+    </tr>
+  </tbody>
+  </table>
     <div>商品描述:</div>
     <textarea
       v-model="productDescription"
@@ -19,10 +35,12 @@
 
     <!-- 添加清空按钮 -->
     <button @click="clearSessionStorage">清空数据</button>
+    <button @click="saveProduct">傳送</button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -30,6 +48,7 @@ export default {
       productTitle: "", // 商品标题
       productCategory: "", // 商品分類
       productDescription: "", // 商品描述
+      productObject: [],
     };
   },
   created() {
@@ -38,31 +57,62 @@ export default {
     if (storedData) {
       this.inputsArray = JSON.parse(storedData);
     }
+
+    const product = sessionStorage.getItem("product");
+    console.log(sessionStorage.getItem("product"));
+    if (product != null) {
+      this.productObject = JSON.parse(product);
+      this.productTitle = this.productObject[0].productTitle;
+      this.productCategory = this.productObject[0].productCategory;
+      this.productDescription = this.productObject[0].productDescription;
+    }
+    console.log(this.productObject);
   },
   methods: {
     clearSessionStorage() {
       // 清空 sessionStorage 中的数据
       sessionStorage.removeItem("type");
+      sessionStorage.removeItem("product");
       // 清空本地数据
       this.inputsArray = [];
+      this.productObject = [];
+    },
+
+    save() {
+      const product = {
+        productTitle: this.productTitle,
+        productCategory: this.productCategory,
+        productDescription: this.productDescription,
+      };
+      this.productObject.push(product);
+      console.log(this.productObject);
+      const inputsJSON = JSON.stringify(this.productObject);
+      sessionStorage.setItem("product", inputsJSON);
     },
     saveProduct() {
       // 创建包含商品信息的 JSON 对象
       const productData = {
-        title: this.productTitle,
-        category: this.productCategory,
+        //可能需加入抓fkcompanyid的資訊
+        fkCompanyId: 2,
+        name: this.productTitle,
+        type: this.productCategory,
         description: this.productDescription,
-        specs: this.inputsArray,
+        sizeArray: this.inputsArray,
       };
       const productDataJSON = JSON.stringify(productData);
-
-      // 可以在这里执行其他保存操作，例如将数据发送到服务器
-
-      console.log("保存商品信息:", productDataJSON);
+      console.log("保存商品信息1:", productDataJSON);
+      axios
+        .post("http://localhost:8080/pet_web/product/insert", productData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       // 清空 sessionStorage 中的数据
       sessionStorage.removeItem("type");
-
+      sessionStorage.removeItem("product");
       // 清空本地数据
       this.inputsArray = [];
       this.productTitle = "";
@@ -73,17 +123,23 @@ export default {
       this.$router.push("/other-page");
     },
   },
-  beforeRouteLeave(to, from, next) {
-    // 在离开页面前保存数据
-    const productData = {
-      title: this.productTitle,
-      category: this.productCategory,
-      description: this.productDescription,
-      specs: this.inputsArray,
-    };
-    const productDataJSON = JSON.stringify(productData);
-    sessionStorage.setItem("type", productDataJSON);
-    next();
-  },
 };
 </script>
+<style scoped>
+/* 調整輸入框樣式 */
+input[type="text"] {
+  width: 30%; /* 使輸入框寬度充滿父容器 */
+  margin-bottom: 10px; /* 添加底部間隔 */
+  padding: 5px; /* 添加內邊距以增加輸入框的間隔 */
+  box-sizing: border-box; /* 保證內邊距不會使寬度超出 */
+}
+
+/* 調整刪除按鈕樣式 */
+button {
+  margin-left: 10px; /* 添加按鈕之間的間隔 */
+}
+
+hr {
+  margin: 10px 0; /* 添加分隔線的間隔 */
+}
+</style>
