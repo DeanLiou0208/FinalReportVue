@@ -1,6 +1,6 @@
 <template>
-  <table class="table table-bordered">
-    <!-- 排序區塊 -->
+  <table class="table table-bordered"><!-- 排序區塊 -->
+    
     <thead>
       <tr>
         <th>商品名稱 <i class="bi"
@@ -21,8 +21,8 @@
   </table>
   <hr>
 
-<div class="accordion accordion-flush" id="accordionFlushExample">
-  <!-- 風琴的第一頁 -->
+<div class="accordion accordion-flush" id="accordionFlushExample"><!-- 風琴的第一頁 -->
+  
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingOne" style="background-color: goldenrod;">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -75,12 +75,23 @@
       <div class="card container ml-2" style="width: 100%;">
         <img :src="`${img}`" class="card-img-top" alt="Image">
         <div class="card-body">
-          <h5 class="card-title">產品編號: {{ productId }} 產品名稱: {{ name }} </h5>
-          <h4 class="card-title">售價: {{ price }} 元</h4>
-          <p class="card-text">{{ description }}</p>
+            <div class="container ml-3 " style="display: flex;">
+                <p>ItemNo:</p><p class="card-number">{{ productId }}</p>
+            </div>
+            <div class="container ml-3 " style="display: flex;">
+                <h4 class="card-name">{{ name }}</h4>
+            </div>    
+            <div class="container ml-3 " style="display: flex;">
+              <span style="border:1px red solid; height: 0%; color: red;">15天鑑賞期</span>&nbsp&nbsp<p>售價:</p><p class="card-price">{{ price }}</p><p>元</p>
+            </div>
+            <div class="container ml-3 " style="display: flex;">
+                <p>商品簡介:</p><p class="card-text">{{ description }}</p>
+            </div>
+          
           <div class="container ml-1">
-            <RouterLink class="btn btn-info" to="/shopproduct">去賣場</RouterLink>&nbsp
-            <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill" @click="showaddproduct"> >加入購物車</i></a>
+            <RouterLink to="/shopproduct"><a href="#" type="button" class="btn btn-info" data-bs-toggle="modal2" data-bs-target="#toProduct" to="/shopproduct">去賣場</a></RouterLink>
+            &nbsp
+            <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill" > >加入購物車</i></a>
           </div>
         </div>
       </div>
@@ -100,28 +111,45 @@
     <div class="modal-content">
   <!-- header -->
       <div class="modal-header">
-        <h5 class="modal-title" id="addToShoppingCartLabel">購物車</h5>
+        <h5 class="modal-title" id="addToShoppingCartLabel">加入購物車</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
   <!-- body -->
-      <div class="modal-body">
-        <div class="row">
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="card container ml-2" style="width: 100%;" >
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <h5 class="card-title">產品編號:  產品名稱:</h5>
-          <h4 class="card-title">售價:  元</h4>
-          <p class="card-text"></p>
-          <div class="container ml-1">
-            <RouterLink class="btn btn-info" to="/shopproduct">去賣場</RouterLink>&nbsp
-            <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill"> >加入購物車</i></a>
+  <div>
+  <div class="modal-body container ml-1">
+    <div class="row">
+      <div class="col-12 ">
+        <div class="card-add container ml-2" style="width: 100%;" >
+          <img :src="`${productDetails.img}`" class="card-img-top" alt="Image">
+          <div class="card-body container ml-3">
+
+            <div class="container ml-3 " style="display: flex;">
+                <p>ItemNo:</p><p class="card-number">{{ productDetails.productId }}</p>
+            </div>
+            <div class="container ml-3 " style="display: flex;">
+                <h4 class="card-name">{{ productDetails.name }}</h4>
+            </div>    
+            <div class="container ml-3 " style="display: flex;">
+                <p>售價:</p><p class="card-price">{{ productDetails.price }}</p><p>元</p>
+            </div>
+            <div class="container ml-3 " style="display: flex;">
+              <a type="button" @click="decrementCounting"><img src="../assets/img/minus.png" alt="-">&nbsp&nbsp</a>         
+                <div >
+                  <input type="text" style="height: 30px; width:50px; text-align: center; border: 2px solid black;"  v-model="counting">
+                </div>
+              <a type="button" @click="incrementCounting">&nbsp&nbsp<img src="../assets/img/plus.png" alt="+"></a>  
+            </div>
+            <!-- <div class="container ml-3 " style="display: flex;">
+                <p>商品簡介:</p><p class="card-text">{{ description }}</p>
+            </div> -->
+            <div class="container ml-1">
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-      </div>
+</div>
   <!-- footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -132,19 +160,18 @@
 </div>
 
 
-
-
-
-
 </template>
     
 <script setup>
 
-  import {ref ,reactive, registerRuntimeCompiler, onMounted} from "vue";
+  import {ref ,reactive, registerRuntimeCompiler, onMounted, onUpdated} from "vue";
+  
   import axios from 'axios';
   import SearchBar from '../components/SearchBar.vue';
   import Paging from '../components/Paging.vue'
-  import PageSize from '../components/PageSize.vue';
+  
+  
+  
   
   
   const products = ref([]);//接產品清單的陣列
@@ -153,8 +180,20 @@
   const maxPrice = ref();//傳入最大價格的變數
   const mixPrice = ref();//傳入最小價格的變數
   const avgRateScore = ref();//傳入評分的變數
+  const productDetails = ref([]);
+  const counting = ref(0);
 
   const tooltip = ref(null);
+
+  const pdetails = reactive({
+    img : null,
+    productId : null,
+    name : null,
+    price: null,
+    description :null,
+  })
+
+
 
   const datas = reactive({
   
@@ -184,15 +223,13 @@
   products.value = response.data.list;
   
   //取得產品list
-  //console.log(products.value = response.data.list);
+  console.log(products.value = response.data.list);
   totalPage.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows);
   //取得所有產品算分頁
   };
   
-  const showaddproduct = function(){
-    console.log()
-  }
-
+  
+  
   //取得產品分類
   const loadType = async () =>{
     const response = await axios.get(URLTYPE,types);
@@ -239,6 +276,7 @@ const inMinPrice = function(){
   loadProducts();
 }
 
+
 onMounted(() => {
       const rangeInput = document.getElementById('customRange2');
 
@@ -249,8 +287,8 @@ onMounted(() => {
 
         // 设置提示框的位置和内容
         tooltip.value.style.display = 'block';
-        tooltip.value.style.left = `${rect.left + offset}px`;
-        tooltip.value.style.top = `${rect.top - 30}px`;
+        tooltip.value.style.left = `${rect.left + offset -80}px`;
+        tooltip.value.style.top = `${rect.top +230}px`;
         tooltip.value.textContent = `評分數為: ${value} 分以上`;
       });
 
@@ -260,6 +298,50 @@ onMounted(() => {
         return { tooltip };
       });
     });
+
+onUpdated(() =>{
+  // console.log(2)
+  const element = document.querySelectorAll('a[data-bs-toggle="modal"][data-bs-target="#addToShoppingCart"]');
+  const elements = document.querySelectorAll('a[data-bs-toggle="modal2"][data-bs-target="#toProduct"]');
+  element.forEach(button => {
+    button.addEventListener('click', function() {
+      // 獲取相關數據
+      const cardContainer = this.closest('.card');
+      const img = cardContainer.querySelector('img').getAttribute('src');
+      const productId = cardContainer.querySelector('.card-number').innerText;
+      const name = cardContainer.querySelector('.card-name').innerText;
+      const price = cardContainer.querySelector('.card-price').innerText;
+      const description = cardContainer.querySelector('.card-text').innerText;
+
+      // 現在你可以使用 imgSrc, productId, name, price 和 description 進行需要的操作
+
+      pdetails.img =img;
+      pdetails.productId =productId;
+      pdetails.name = name;
+      pdetails.price = price;
+      pdetails.description = description;
+
+      productDetails.value = pdetails;
+      console.log(productDetails)
+
+      // console.log(img);
+      // console.log(productId);
+      // console.log(name);
+      // console.log(price);
+      // console.log(description);
+      // console.log(productDetails)
+    });
+  });
+  elements.forEach(button =>{
+  button.addEventListener('click',function(){
+    const cardContainer = this.closest('.card');
+    const productId = cardContainer.querySelector('.card-number').innerText;
+    sessionStorage.setItem("productId", productId);
+    console.log(productId)
+  })  
+  })
+});
+
 //按照分數搜尋
 const chioseRate = function() {
   console.log(avgRateScore.value)
@@ -273,10 +355,43 @@ const sortHandler = type => {
   loadProducts()
 }
 
+const decrementCounting = function(){
+                if (counting.value > 0) {
+                        counting.value--;
+                }
+                console.log(counting)
+        }
+        const incrementCounting = function(){
+                counting.value++;
+        }
+
 
   //再載入的時候就執行loadProduct(),就會先將datas的jsont傳到後端搜尋
   loadProducts();
   loadType();
+
+//   window.onload=function(){
+//   const element = document.querySelectorAll('a[data-bs-toggle="modal"][data-bs-target="#addToShoppingCart"]');
+//   element.forEach(button => {
+//     button.addEventListener('click', function() {
+//       // 獲取相關數據
+//       const cardContainer = this.closest('.card');
+//       const imgSrc = cardContainer.querySelector('img').getAttribute('src');
+//       const productId = cardContainer.querySelector('.card-title').innerText.split('產品編號: ')[1].split(' 產品名稱: ')[0];
+//       const name = cardContainer.querySelector('.card-title').innerText.split('產品名稱: ')[1];
+//       const price = cardContainer.querySelector('.card-title + h4').innerText.split('售價: ')[1].split(' 元')[0];
+//       const description = cardContainer.querySelector('.card-text').innerText;
+
+//       // 現在你可以使用 imgSrc, productId, name, price 和 description 進行需要的操作
+//       console.log(imgSrc);
+//       console.log(productId);
+//       console.log(name);
+//       console.log(price);
+//       console.log(description);
+//     });
+//   });
+// }
+  
 
 </script>        
     
@@ -295,8 +410,8 @@ const sortHandler = type => {
   position: absolute;
   background-color: #ee3f09d5;
   color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px;
+  border-radius: 100px;
   display: none;
   }
   .reversed-range {
@@ -305,6 +420,12 @@ const sortHandler = type => {
 }
 .reversed-range::-webkit-slider-thumb {
   transform: scaleX(-1);
+}
+.card-text {
+  white-space: nowrap;      /* 防止文本换行 */
+  overflow: hidden;         /* 隐藏溢出文本 */
+  text-overflow: ellipsis;  /* 显示省略号 */
+  max-width: 250px;         /* 指定最大宽度，根据需要调整 */
 }
 
 
