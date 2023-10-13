@@ -178,4 +178,7 @@ export default {
   margin: 5px 50px;
 }
 
+  
+
+      
 </style>

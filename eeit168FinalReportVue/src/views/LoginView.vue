@@ -25,7 +25,7 @@
     
 </script>
     
-<style>
+<style scoped>
     .cantainer{
         width: 800px;
         height: 600px;

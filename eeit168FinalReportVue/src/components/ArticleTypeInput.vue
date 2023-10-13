@@ -48,6 +48,6 @@ const ArticleTypes = [
      }
 </script>
     
-<style>
+<style scoped>
     
 </style>

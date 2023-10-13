@@ -114,6 +114,11 @@ const inputHandler = (value) => {
 
 loadPosts();
 </script>
+<<<<<<< Updated upstream
+=======
+    
+<style scoped>
+>>>>>>> Stashed changes
 
 <style>
 .card-list {

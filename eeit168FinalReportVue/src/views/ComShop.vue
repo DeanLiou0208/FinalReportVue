@@ -87,7 +87,7 @@ const inputHandelr =value =>{
 
 </script>
     
-<style>
+<style scoped>
       .shop-item{
         display: flex; 
         justify-content: space-between; 

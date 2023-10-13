@@ -63,7 +63,7 @@ const toggleSpecies = (species,speciesIds) => {
 
 </script>
     
-<style>
+<style scoped>
     /* 根据选中状态修改按钮样式 */
 .active {
   background-color: #007BFF;

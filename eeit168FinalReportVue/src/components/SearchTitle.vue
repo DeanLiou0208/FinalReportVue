@@ -22,6 +22,6 @@ const inputHandler = () => {
 }
 </script>
     
-<style>
+<style scoped>
     
 </style>
