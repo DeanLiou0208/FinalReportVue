@@ -2,10 +2,10 @@
         <h1>MemberRegister</h1>
 </template>
     
-<script setup lang='ts'>
+<script setup>
     
 </script>
     
-<style>
+<style scoped>
     
 </style>

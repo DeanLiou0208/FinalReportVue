@@ -1,39 +1,5 @@
 <template>
     <div class="main-content">
-        <div class="sidebar_left">
-            <ul>
-                <li>
-                    <router-link to="/memberInformation">
-                        <h5>個人資料</h5>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/personalPetView">
-                        <h6>我的寵物</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
-                        <h6>我的文章</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
-                        <h6>我的收藏</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
-                        <h6>我的訂單</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
-                        <h6>我的任務</h6>
-                    </router-link>
-                </li>
-            </ul>
-        </div>
         <div class="content">
             <div class="row">
                 <div class="col-7">
@@ -86,7 +52,7 @@
                     <div class="mb-3">
                         <label for="formFile" class="form-label">上傳頭貼</label>
                         <input class="form-control" type="file" id="formFile"/>
-                        <!-- <img :src="member.img" alt="">7 -->
+                        <img :src="member.img" alt="">
                     </div>
 
                     <button class="btn btn-primary" type="button" @click="updateMember">
@@ -99,10 +65,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 
-const $cookies = inject("$cookies");
 const member = ref([]);
 const account = reactive({
     account: "",
@@ -110,20 +75,6 @@ const account = reactive({
 const avatarInput = ref(null);
 const file = new FormData();
 const URL = import.meta.env.VITE_API_JAVAURL;
-
-async function selectInformation() {
-    const API_URL = `${URL}pages/member/information`;
-    account.account = $cookies.get("account");
-    const response = await axios.post(API_URL, account);
-    member.value = response.data;
-    console.log(response.data);
-    //如果結果查無資料則發出警告
-    // if (response.data.success) {
-    //     alert(response.data.message)
-    //     router.push('/memberInformation');
-    // }
-}
-selectInformation();
 
 onMounted(() => {
     avatarInput.value = document.getElementById('formFile');
@@ -143,10 +94,8 @@ const updateMember = async () => {
     });
     if(response.data.success){
         console.log(response.data.message);
-        alert(response.data.message);
     }else{
         console.log(response.data.message);
-        alert(response.data.message);
     }
 };
 
@@ -192,7 +141,7 @@ const focusNextInput = (part) => {
 .sidebar_left {
     background-color: #ffecc9;
     width: 150px;
-    height: 200px;
+    height: 400px;
     text-align: center;
     line-height: 10px;
     float: left;

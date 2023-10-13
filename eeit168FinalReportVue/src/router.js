@@ -10,7 +10,8 @@ import Register from './views/RegisterView.vue'
 import PetPhotoViewVue from "./views/PetPhotoView.vue";
 import MemberLogin from "./views/MemberLoginView.vue";
 import MemberForgetPassword from "./views/MemberForgetPasswordView.vue";
-import MemberRegister from "./views/MemberRegisterView.vue";
+import MemberRegisterAccount from "./views/MemberRegisterAccountView.vue";
+import MemberRegisterInfo from "./views/MemberRegisterInfoView.vue";
 import ComLogin from "./views/ComLoginView.vue";
 import MemberInformation from "./views/MemberInformationView.vue";
 import PersonalPetView from "./views/PersonalPetView.vue";
@@ -20,6 +21,8 @@ import ShopProduct from "./views/ProductPage.vue";
 import ComShop from './views/ComShop.vue'
 import ShoppingCart from './views/ShoppingCart.vue';
 import ForumPost from "./views/ForumPost.vue";
+import Test from "./views/test.vue";
+import PetView from "./views/PetView.vue";
 
 
 
@@ -67,8 +70,12 @@ const routes=
     component : MemberForgetPassword
 },
 {
-    path : "/memberRegister",
-    component : MemberRegister
+    path : "/memberRegisteraccount",
+    component : MemberRegisterAccount
+},
+{
+    path : "/memberRegisterinfo",
+    component : MemberRegisterInfo
 },
 {
     path : "/companyLogin",
@@ -104,6 +111,19 @@ const routes=
 {
     path : "/forumpost",
     component : ForumPost
+},
+{   
+    path: "/comshop",
+    component: ComShop
+    ,props: true
+},
+{
+    path : "/test",
+    component : Test
+},
+{
+    path : "/petview",
+    component : PetView
 }
 ]
 
