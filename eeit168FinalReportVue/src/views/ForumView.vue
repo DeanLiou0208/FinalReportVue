@@ -114,13 +114,10 @@ const inputHandler = (value) => {
 
 loadPosts();
 </script>
-<<<<<<< Updated upstream
-=======
     
-<style scoped>
->>>>>>> Stashed changes
 
-<style>
+
+<style scoped>
 .card-list {
   display: flex;
   flex-direction: row;
