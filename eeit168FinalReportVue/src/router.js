@@ -100,11 +100,11 @@ const routes=
     component : ShopProduct
 },
 {
-    path : "/membershoppingcart"
+    path : "/membershoppingcart",
     component : ShoppingCart
 },
 {
-    path : "/forumpost"
+    path : "/forumpost",
     component : ForumPost
 }
 
