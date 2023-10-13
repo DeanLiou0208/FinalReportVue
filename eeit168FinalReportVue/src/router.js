@@ -17,8 +17,13 @@ import PersonalPetView from "./views/PersonalPetView.vue";
 import Type from "./views/Type.vue";
 import Product from "./views/Product.vue";
 import ShopProduct from "./views/ProductPage.vue";
+
 import ComShop from './views/ComShop.vue'
 import ShoppingCart from './views/ShoppingCart.vue';
+
+import ForumPost from "./views/ForumPost.vue";
+
+
 
 const routes=
 [
@@ -93,15 +98,6 @@ const routes=
 {
     path : "/shopproduct",
     component : ShopProduct
-},
-{
-    path: "/comshop",
-    component: ComShop,
-    props: true
-},
-{
-    path : "/memberInformation/shoppingcart",
-    component : ShoppingCart
 }
 
 ]
