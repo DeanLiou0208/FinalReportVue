@@ -98,6 +98,14 @@ const routes=
 {
     path : "/shopproduct",
     component : ShopProduct
+},
+{
+    path : "/membershoppingcart"
+    component : ShoppingCart
+},
+{
+    path : "/forumpost"
+    component : ForumPost
 }
 
 ]
