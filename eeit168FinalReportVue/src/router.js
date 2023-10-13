@@ -18,6 +18,7 @@ import Type from "./views/Type.vue";
 import Product from "./views/Product.vue";
 import ShopProduct from "./views/ProductPage.vue";
 import ComShop from './views/ComShop.vue'
+import ShoppingCart from './views/ShoppingCart.vue';
 
 const routes=
 [
@@ -95,9 +96,13 @@ const routes=
 },
 {
     path: "/comshop",
-    component: ComShop
-    ,props: true
-  },
+    component: ComShop,
+    props: true
+},
+{
+    path : "/memberInformation/shoppingcart",
+    component : ShoppingCart
+}
 
 ]
 
