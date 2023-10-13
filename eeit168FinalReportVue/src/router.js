@@ -26,6 +26,7 @@ import PetView from "./views/PetView.vue";
 
 
 
+import ComRegister from './views/ComRegister.vue'
 const routes=
 [
 {
@@ -124,7 +125,14 @@ const routes=
 {
     path : "/petview",
     component : PetView
-}
+},
+  {
+    path: "/comr",
+    component: ComRegister
+    ,props: true
+  },
+ 
+
 ]
 
 const router=createRouter({history:createWebHistory(),routes,})

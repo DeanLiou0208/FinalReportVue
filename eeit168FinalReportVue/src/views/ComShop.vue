@@ -31,7 +31,6 @@
   
   const products = ref([]);
   const totalPage = ref(0);
-  const start=ref(0);
   const datas = reactive({
     companyShopName:'劉學長的店',
     // name : "",
@@ -93,4 +92,5 @@ const inputHandelr =value =>{
         display: flex; 
         justify-content: space-between; 
     }
+
 </style>

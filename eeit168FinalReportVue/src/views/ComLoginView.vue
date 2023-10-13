@@ -50,7 +50,10 @@ export default {
             console.log(response.data);
             responseMessage.innerHTML = response.data.message;
             if (response.data.success) {
+              console.log(response.data.identity)
               $cookies.set("cookies", response.data);
+              $cookies.set("identity",response.data.identity);
+             console.log($cookies.get("identity")) 
             }else{
               pass.value=false;
               captcha.classList.remove("passed");
@@ -248,14 +251,14 @@ export default {
   position: absolute;
   top: 40%; /* 调整垂直位置，可以根据需要修改 */
   left: 35%;
-  width: 250px; /* 添加这行来设置宽度 */
+  width: auto; /* 添加这行来设置宽度 */
 }
 
 #password {
   position: absolute;
   top: 50%; /* 调整垂直位置，可以根据需要修改 */
   left: 35%;
-  width: 250px; /* 添加这行来设置宽度 */
+  width: auto; /* 添加这行来设置宽度 */
 }
 #submit {
   position: absolute;
