@@ -40,7 +40,8 @@
               
               <a href="#" type="button" class="btn btn-link">
               <div class="centered-content" @click="toinfo" >
-                  <div class="gray-circle"><img src="" alt="" ></div>
+                  <div class="gray-circle">   <img :src="`${img}`" alt="" id="img"></div>
+               
               </div>
               </a>&nbsp
             
@@ -73,7 +74,7 @@
     const loginState = ref(false);
     const $cookies = inject("$cookies");
     const identity = ref("");
-    
+    const img = ref("");
     //登入確認身分
     const loginCheck = async () => {
       identity.value = $cookies.get("identity");
@@ -81,6 +82,7 @@
         loginState.value = true;
       }else if(identity.value === "廠商"){
         loginState.value = true;
+        img.value=localStorage.getItem('img');
       }else{
         loginState.value = false;
       }
@@ -120,7 +122,7 @@
       if(identity.value === "會員"){
         document.location.href = "/memberInformation";
       }else if(identity.value === "廠商"){
-        document.location.href = "/";
+        document.location.href = "/cominformation";
       }else{
         document.location.href = "/";
       }
@@ -132,6 +134,7 @@
       $cookies.remove("account");
       $cookies.remove("identity");
       $cookies.remove("username");
+      localStorage.removeItem('img');
       document.location.href = "/";
     }
 
@@ -162,6 +165,13 @@
     height: 40px;
     background-color: gray; /* 设置背景颜色为灰色 */
     border-radius: 50%; /* 设置边框半径为50%，使其呈圆形 */
+ 
+  }
+  #img{
+
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 
 </style>

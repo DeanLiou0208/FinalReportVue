@@ -48,11 +48,19 @@ export default {
           })
           .then((response) => {
             console.log(response.data);
-            responseMessage.innerHTML = response.data.message;
+            alert(response.data.message);
+            // responseMessage.innerHTML = response.data.message;
             if (response.data.success) {
-              console.log(response.data.identity)
-              $cookies.set("cookies", response.data);
+              // alert(response.data.message);
+              window.location.href = '/cominformation';
+              $cookies.set("id", response.data.id);
+              $cookies.set("account",response.data.account);
+              $cookies.set("username",response.data.username);
               $cookies.set("identity",response.data.identity);
+              
+             console.log($cookies.get("id")) 
+             console.log($cookies.get("account")) 
+             console.log($cookies.get("shopname")) 
              console.log($cookies.get("identity")) 
             }else{
               pass.value=false;

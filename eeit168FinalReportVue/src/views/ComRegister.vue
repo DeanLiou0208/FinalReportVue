@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h2>註冊</h2>
+    
     <div class="form-group">
       <label for="username">帳號:</label>
       <div class="input-container">
@@ -13,7 +14,7 @@
         />
       </div>
     </div>
-    <div id="responseAccount"></div>
+    <div id="responseAccount">&nbsp;</div>
     <div class="form-group">
       <label for="password">密碼:</label>
       <div class="input-container">
@@ -25,7 +26,7 @@
           maxlength="15"
         />
       </div>
-      <div id="responsePassword"></div>
+      <div id="responsePassword">&nbsp;</div>
     </div>
     <div class="form-group">
       <label for="confirm-password">再次輸入密碼:</label>
@@ -38,7 +39,7 @@
           maxlength="15"
         />
       </div>
-      <div id="responseSecPassword"></div>
+      <div id="responseSecPassword">&nbsp;</div>
     </div>
 
     <div class="form-group">
@@ -52,7 +53,7 @@
           v-model="shopName"
         />
       </div>
-      <div id="responseShopname"></div>
+      <div id="responseShopname">&nbsp;</div>
     </div>
 
     <div class="form-group">
@@ -64,7 +65,7 @@
         @mouseout="checkValue()"
         @mousemove="checkValue()"
       >
-        註冊
+        下一步
       </button>
     </div>
   </div>
@@ -72,7 +73,9 @@
 
 <script setup>
 import axios from "axios";
-import { ref, reactive } from "vue";
+import { ref, reactive, inject} from "vue";
+
+const $cookies = inject("$cookies");
 const username = ref("");
 const password = ref("");
 const secPassword = ref("");
@@ -102,7 +105,7 @@ function checkAccount() {
       responseAccount.innerHTML = "用户名必須包含英文字母和數字。";
       return;
     } else {
-      responseAccount.innerHTML = "";
+      responseAccount.innerHTML = "&nbsp;";
       axios
         .post(URLAPI, {
           account: username.value,
@@ -134,7 +137,7 @@ function checkPassword() {
       responsePassword.innerHTML = "密碼必須介於8到15個字符之間";
       return; // 中止提交
     } else {
-      responsePassword.innerHTML = "";
+      responsePassword.innerHTML = "&nbsp;";
     }
   }
 }
@@ -150,7 +153,7 @@ function secondCheckPassword() {
       responseSecPassword.innerHTML = "兩次密碼不相同";
       return; // 中止提交
     } else {
-      responseSecPassword.innerHTML = "";
+      responseSecPassword.innerHTML = "&nbsp;";
       passwordPass.value = true;
     }
   }
@@ -165,11 +168,11 @@ function checkShopName() {
       responseShopname.innerHTML = "店名必須介於3到10個字符之間";
       return; // 中止提交
     } else {
-      responseShopname.innerHTML = "";
+      responseShopname.innerHTML =  "&nbsp;";
 
       axios
         .post(URLShopName, {
-          shopName: shopName.value,
+          body: shopName.value,
         })
         .then(function (response) {
           // 处理后端响应
@@ -212,6 +215,10 @@ const submit = async () => {
   const response = await axios.post(URLRegister, data);
   if (response.data.success) {
     console.log(response.data.message);
+    $cookies.set("registershopname",response.data.registershopname)
+    $cookies.set("registerid",response.data.registerid)
+    window.location.href = '/comu';
+    
   }else{isSubmitDisabled.value = true;}
   
 };

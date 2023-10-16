@@ -49,13 +49,15 @@
     ></textarea>
 
     <!-- 添加清空按钮 -->
-    <button @click="clearSessionStorage">清空数据</button>
+    <!-- <button @click="clearSessionStorage">清空数据</button> -->
     <button @click="saveProduct">傳送</button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+
+
 export default {
   data() {
     return {
@@ -68,6 +70,8 @@ export default {
       fileInput1: null,
       fileInput2: null,
       fileInput3: null,
+       URL : import.meta.env.VITE_API_JAVAURL
+      
     };
   },
   created() {
@@ -86,8 +90,10 @@ export default {
       this.productDescription = this.productObject[0].productDescription;
     }
     console.log(this.productObject);
+    console.log(this.$cookies.get("id"))
   },
   methods: {
+    
     clearSessionStorage() {
       // 清空 sessionStorage 中的数据
       sessionStorage.removeItem("type");
@@ -112,7 +118,7 @@ export default {
       // 创建包含商品信息的 JSON 对象
       const productData = {
         //可能需加入抓fkcompanyid的資訊
-        fkCompanyId: 2,
+        fkCompanyId: this.$cookies.get("id"),
         name: this.productTitle,
         type: this.productCategory,
         description: this.productDescription,
@@ -120,8 +126,9 @@ export default {
       };
       const productDataJSON = JSON.stringify(productData);
       console.log("保存商品信息1:", productDataJSON);
+      
       axios
-        .post("http://localhost:8080/pet_web/product/insert", productData)
+        .post(`${this.URL}pet_web/product/insert`, productData)
         .then((response) => {
           console.log(response.data);
           if (response.data.success) {
@@ -130,6 +137,7 @@ export default {
             }
             console.log(this.productId);
             this.uploadImages();
+            alert(response.data.message)
           }
         })
         .catch((error) => {
@@ -144,9 +152,9 @@ export default {
       this.productTitle = "";
       this.productCategory = "";
       this.productDescription = "";
-
+     
       // 跳转到其他页面
-      this.$router.push("/other-page");
+      this.$router.push("/comshop");
     },
     fileChange1() {
       let file = document.getElementById("picFile1").files[0];
@@ -194,11 +202,13 @@ export default {
     },
     uploadImages() {
       console.log(1);
+      
       for (let i = 0; i < this.productId.length; i++) {
         console.log(2);
         console.log(this.fileInput1);
         console.log(this.fileInput2);
         console.log(this.fileInput3);
+
 
         if (this.fileInput1) {
           const data = { productId: this.productId[i], main: true };
@@ -210,7 +220,7 @@ export default {
             console.log(pair[0], pair[1]);
           }
           axios
-            .post("http://localhost:8080/pet_web/product-photo/insert", formData)
+            .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
               console.log( response.data);
             })
@@ -230,7 +240,7 @@ export default {
             console.log(pair[0], pair[1]);
           }
           axios
-            .post("http://localhost:8080/pet_web/product-photo/insert", formData)
+            .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
               console.log( response.data);
             })
@@ -250,7 +260,7 @@ export default {
             console.log(pair[0], pair[1]);
           }
           axios
-            .post("http://localhost:8080/pet_web/product-photo/insert", formData)
+            .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
               console.log( response.data);
             })
@@ -263,6 +273,7 @@ export default {
 
       }
       this.productId = [];
+      
     },
   },
 };
