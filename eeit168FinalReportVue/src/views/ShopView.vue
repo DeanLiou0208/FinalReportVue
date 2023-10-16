@@ -89,7 +89,9 @@
             </div>
           
           <div class="container ml-1">
-            <RouterLink to="/shopproduct"><a href="#" type="button" class="btn btn-info" data-bs-toggle="modal2" data-bs-target="#toProduct" to="/shopproduct">去賣場</a></RouterLink>
+            <RouterLink to="/shopproduct">
+              <a href="#" type="button" class="btn btn-info" data-bs-toggle="modal2" data-bs-target="#toProduct" to="/shopproduct">去賣場</a>
+            </RouterLink>
             &nbsp
             <a href="#" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToShoppingCart"><i class="bi bi-cart-plus-fill" > >加入購物車</i></a>
           </div>
@@ -97,8 +99,8 @@
       </div>
     </div>
   </div>
-  
-  <Paging :totalPages="totalPage" :thePage="datas.start + 1" @child-click="clickHandler"></Paging>
+  <br>
+  <Paging :totalPages="totalPage" :thePage="datas.start/datas.rows +1" @childClick="clickHandler"></Paging>
 </div>
 
 
@@ -153,7 +155,7 @@
   <!-- footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">加入</button>
+        <button type="button" class="btn btn-primary" @click="addToShoppingCart">加入</button>
       </div>
     </div>
   </div>
@@ -164,16 +166,16 @@
     
 <script setup>
 
-  import {ref ,reactive, registerRuntimeCompiler, onMounted, onUpdated} from "vue";
+  import {ref ,reactive, registerRuntimeCompiler, onMounted, onUpdated,inject} from "vue";
   
   import axios from 'axios';
   import SearchBar from '../components/SearchBar.vue';
   import Paging from '../components/Paging.vue'
+  import Swal from "sweetalert2";
   
   
   
-  
-  
+
   const products = ref([]);//接產品清單的陣列
   const types = ref([]);//接type清單的陣列
   const totalPage = ref(0);//換算總頁數的變數
@@ -182,6 +184,7 @@
   const avgRateScore = ref();//傳入評分的變數
   const productDetails = ref([]);
   const counting = ref(0);
+  const $cookies = inject("$cookies");
 
   const tooltip = ref(null);
 
@@ -193,7 +196,11 @@
     description :null,
   })
 
-
+  const addShopCart = reactive({
+  fkMemberId: 0,
+  fkProductId: 0,
+  count: 0,
+});
 
   const datas = reactive({
   
@@ -206,7 +213,7 @@
     avgRateScore : null,
     companyShopName : null,
     start : 0,
-    rows : 5,
+    rows : 4,
     order: "asc",
     sort: "id"
 
@@ -216,9 +223,11 @@
   const URL = import.meta.env.VITE_API_JAVAURL;// http://localhost:8080/定義在.env檔案
   const URLAPI = `${URL}shop/product/sreach`;
   const URLTYPE = `${URL}shop/type`;
+  const URLADDSHOPPINGCART = `${URL}product/addShoppingCart`;
   const loadProducts = async () =>{
   
   const response = await axios.post(URLAPI, datas);
+  console.log(datas)
   console.log(response.data)
   products.value = response.data.list;
   
@@ -238,7 +247,8 @@
   
   //paging 由子元件觸發
   const clickHandler = page => {
-  datas.start = (page - 1) * datas.rows
+  datas.start = (page-1) * datas.rows
+  console.log(page)
   loadProducts()
 }
 
@@ -361,9 +371,51 @@ const decrementCounting = function(){
                 }
                 console.log(counting)
         }
-        const incrementCounting = function(){
-                counting.value++;
+const incrementCounting = function(){
+        counting.value++;
         }
+
+const addToShoppingCart = async () => {
+  if ($cookies.get("identity") != null) {
+    if ($cookies.get("identity") === "會員") {
+      if ($cookies.get("id") != null) {
+        // console.log($cookies.get("fkMemberId"))
+        addShopCart.fkMemberId = $cookies.get("id")
+        addShopCart.fkProductId = pdetails.productId;
+        addShopCart.count = counting.value;
+        console.log(addShopCart);
+        if (addShopCart.count == 0) {
+          Swal.fire({
+            icon: "warning",
+            title: "請輸入購買數量!",
+          });
+        } else {
+          const response = await axios.put(URLADDSHOPPINGCART, addShopCart);
+          console.log(response);
+          Swal.fire({
+            icon: "success",
+            title: "已加入購物車!",
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "查無此帳號!",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "請使用非廠商帳號登入!",
+      });
+    }
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "請先登入!",
+    });
+  }
+};
 
 
   //再載入的時候就執行loadProduct(),就會先將datas的jsont傳到後端搜尋

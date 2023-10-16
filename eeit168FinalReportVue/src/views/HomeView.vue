@@ -1,6 +1,4 @@
 <template>
-  <h1>Home</h1>
-  
   <homeimg></homeimg>
   <div style="background-color: blanchedalmond; height: 400px">
     <h5>請放論壇文章</h5>

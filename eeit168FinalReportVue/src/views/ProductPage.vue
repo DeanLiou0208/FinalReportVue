@@ -212,7 +212,7 @@ const photomain = ref([]);
 const photoList = ref([]);
 const counting = ref(0);
 const $cookies = inject("$cookies");
-const fkMemberId = ref(0);
+// const fkMemberId = ref(0);
 
 // sweetalert
 
@@ -241,9 +241,9 @@ const loadProduct = async () => {
   const response = await axios.post(URLAPI, id);
   product.value = response.data;
   console.log(product.value);
-  $cookies.set("identity", "會員");
-  $cookies.set("fkMemberId", 1);
-  fkMemberId.value = $cookies.get("fkMemberId");
+  // $cookies.set("identity", "會員");
+  // $cookies.set("fkMemberId", 1);
+  // fkMemberId.value = $cookies.get("id");
   // console.log($cookies.get("fkMemberId"))
 };
 //載入產品評分
@@ -275,9 +275,9 @@ const incrementCounting = function () {
 const addToShoppingCart = async () => {
   if ($cookies.get("identity") != null) {
     if ($cookies.get("identity") === "會員") {
-      if ($cookies.get("fkMemberId") != null) {
+      if ($cookies.get("id") != null) {
         // console.log($cookies.get("fkMemberId"))
-        addShopCart.fkMemberId = fkMemberId.value;
+        addShopCart.fkMemberId = $cookies.get("id");
         addShopCart.fkProductId = productId;
         addShopCart.count = counting.value;
         console.log(addShopCart);
