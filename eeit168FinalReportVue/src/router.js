@@ -28,6 +28,11 @@ import ComInformation from "./views/ComInformation.vue";
 import ComUpdateInfo from "./views/ComUpdateInfo.vue";
 import ComRegister from "./views/ComRegister.vue";
 import ComOrder from "./views/ComOrder.vue";
+import PetNewView from "./views/PetNewView.vue";
+import MemberInfoUpdate from "./views/MemberInfoUpdateView.vue";
+
+
+
 const routes = [
   {
     path: "/",
@@ -90,7 +95,6 @@ const routes = [
     path: "/personalPetView",
     component: PersonalPetView,
   },
-
   {
     path: "/type",
     component: Type,
@@ -127,11 +131,10 @@ const routes = [
     component: ComRegister,
     props: true,
   },
- {
+  {
     path : "/payment",
     component :PayMent
- },
-
+  },
   {
     path: "/comu",
     component: ComUpdate,
@@ -152,7 +155,15 @@ const routes = [
     component: ComOrder,
     props: true,
   },
-];
+  {
+    path : "/petnewview",
+    component : PetNewView
+  },
+  {
+    path : "/memberinfoupdate",
+    component : MemberInfoUpdate
+  },
+]
 
 const router = createRouter({ history: createWebHistory(), routes });
 

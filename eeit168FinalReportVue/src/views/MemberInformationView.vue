@@ -1,103 +1,74 @@
 <template>
     <div class="main-content">
-        <div class="sidebar_left">
+        <div class="sidebar routerborder">
             <ul>
-                <li>
-                    <router-link to="/memberInformation">
+                <li><router-link to="/memberInformation">
                         <h5>個人資料</h5>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/personalPetView">
+                    </router-link></li>
+                <li><router-link to="/personalPetView">
                         <h6>我的寵物</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
+                    </router-link></li>
+                <li><router-link to="">
                         <h6>我的文章</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
+                    </router-link></li>
+                <li><router-link to="">
                         <h6>我的收藏</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
+                    </router-link></li>
+                <li><router-link to="">
                         <h6>我的訂單</h6>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="">
+                    </router-link></li>
+                <li><router-link to="">
                         <h6>我的任務</h6>
-                    </router-link>
-                </li>
+                    </router-link></li>
             </ul>
         </div>
-        <div class="content">
-            <div class="row">
-                <div class="col-7">
-                    <div class="mb-3">
-                        <label for="account" class="form-label">帳號 : </label>
-                        <input type="text" class="form-control" id="account" v-model="member.account" readonly />
+        <div class="container">
+            <h2>我的資訊</h2>
+            <button class="btn btn-primary" type="button" @click="toUpdate">
+                修改資料
+            </button>
+            <div class="flexbox">
+                <fieldset class="">
+                    <div class="row">
+                        <div class="col-16">
+                            <div class="mb-3">
+                                帳號 : {{ member.account }}
+                            </div>
+                            <div class="mb-3">
+                                姓氏 :　{{ member.lastName }}
+                            </div>
+                            <div class="mb-3">
+                                名字 :　{{ member.firstName }}
+                            </div>
+                            <div class="mb-3">
+                                使用者名稱 :　{{ member.userName }}
+                            </div>
+                            <div class="mb-3">
+                                性別 :　{{ resultGender }}
+                            </div>
+                            <div class="mb-3">
+                                生日 :　{{ member.birth }}
+                            </div>
+                            <div class="mb-3">
+                                電話 :　{{ member.phone1 }}-{{ member.phone2 }}-{{ member.phone3 }}
+                            </div>
+                            <div class="mb-3">
+                                地址 :　{{ member.address }}
+                            </div>
+                            <div class="mb-3">
+                                email :　{{ member.email }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">姓氏 :　</label>
-                        <input type="text" class="form-control" id="lastName" v-model="member.lastName" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">名字 :　</label>
-                        <input type="text" class="form-control" id="firstName" v-model="member.firstName" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">使用者名稱 :　</label>
-                        <input type="text" class="form-control" id="userName" v-model="member.userName" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">性別 :　</label>
-                        <input type="radio" name="gender" value="true" id="gender" v-model="member.gender" /><span>男</span>
-                        <input type="radio" name="gender" value="false" id="gender" v-model="member.gender" /><span>女</span>
-                        <input type="radio" name="gender" value="null" id="gender"
-                            v-model="member.gender" /><span>不公開</span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">生日 :　</label>
-                        <input type="date" class="form-control" id="birth" v-model="member.birth" />
-                    </div>
-                    <label for="name" class="form-label">電話 :　</label>
-                    <div class="d-flex align-items-center mb-3">
-                        <input ref="input1" v-model="member.phone1" class="autotab form-control" maxlength="4"
-                            @input="handleInput(1)" placeholder="09xx" />
-                        <span>-</span>
-                        <input ref="input2" v-model="member.phone2" class="autotab form-control" maxlength="3"
-                            @input="handleInput(2)" placeholder="xxx" />
-                        <span>-</span>
-                        <input ref="input3" v-model="member.phone3" class="autotab form-control" maxlength="3"
-                            @input="handleInput(3)" placeholder="xxx" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">地址 :　</label>
-                        <input type="text" class="form-control" id="address" v-model="member.address" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">email :　</label>
-                        <input type="text" class="form-control" id="email" v-model="member.email" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">上傳頭貼</label>
-                        <input class="form-control" type="file" id="formFile"/>
-                        <!-- <img :src="member.img" alt="">7 -->
-                    </div>
-
-                    <button class="btn btn-primary" type="button" @click="updateMember">
-                        更新
-                    </button>
-                </div>
+                </fieldset>
+                <fieldset>
+                    <img :src="`${member.img}`" alt="" class="photosize">
+                </fieldset>
             </div>
         </div>
     </div>
 </template>
-
+    
 <script setup>
 import { ref, reactive, inject, onMounted } from "vue";
 import axios from "axios";
@@ -107,6 +78,7 @@ const member = ref([]);
 const account = reactive({
     account: "",
 });
+const resultGender = ref("");
 const avatarInput = ref(null);
 const file = new FormData();
 const URL = import.meta.env.VITE_API_JAVAURL;
@@ -116,7 +88,16 @@ async function selectInformation() {
     account.account = $cookies.get("account");
     const response = await axios.post(API_URL, account);
     member.value = response.data;
+    if (member.value.gender === true) {
+        resultGender.value = "男";
+    } else if (member.value.gender === false) {
+        resultGender.value = "女";
+    } else {
+        resultGender.value = "不透漏";
+    }
+    member.value.gender
     console.log(response.data);
+    // console.log(member.value.img);
     //如果結果查無資料則發出警告
     // if (response.data.success) {
     //     alert(response.data.message)
@@ -125,95 +106,44 @@ async function selectInformation() {
 }
 selectInformation();
 
-onMounted(() => {
-    avatarInput.value = document.getElementById('formFile');
-});
 
-const updateMember = async () => {
-    const API_URL = `${URL}pages/member/information`;
-    member.value.img = null;
-    const json = JSON.stringify(member.value);
-    file.append('file', avatarInput.value.files[0]);
-    file.append('body', json);
-    console.log(json);
-    const response = await axios.put(API_URL, file, {
-        headers: {
-            'Content-Type': 'multipart/form-data', // 必须设置正确的Content-Type
-        },
-    });
-    if(response.data.success){
-        console.log(response.data.message);
-        alert(response.data.message);
-    }else{
-        console.log(response.data.message);
-        alert(response.data.message);
-    }
-};
-
-///////////////////////////////////////
-// const part1 = ref("");
-// const part2 = ref("");
-// const part3 = ref();
-
-const handleInput = (part) => {
-    const currentInput = document.querySelectorAll(".autotab")[part - 1];
-
-    if (currentInput.value.length === currentInput.maxLength) {
-        focusNextInput(part);
-    }
-};
-
-const focusNextInput = (part) => {
-    if (part < 3) {
-        const nextInput = document.querySelectorAll(".autotab")[part];
-        if (nextInput) {
-            nextInput.focus();
-        }
-    }
-};
+const toUpdate = async () => {
+    window.location.href = '/memberinfoupdate';
+}
 </script>
-
+    
 <style scoped>
-/* .routerborder{
-        border: black 1px solid;
-        height: 200px;
-        width: 150px;
-    }
-    .content2 {
-        flex-grow: 1;
-        margin: 0 100px ;
-    }
-    .main-content{
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-    } */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
 
-.sidebar_left {
-    background-color: #ffecc9;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: auto;
+    /* 让容器占满整个视窗高度 */
+}
+
+.routerborder {
+    padding: 50px 0;
+    border: black 1px solid;
+    border-radius: 10px;
+    height: 300px;
     width: 150px;
+}
+
+.flexbox {
+    display: flex;
+        flex-direction: row;
+    justify-content: space-around;
+}
+.photosize{
+    margin: 80px 20px;
     height: 200px;
-    text-align: center;
-    line-height: 10px;
-    float: left;
-}
-
-.sidebar_right {
-    background-color: #ffecc9;
-    width: 150px;
-    height: 400px;
-    text-align: center;
-    line-height: 10px;
-    float: right;
-}
-
-.content {
-    margin-left: 150px;
-    margin-right: 150px;
-    padding: 30px 100px;
-    height: 800px;
-    background-color: #f2fff2;
-    text-align: left;
-    line-height: 10px;
+    width: 200px;
 }
 </style>

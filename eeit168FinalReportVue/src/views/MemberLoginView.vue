@@ -28,8 +28,8 @@
       </div>
 
       <div class="box">
-        <router-link  to="/memberRegister">註冊</router-link>
-        <router-link  to="/memberForgetPassword">忘記密碼</router-link>
+        <router-link  to="/memberregisteraccount">註冊</router-link>
+        <router-link  to="/memberforgetPassword">忘記密碼</router-link>
       </div>
 <div class="col-3"></div>
 </div>

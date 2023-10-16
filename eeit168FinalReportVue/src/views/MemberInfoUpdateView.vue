@@ -1,6 +1,41 @@
 <template>
     <div class="main-content">
-        <div class="content">
+        <div class="sidebar routerborder">
+            <ul>
+                <li>
+                    <router-link to="/memberInformation">
+                        <h5>個人資料</h5>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/personalPetView">
+                        <h6>我的寵物</h6>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="">
+                        <h6>我的文章</h6>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="">
+                        <h6>我的收藏</h6>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="">
+                        <h6>我的訂單</h6>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="">
+                        <h6>我的任務</h6>
+                    </router-link>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <h2>修改資料</h2>
             <div class="row">
                 <div class="col-7">
                     <div class="mb-3">
@@ -8,26 +43,26 @@
                         <input type="text" class="form-control" id="account" v-model="member.account" readonly />
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">姓氏 :　</label>
+                        <label for="lastName" class="form-label">姓氏 :　</label>
                         <input type="text" class="form-control" id="lastName" v-model="member.lastName" />
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">名字 :　</label>
+                        <label for="firstName" class="form-label">名字 :　</label>
                         <input type="text" class="form-control" id="firstName" v-model="member.firstName" />
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">使用者名稱 :　</label>
+                        <label for="userName" class="form-label">使用者名稱 :　</label>
                         <input type="text" class="form-control" id="userName" v-model="member.userName" />
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">性別 :　</label>
+                        <label for="gender" class="form-label">性別 :　</label>
                         <input type="radio" name="gender" value="true" id="gender" v-model="member.gender" /><span>男</span>
                         <input type="radio" name="gender" value="false" id="gender" v-model="member.gender" /><span>女</span>
                         <input type="radio" name="gender" value="null" id="gender"
                             v-model="member.gender" /><span>不公開</span>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">生日 :　</label>
+                        <label for="birth" class="form-label">生日 :　</label>
                         <input type="date" class="form-control" id="birth" v-model="member.birth" />
                     </div>
                     <label for="name" class="form-label">電話 :　</label>
@@ -52,11 +87,11 @@
                     <div class="mb-3">
                         <label for="formFile" class="form-label">上傳頭貼</label>
                         <input class="form-control" type="file" id="formFile"/>
-                        <img :src="member.img" alt="">
+                        <!-- <img :src="member.img" alt="">7 -->
                     </div>
 
                     <button class="btn btn-primary" type="button" @click="updateMember">
-                        註冊
+                        更新
                     </button>
                 </div>
             </div>
@@ -65,10 +100,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, inject, onMounted } from "vue";
 import axios from "axios";
-import router from "../router";
 
+const $cookies = inject("$cookies");
 const member = ref([]);
 const account = reactive({
     account: "",
@@ -77,13 +112,12 @@ const avatarInput = ref(null);
 const file = new FormData();
 const URL = import.meta.env.VITE_API_JAVAURL;
 
-onMounted(() => {
-    avatarInput.value = document.getElementById('formFile');
-});
-
 async function selectInformation() {
+    const API_URL = `${URL}pages/member/information`;
     account.account = $cookies.get("account");
-    member.value = account;
+    const response = await axios.post(API_URL, account);
+    member.value = response.data;
+    console.log(response.data);
     //如果結果查無資料則發出警告
     // if (response.data.success) {
     //     alert(response.data.message)
@@ -91,6 +125,10 @@ async function selectInformation() {
     // }
 }
 selectInformation();
+
+onMounted(() => {
+    avatarInput.value = document.getElementById('formFile');
+});
 
 const updateMember = async () => {
     const API_URL = `${URL}pages/member/information`;
@@ -104,11 +142,11 @@ const updateMember = async () => {
             'Content-Type': 'multipart/form-data', // 必须设置正确的Content-Type
         },
     });
-    console.log(response.data.message)
     if(response.data.success){
+        console.log(response.data.message);
         alert(response.data.message);
-        router.push("/login");
     }else{
+        console.log(response.data.message);
         alert(response.data.message);
     }
 };
@@ -152,31 +190,27 @@ const focusNextInput = (part) => {
         padding: 10px;
     } */
 
-.sidebar_left {
-    background-color: #ffecc9;
-    width: 150px;
-    height: 400px;
-    text-align: center;
-    line-height: 10px;
-    float: left;
-}
-
-.sidebar_right {
-    background-color: #ffecc9;
-    width: 150px;
-    height: 400px;
-    text-align: center;
-    line-height: 10px;
-    float: right;
-}
-
-.content {
-    margin-left: 150px;
-    margin-right: 150px;
-    padding: 30px 100px;
-    height: 800px;
-    background-color: #f2fff2;
-    text-align: left;
-    line-height: 10px;
-}
+    .main-content {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .routerborder {
+        padding: 50px 0;
+        border: black 1px solid;
+        border-radius: 10px;
+        height: 300px;
+        width: 150px;
+    }
+    .content {
+        flex-grow: 1;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: center; */
+        height: auto;
+        /* 让容器占满整个视窗高度 */
+    }
 </style>
