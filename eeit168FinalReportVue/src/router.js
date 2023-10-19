@@ -162,7 +162,7 @@ const routes = [
     path : "/memberinfoupdate",
     component : MemberInfoUpdate
   },
-  }
+  {
     path : "/productanlysis",
     component : Analysis
   }
