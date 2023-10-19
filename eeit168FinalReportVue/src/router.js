@@ -30,8 +30,7 @@ import ComRegister from "./views/ComRegister.vue";
 import ComOrder from "./views/ComOrder.vue";
 import PetNewView from "./views/PetNewView.vue";
 import MemberInfoUpdate from "./views/MemberInfoUpdateView.vue";
-
-
+import Analysis from "./views/analysis.vue";
 
 const routes = [
   {
@@ -163,7 +162,11 @@ const routes = [
     path : "/memberinfoupdate",
     component : MemberInfoUpdate
   },
-]
+  }
+    path : "/productanlysis",
+    component : Analysis
+  }
+];
 
 const router = createRouter({ history: createWebHistory(), routes });
 

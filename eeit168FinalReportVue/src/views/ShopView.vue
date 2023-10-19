@@ -1,6 +1,6 @@
 <template>
+  
   <table class="table table-bordered"><!-- 排序區塊 -->
-    
     <thead>
       <tr>
         <th>商品名稱 <i class="bi"
@@ -23,7 +23,7 @@
 
 <div class="accordion accordion-flush" id="accordionFlushExample"><!-- 風琴的第一頁 -->
   
-  <div class="accordion-item">
+  <div class="accordion-item" >
     <h2 class="accordion-header" id="flush-headingOne" style="background-color: goldenrod;">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
         您要的商品，在這裡點我「應該」都 &nbsp <i class="bi bi-search"></i> &nbsp 的到：
@@ -47,8 +47,10 @@
 
           <div class="container ml-3">
             <label for="customRange2" class="form-label"><p>請客官選擇要的評分</p></label>
-            <input type="range" class="form-range " min="1" max="5" id="customRange2"  @click="chioseRate" v-model="avgRateScore">
-            <div class="custom-range-tooltip" ref="tooltip"></div>
+            <div class="demo-rate-block">
+              <span class="demonstration">1星~5星你要幾星</span>
+              <el-rate @click="chioseRate" v-model="avgRateScore" :colors="colors" />
+            </div>
           </div>
 
           <div class="search-item">
@@ -102,9 +104,6 @@
   <br>
   <Paging :totalPages="totalPage" :thePage="datas.start/datas.rows +1" @childClick="clickHandler"></Paging>
 </div>
-
-
-
 
 
 <!-- addshoppingCart互動元件 -->
@@ -166,29 +165,34 @@
     
 <script setup>
 
-  import {ref ,reactive, registerRuntimeCompiler, onMounted, onUpdated,inject} from "vue";
+  import {ref ,reactive, onMounted, onUpdated,inject} from "vue";
   
   import axios from 'axios';
   import SearchBar from '../components/SearchBar.vue';
   import Paging from '../components/Paging.vue'
   import Swal from "sweetalert2";
+  import {useRouter, useRoute} from 'vue-router';
   
   
   
-
+  // const tooltip = ref(null);
+  const router = useRouter();
   const products = ref([]);//接產品清單的陣列
   const types = ref([]);//接type清單的陣列
   const totalPage = ref(0);//換算總頁數的變數
   const maxPrice = ref();//傳入最大價格的變數
   const mixPrice = ref();//傳入最小價格的變數
-  const avgRateScore = ref();//傳入評分的變數
+  const avgRateScore = ref(null);//傳入評分的變數
   const productDetails = ref([]);
   const counting = ref(0);
   const $cookies = inject("$cookies");
+  const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])//星星的顏色
+  
+  // console.log(avgRateScore)
 
-  const tooltip = ref(null);
 
   const pdetails = reactive({
+    
     img : null,
     productId : null,
     name : null,
@@ -213,7 +217,7 @@
     avgRateScore : null,
     companyShopName : null,
     start : 0,
-    rows : 4,
+    rows : 6,
     order: "asc",
     sort: "id"
 
@@ -260,7 +264,7 @@
   loadProducts()
 }
 
-const inputHandelr =value =>{
+const inputHandelr = value =>{
   datas.name = value
   datas.description = value 
   datas.start = 0
@@ -286,28 +290,6 @@ const inMinPrice = function(){
   loadProducts();
 }
 
-
-onMounted(() => {
-      const rangeInput = document.getElementById('customRange2');
-
-      rangeInput.addEventListener('input', (e) => {
-        const value = e.target.value;
-        const rect = e.target.getBoundingClientRect();
-        const offset = (value / (e.target.max - e.target.min)) * rect.width;
-
-        // 设置提示框的位置和内容
-        tooltip.value.style.display = 'block';
-        tooltip.value.style.left = `${rect.left + offset -80}px`;
-        tooltip.value.style.top = `${rect.top +230}px`;
-        tooltip.value.textContent = `評分數為: ${value} 分以上`;
-      });
-
-      rangeInput.addEventListener('mouseout', () => {
-        // 鼠标移开时隐藏提示框
-        tooltip.value.style.display = 'none';
-        return { tooltip };
-      });
-    });
 
 onUpdated(() =>{
   // console.log(2)
@@ -396,6 +378,7 @@ const addToShoppingCart = async () => {
             icon: "success",
             title: "已加入購物車!",
           });
+          // router.push('/')
         }
       } else {
         Swal.fire({

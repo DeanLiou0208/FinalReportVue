@@ -1,5 +1,5 @@
 <template>
-    <div class="container ml-1">
+    <div >
         <header style="height: 200px;">
         <div id="header" style="height: 120px;" >
             <figure class="text-center container ml-1">
@@ -24,10 +24,21 @@
     <hr>
     <footer>
         <div id="footer">
-            <h6>iSpan-EEiT-168team6 company</h6>
+            <h6>@iSpan-EEiT-168team6 company</h6>
         </div>
     </footer>
     </div>
+
+    <!-- <div class="wrap">
+        <div class="Header"></div>
+        <div class="Leftbar"></div>
+        <div class="Rightbar"></div>
+        <div class="Body"></div>
+        <div class="clearfix"></div>
+        <div class="Footer"></div>
+    </div> -->
+
+
 </template>
   
 <script setup >
@@ -48,4 +59,10 @@ import Navbar from "./components/navbar.vue"
         justify-content: center; /* 水平置中 */
         height: 60px;
     }
+    /* .Leftbar{
+        background: gold;
+        text-align: center;
+        
+    } */
+
 </style>
