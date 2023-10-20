@@ -1,0 +1,190 @@
+<template>
+  <div>
+    <div id="map" style="height: 400px; width: 100%"></div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+const mainAddress = ref('106台北市北投區'); // 主地址
+const otherAddresses = ref([]); // 其他地址
+
+let map;
+const geocoder = new google.maps.Geocoder();
+
+onMounted(() => {
+  getwhere();
+  select();
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const locationString = latitude + "," + longitude;
+      mainAddress.value = locationString; // 在這裡修改 mainAddress 的值
+      console.log("Updated mainAddress: " + mainAddress.value);
+      getwhere();
+      // 其他代碼不變
+      // ...
+    }, function(error) {
+      console.error("Error getting user's location: " + error.message);
+    });
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
+
+ 
+});
+
+function getwhere(){
+
+
+  geocoder.geocode({ address: mainAddress.value }, (results, status) => {
+    if (status === "OK" && results.length > 0) {
+      const mainLocation = results[0].geometry.location;
+      initializeMap(mainLocation);
+      createMainMarker(mainLocation, mainAddress.value);
+    } else {
+      console.error(
+        "Geocode for main address was not successful for the following reason: " +
+        status
+      );
+    }
+  });
+}
+
+
+function initializeMap(mainLocation) {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: mainLocation,
+    zoom: 15,
+    styles: darkMapStyle,
+  });
+
+  otherAddresses.value.forEach((hospital) => {
+    // 使用 .value 訪問內部的陣列
+    const { address } = hospital;
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK" && results.length > 0) {
+        const location = results[0].geometry.location;
+        createMarker(location, address);
+      } else {
+        console.error(
+          "Geocode for the address was not successful for the following reason: " +
+            status
+        );
+      }
+    });
+  });
+}
+
+function createMainMarker(location, name) {
+  new google.maps.Marker({
+    map: map,
+    position: location,
+    title: name,
+    icon:"./icons8-dog-64.png"
+  });
+}
+
+
+function createMarker(location, name) {
+  new google.maps.Marker({
+    map: map,
+    position: location,
+    title: name,
+  });
+}
+
+const URL = import.meta.env.VITE_API_JAVAURL;
+const URLAPI = `${URL}pet_web/hospital`;
+const select = async () => {
+  const response = await axios.get(URLAPI);
+  otherAddresses.value = response.data;
+  console.log(otherAddresses.value);
+};
+
+const darkMapStyle=[
+      { elementType: 'geometry', stylers: [{color: '#242f3e'}] },
+      { elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}] },
+      { elementType: 'labels.text.fill', stylers: [{color: '#746855'}] },
+      {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'poi',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [{color: '#263c3f'}]
+      },
+      {
+        featureType: 'poi.park',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#6b9a76'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'geometry',
+        stylers: [{color: '#38414e'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'geometry.stroke',
+        stylers: [{color: '#212a37'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#9ca5b3'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [{color: '#746855'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry.stroke',
+        stylers: [{color: '#1f2835'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#f3d19c'}]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'geometry',
+        stylers: [{color: '#2f3948'}]
+      },
+      {
+        featureType: 'transit.station',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{color: '#17263c'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#515c6d'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'labels.text.stroke',
+        stylers: [{color: '#17263c'}]
+      }
+    ]
+
+    
+</script>

@@ -1,10 +1,13 @@
 <template>
+
+
   <div class="container ml-1">
     <div class="row">
       <div>
         <a href="/product"><button>新增產品</button></a>
       </div>
       <div
+
         class="col-12 col-md-6 col-lg-4"
         v-for="{
           img,
@@ -91,16 +94,18 @@
       @child-click="clickHandler"
     ></Paging>
   </div>
+
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, inject } from "vue";
 import axios from "axios";
 import Paging from "../components/Paging.vue";
+
 const $cookies = inject("$cookies");
 const products = ref([]);
 const totalPage = ref(0);
-const statu=ref("")
+
 const datas = reactive({
   name: "",
   price: "",
@@ -119,11 +124,11 @@ const loadProducts = async () => {
   // http://localhost:8080/shop/product/sreach
   const response = await axios.post(URLAPI, datas);
 
-  console.log(response.data.list);
+  // console.log(response.data.list);
   products.value = response.data.list;
 
-  console.log(datas.start);
-  console.log(response.data.count);
+  // console.log(datas.start);
+  // console.log(response.data.count);
   totalPage.value =
     +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows);
   //取得所有產品算分頁
@@ -135,29 +140,15 @@ const clickHandler = (page) => {
   loadProducts();
 };
 
-//一頁幾筆資料
-const changeHandler = (value) => {
-  datas.rows = value;
-  datas.start = 0;
-  //console.log("pagesize：", datas)
-  loadProducts();
-};
-
-const inputHandelr = (value) => {
-  // datas.name = value
-  datas.description = value;
-  datas.start = 0;
-  loadProducts();
-};
 
 onMounted(() => {
   loadProducts();
-  console.log($cookies.get("id"));
-  console.log($cookies.get("username"));
+  // console.log($cookies.get("id"));
+  // console.log($cookies.get("username"));
 });
 
 const storeType = (productId, isTrue) => {
-  console.log(productId, isTrue);
+  // console.log(productId, isTrue);
   updateProducts(productId, isTrue);
 };
 
@@ -170,7 +161,7 @@ const updateProducts = async (productId, isTrue) => {
   });
   const response = await axios.put(URLupdate, dataStatus);
 
-  console.log(response.data);
+  // console.log(response.data);
 
   loadProducts();
 };

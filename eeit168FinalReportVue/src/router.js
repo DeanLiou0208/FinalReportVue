@@ -31,6 +31,7 @@ import ComOrder from "./views/ComOrder.vue";
 import PetNewView from "./views/PetNewView.vue";
 import MemberInfoUpdate from "./views/MemberInfoUpdateView.vue";
 import Analysis from "./views/analysis.vue";
+import Hos from "./views/hospital.vue";
 
 const routes = [
   {
@@ -165,7 +166,13 @@ const routes = [
   {
     path : "/productanlysis",
     component : Analysis
-  }
+  },
+
+  {
+    path: "/hos",
+    component: Hos,
+    props: true,
+  },
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

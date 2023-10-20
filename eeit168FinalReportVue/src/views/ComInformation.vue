@@ -91,11 +91,11 @@ img.value=response.data.img
  phone.value=response.data.phone
  address.value=response.data.address
  email.value=response.data.email
-  console.log(response.data);
-   localStorage.setItem('img', response.data.img);
+  // console.log(response.data);
+   
 };
 onMounted(() => {
-  console.log($cookies.get("id"));
+  // console.log($cookies.get("id"));
   select();
 });
 </script>

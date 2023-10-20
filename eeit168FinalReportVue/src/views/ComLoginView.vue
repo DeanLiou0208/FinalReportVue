@@ -57,7 +57,7 @@ export default {
               $cookies.set("account",response.data.account);
               $cookies.set("username",response.data.username);
               $cookies.set("identity",response.data.identity);
-              
+              localStorage.setItem('img', response.data.img);
              console.log($cookies.get("id")) 
              console.log($cookies.get("account")) 
              console.log($cookies.get("shopname")) 

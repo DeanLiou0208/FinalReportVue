@@ -190,7 +190,7 @@ function submit() {
     .put(updateURL, formData)
     .then((response) => {
       alert(response.data.message);
-   
+      localStorage.setItem('img', response.data.img);
      
       window.location.href = "cominformation";
     })

@@ -20,7 +20,7 @@
             <router-link class="nav-link nav-link-con" to="/petphoto">萌寵照片</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-con ml-3 "  to="/hospital">寵物醫院</router-link>
+            <router-link class="nav-link nav-link-con ml-3 "  to="/hos">寵物醫院</router-link>
           </li>
         </ul>
         </div>
