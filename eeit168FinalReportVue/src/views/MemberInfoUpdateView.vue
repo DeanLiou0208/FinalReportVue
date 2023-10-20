@@ -58,7 +58,7 @@
                         <label for="gender" class="form-label">性別 :　</label>
                         <input type="radio" name="gender" value="true" id="gender" v-model="member.gender" /><span>男</span>
                         <input type="radio" name="gender" value="false" id="gender" v-model="member.gender" /><span>女</span>
-                        <input type="radio" name="gender" value="null" id="gender"
+                        <input type="radio" name="gender" value="" id="gender"
                             v-model="member.gender" /><span>不公開</span>
                     </div>
                     <div class="mb-3">
@@ -85,7 +85,12 @@
                         <input type="text" class="form-control" id="email" v-model="member.email" />
                     </div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">上傳頭貼</label>
+                        <label for="" class="form-label">頭貼 :　</label>
+                        <br>
+                        <img :src="member.img" alt="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">更換頭貼 :　</label>
                         <input class="form-control" type="file" id="formFile"/>
                         <!-- <img :src="member.img" alt="">7 -->
                     </div>
@@ -118,6 +123,7 @@ async function selectInformation() {
     const response = await axios.post(API_URL, account);
     member.value = response.data;
     console.log(response.data);
+    console.log(member.value.gender);
     //如果結果查無資料則發出警告
     // if (response.data.success) {
     //     alert(response.data.message)
@@ -133,6 +139,9 @@ onMounted(() => {
 const updateMember = async () => {
     const API_URL = `${URL}pages/member/information`;
     member.value.img = null;
+    if(member.value.gender===""){
+        member.value.gender = null;
+    }
     const json = JSON.stringify(member.value);
     file.append('file', avatarInput.value.files[0]);
     file.append('body', json);
@@ -148,6 +157,10 @@ const updateMember = async () => {
     }else{
         console.log(response.data.message);
         alert(response.data.message);
+        
+    }
+    if(member.value.gender===null){
+        member.value.gender = "";
     }
 };
 
@@ -175,6 +188,12 @@ const focusNextInput = (part) => {
 </script>
 
 <style scoped>
+    img{
+        border: 1px black solid;
+        width: 200px;
+        height: 200px;
+    }
+
 /* .routerborder{
         border: black 1px solid;
         height: 200px;

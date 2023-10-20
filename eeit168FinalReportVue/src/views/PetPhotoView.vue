@@ -1,5 +1,11 @@
 <template>
-    <h1>萌寵照片</h1>
+        <span v-if="showChat">
+            <ChatRoom></ChatRoom>
+        </span>
+        <span v-else>
+            <span class="tital">萌寵照片</span>
+        </span>
+        <br>
     <div class="row">
         <div class="col-md-12">
             <span>物種選擇 : </span>&nbsp&nbsp
@@ -41,9 +47,8 @@
                 <label class="btn btn-outline-primary" for="btnradio2">我的最愛</label>
             </div>
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-
-            <span>排序 :　</span>&nbsp&nbsp
-            <select class="form-select custom-select" aria-label="Default select example" v-model="sortOrder"
+                <span>排序 :　</span>&nbsp&nbsp
+                <select class="form-select custom-select" aria-label="Default select example" v-model="sortOrder"
                 @change="selectSortOrder">
                 <option value="1">最新</option>
                 <option value="2">最舊</option>
@@ -57,7 +62,7 @@
 
     <div class="container ml-1">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-3" v-for="(pet, index) in pets" :key="index">
+            <div style="width: 300px;" v-for="(pet, index) in pets" :key="index">
                 <div class="card-add container ml-2">
                     <fieldset>
                         <div class="petinfo">
@@ -88,6 +93,7 @@
 import { ref, reactive, inject, watch } from "vue";
 import axios from "axios";
 import Paging from "../components/Paging.vue";
+import ChatRoom from "../components/ChatRoom.vue";
 const $cookies = inject("$cookies");
 const likeState = ref([]);
 const datas = reactive({
@@ -109,6 +115,8 @@ const count = ref(0);
 const likeRecord = ref([]);
 const pets = ref([]);
 const totalPages = ref(0);
+const check = $cookies.get("identity");
+const showChat = ref(false);
 const URL = import.meta.env.VITE_API_JAVAURL;
 
 //載入
@@ -119,7 +127,7 @@ const loadPets = async () => {
     pets.value = response.data.list;
     count.value = response.data.count;
     likeRecord.value = response.data.likeRecord;
-    console.log(response.data.likeRecord);
+    // console.log(response.data.likeRecord);
     //計算總共幾頁
     totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
 };
@@ -131,11 +139,11 @@ const cancelClick = async (index) => {
     likeUse.fkPetId = pets.value[index].id;
     const URLDELETE = `${URL}pages/pet/dislike/${likeUse.fkMemberId}-${likeUse.fkPetId}`;
     const response = await axios.delete(URLDELETE);
-    if (response.data.success) {
-        alert(response.data.message);
-    } else {
-        alert(response.data.message);
-    }
+    // if (response.data.success) {
+    //     alert(response.data.message);
+    // } else {
+    //     alert(response.data.message);
+    // }
 
 }
 const likeClick = async (index) => {
@@ -147,11 +155,11 @@ const likeClick = async (index) => {
         const URLINSERT = `${URL}pages/pet/like`;
         likeUse.fkPetId = pets.value[index].id;
         const response = await axios.post(URLINSERT, likeUse);
-        if (response.data.success) {
-            alert(response.data.message);
-        } else {
-            alert(response.data.message);
-        }
+        // if (response.data.success) {
+        //     alert(response.data.message);
+        // } else {
+        //     alert(response.data.message);
+        // }
     }
 }
 
@@ -200,7 +208,14 @@ const clickHandler = page => {
     loadPets()
 }
 
-
+const checkLogin = async () => {
+    if(check !== null){
+        showChat.value = true;
+    }else{
+        showChat.value = false;
+    }
+};
+checkLogin();
 </script>
     
 <style scoped>
@@ -239,5 +254,9 @@ img {
     width: auto;
     /* 设置所需的宽度，可以根据需要进行调整 */
     display: inline-block;
+}
+.tital{
+    font-size: 36px; /* 设置字体大小 */
+    justify-content: left;
 }
 </style>

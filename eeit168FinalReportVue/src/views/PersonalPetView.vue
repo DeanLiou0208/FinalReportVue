@@ -65,9 +65,17 @@
                         <div>寵物類型 : {{ pet.species }}</div>
                         <div>寵物品種 : {{ pet.breed }}</div>
                         <div>寵物年齡 : {{ pet.age }}</div>
-                        <div v-if="`${gender}` === true">寵物性別 : 公</div>
-                        <div v-else-if="`${gender}` === false">寵物性別 : 母</div>
+                        <div v-if="`${pet.gender}`==='true'">寵物性別 : 公</div>
+                        <div v-else-if="`${pet.gender}`==='false'">寵物性別 : 母</div>
                         <div v-else>寵物性別 : 不公開</div>
+                    </div>
+
+                    <div class="buttomstyle">
+                        <button type="button" class="btn btn-warning">修改</button>
+                        <br>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-danger">刪除</button>
                     </div>
                 </fieldset>
                 
@@ -89,6 +97,10 @@ const API_URL = `${URL}pages/pet/information/find`;
 const loadPets = async () => {
     const response = await axios.post(API_URL, owner);
     pets.value = response.data.petList;
+    console.log(pets.value[0].gender)
+    console.log(pets.value[1].gender)
+    console.log(pets.value[2].gender)
+    console.log(pets.value[3].gender)
 };
 loadPets();
 </script>
@@ -125,7 +137,7 @@ loadPets();
 
 .petinfo {
     margin-top: 30px;
-    margin-left: 150px;
+    margin-left: 120px;
 }
 
 .container {
@@ -137,9 +149,16 @@ loadPets();
     /* 让容器占满整个视窗高度 */
 }
 
+.buttomstyle{
+    margin-top: 30px;
+    margin-left: 80px;
+}
+
 fieldset {
     border: black solid 1px;
     margin-top: 30px;
     padding: 30px;
+    border-radius: 10px;
 }
+
 </style>

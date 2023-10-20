@@ -33,6 +33,7 @@ import MemberInfoUpdate from "./views/MemberInfoUpdateView.vue";
 import Analysis from "./views/analysis.vue";
 import Hos from "./views/hospital.vue";
 
+
 const routes = [
   {
     path: "/",

@@ -53,7 +53,7 @@
     const selectSpecies = ref("");
 
     const URL = import.meta.env.VITE_API_JAVAURL;
-    const loadProducts = async () => {
+    const loadPets = async () => {
         const URLAPI = `${URL}pages/pet/information/exists`;
         const response = await axios.post(URLAPI, datas);
         console.log(response.data)

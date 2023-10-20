@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-16">
                             <div class="mb-3">
-                                帳號 : {{ member.account }}
+                                帳號 :　{{ member.account }}
                             </div>
                             <div class="mb-3">
                                 姓氏 :　{{ member.lastName }}

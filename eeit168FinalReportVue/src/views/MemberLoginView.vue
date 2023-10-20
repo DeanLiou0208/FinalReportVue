@@ -58,11 +58,11 @@ const addHandler = async () => {
     $cookies.set("account",response.data.account);
     $cookies.set("identity",response.data.identity);
     $cookies.set("username",response.data.username);
+    localStorage.setItem('img', response.data.img);
     // document.cookie = `Account=${response.data.account}`;
     // document.cookie = `identity=${response.data.identity}`;
     // router.push('/');
     window.location.href = '/';
-
   } else {
     alert(response.data.message);
   }
