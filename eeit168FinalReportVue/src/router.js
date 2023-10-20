@@ -35,6 +35,7 @@ import ForumAdd from "./views/ForumAdd.vue";
 import ForumPost from './views/ForumPostView.vue';
 import ForumPostBymember from './views/ForumPostBymember.vue';
 import ForumEdit from './views/ForumEdit.vue';
+import ForumBymemberInf from './views/ForumBymemberInf.vue';
 
 
 const routes = [
@@ -192,6 +193,10 @@ const routes = [
   {
     path: "/forum/edit/:id",
     component: ForumEdit
+  },
+  {
+    path: "/forumbymemberinf",
+    component: ForumBymemberInf
   },
 ];
 

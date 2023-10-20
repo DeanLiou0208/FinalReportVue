@@ -8,7 +8,7 @@
                 <li><router-link to="/personalPetView">
                         <h6>我的寵物</h6>
                     </router-link></li>
-                <li><router-link to="">
+                <li><router-link to="/forumbymemberinf">
                         <h6>我的文章</h6>
                     </router-link></li>
                 <li><router-link to="">

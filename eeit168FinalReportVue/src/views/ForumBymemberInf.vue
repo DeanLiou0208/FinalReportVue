@@ -1,5 +1,38 @@
 <template>
-    <div class="container ml-1">
+    <div class="main-content">
+    <div class="sidebar routerborder">
+            <ul>
+                <li><router-link to="/memberInformation">
+                        <h6>個人資料</h6>
+                    </router-link></li>
+                <li><router-link to="/personalPetView">
+                        <h6>我的寵物</h6>
+                    </router-link></li>
+                <li><router-link to="">
+                        <h5>我的文章</h5>
+                    </router-link></li>
+                <li><router-link to="">
+                        <h6>我的收藏</h6>
+                    </router-link></li>
+                <li><router-link to="">
+                        <h6>我的訂單</h6>
+                    </router-link></li>
+                <li><router-link to="">
+                        <h6>我的任務</h6>
+                    </router-link></li>
+            </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
         <div style="margin-bottom: 20px;">
             <span class="profile-picture">
                 <img :src="posts[0].img" alt="Profile Picture" class="rounded-circle" style="margin-top: 10px;" />
@@ -49,11 +82,12 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- <div class="paging-wrapper"> -->
         <Paging :totalPages="totalPages" :thePage="datas.start / datas.rows + 1" @childClick="clickHandler"
             style="margin-left: 150px;"></Paging>
+    </div>
+    <!-- <div class="paging-wrapper"> -->
     <!-- </div> -->
+    </div>
 </template>
     
 <script setup>
@@ -67,8 +101,8 @@ const $cookies = inject("$cookies");
 const route = useRoute();
 const router = useRouter();
 const datas = reactive({
-    // memberId: $cookies.get("memberId")
-    memberId: localStorage.getItem("memberId"),
+    memberId: $cookies.get("id"),
+    // memberId: localStorage.getItem("memberId"),
     sort: "createAt",
     order: "desc",
     start: 0,
@@ -182,5 +216,27 @@ loadForumPostBymember();
     /* 根據您的需求設置高度 */
     object-fit: cover;
     /* 或 contain，取決於您的需求 */
+}
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: auto;
+    /* 让容器占满整个视窗高度 */
+}
+
+.routerborder {
+    padding: 50px 0;
+    border: black 1px solid;
+    border-radius: 10px;
+    height: 300px;
+    width: 150px;
 }
 </style>
