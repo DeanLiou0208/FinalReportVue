@@ -19,7 +19,6 @@ import Product from "./views/Product.vue";
 import ShopProduct from "./views/ProductPage.vue";
 import ComShop from "./views/ComShop.vue";
 import ShoppingCart from "./views/ShoppingCart.vue";
-import ForumPost from "./views/ForumPost.vue";
 import Test from "./views/test.vue";
 import PetView from "./views/PetView.vue";
 import PayMent from "./views/payment.vue"
