@@ -3,7 +3,7 @@
         <option value="" selected>全部</option>
         <option value="likeCount">按讚數</option>
         <option value="unLikeCount">倒讚數</option>
-        <option value="lastTime">最新回復時間</option>
+        <option value="createAt">由新至舊</option>
         </select>
 </template>
     

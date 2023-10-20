@@ -32,6 +32,10 @@ import PetNewView from "./views/PetNewView.vue";
 import MemberInfoUpdate from "./views/MemberInfoUpdateView.vue";
 import Analysis from "./views/analysis.vue";
 import Hos from "./views/hospital.vue";
+import ForumAdd from "./views/ForumAdd.vue";
+import ForumPost from './views/ForumPostView.vue';
+import ForumPostBymember from './views/ForumPostBymember.vue';
+import ForumEdit from './views/ForumEdit.vue';
 
 
 const routes = [
@@ -173,6 +177,22 @@ const routes = [
     path: "/hos",
     component: Hos,
     props: true,
+  },
+{
+    path : "/forum/add",
+    component : ForumAdd
+},
+{
+    path: "/forumpost",
+    component: ForumPost
+  },
+  {
+    path: "/forumpostbymember",
+    component: ForumPostBymember
+  },
+  {
+    path: "/forum/edit/:id",
+    component: ForumEdit
   },
 ];
 

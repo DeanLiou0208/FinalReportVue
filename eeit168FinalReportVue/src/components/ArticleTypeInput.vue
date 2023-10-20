@@ -5,7 +5,7 @@
       
       <span class="badge bg-secondary " style="font-size:18px;" >文章種類</span>
       
-      <button class="btn btn-primary"
+      <button class="btn btn-primary mx-2"
         v-for="(type, index) in ArticleTypes"
         :key="index"
         @click="filterArticlesByType(type)"
@@ -20,7 +20,7 @@
 </template>
     
 <script setup >
-    import { ref, reactive} from 'vue';
+    import { ref, reactive, onMounted} from 'vue';
     const selectedType = ref(null); 
 const ArticleTypes = [
        "寵物協尋",
@@ -31,7 +31,7 @@ const ArticleTypes = [
        "生活起居",
        "寵物訓練"
      ];
-     const lastSelectedType = ref(null);
+     
      const emit = defineEmits(["typeChange"]);
      const filterArticlesByType = (type) => {
       if (selectedType.value === type) {
@@ -46,8 +46,14 @@ const ArticleTypes = [
   // lastSelectedType.value = selectedType.value;
   emit("typeChange", type);
      }
+
 </script>
     
 <style scoped>
-    
+    .active {
+  background-color:CornflowerBlue;
+  color: #fff;
+  border-color: CornflowerBlue;
+}
+
 </style>

@@ -5,7 +5,7 @@
       
       <span class="badge bg-secondary " style="font-size:18px;" >寵物物種</span>
       
-      <button class="btn btn-primary"
+      <button class="btn btn-primary mx-2" 
         v-for="(species, index) in petSpecies"
         :key="index"
         @click="toggleSpecies(species,speciesIds)"
@@ -66,8 +66,9 @@ const toggleSpecies = (species,speciesIds) => {
 <style scoped>
     /* 根据选中状态修改按钮样式 */
 .active {
-  background-color: #007BFF;
+  background-color:CornflowerBlue;
   color: #fff;
+  border-color: CornflowerBlue;
 }
 
 </style>

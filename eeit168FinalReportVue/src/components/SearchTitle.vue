@@ -1,14 +1,12 @@
 <template>
         <div class="container">
-
-        <input type="search" v-model="keyword" placeholder="請輸入文章標題關鍵字" > 
-        <div class="py-2" style="text-align: right;">
-        <button class="btn btn-info" @click="inputHandler()" ><i class="bi bi-search"></i> 查詢</button>
+            <div class="py-2 d-flex justify-content-end" >
+            <input class="form-control" type="search" v-model="keyword" placeholder="請輸入文章標題關鍵字" > 
+        </div>
+            <div class="py-2 d-flex justify-content-end" >            
+        <button class="btn btn-info" @click="inputHandler()" ><i class="bi bi-search"></i> 查詢</button> 
     </div>
-    </div>
-
-
-    
+    </div>   
 </template>
     
 <script setup>
@@ -23,5 +21,7 @@ const inputHandler = () => {
 </script>
     
 <style scoped>
-    
+    .form-control{
+        width: 200px;
+    }
 </style>
