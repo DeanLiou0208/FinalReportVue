@@ -54,10 +54,11 @@ const $cookies = inject("$cookies");
 const shopProductdata = ref([])
 const shopProductCount = ref([])
 
+console.log($cookies.get("username"))
 const shopName = reactive({
-  shopName : "好寵"
+  shopName : $cookies.get("username")
 })
-
+console.log(shopName)
 //性別圓餅圖
 const option = ref({
   title: {
@@ -108,7 +109,7 @@ const option2 = ref({
   legend: {
     orient: 'vertical',
     left: 'left',
-    data: ['訂單已成立', '訂單已完成', '訂單已退貨'],
+    data: ['訂單已成立', '訂單確認中', '訂單已退貨'],
   },
   series: [
     {
@@ -164,6 +165,10 @@ const barOption = ref({
       name: '銷售總金額',
       type: 'bar',
       data: [1,2,3],
+      itemStyle: {
+        // 设置颜色
+        color: 'orange',
+      },
     },
   ],
 });

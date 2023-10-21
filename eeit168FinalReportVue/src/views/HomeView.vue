@@ -52,15 +52,20 @@
     
     <el-carousel :interval="4000" type="card" height="500px" >
       
-      <el-carousel-item  v-for="{id , name, price, img} in indexProducts" :key="id">
+      <el-carousel-item  v-for="{id , productId, name, price, img} in indexProducts" :key="id">
         <div class="card" style="width: 18rem;">
           <img :src="`${img}`" class="card-img-top" alt="" style="height: 300px; width: 100%;">
           <div class="card-body">
+              <div class="container" style="display: flex;">
+                <p>ItemNo:</p><p class="card-number">{{ productId }}</p>
+              </div>
             <h5 class="card-title">{{ name }}</h5>
             <p class="card-text">
               <p style="color: red;"> 售價: {{price}}</p>
             </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <RouterLink to="/shopproduct">
+            <a href="#" class="btn btn-primary" data-bs-toggle="modal2" data-bs-target="#toProduct" to="/shopproduct">去賣場</a>
+            </RouterLink>
           </div>
         </div>
       </el-carousel-item>  
@@ -73,7 +78,7 @@
 
 <script setup >
   import homeimg from '../components/Homeimg.vue'
-  import {ref, reactive } from 'vue'
+  import {ref, reactive, onUpdated } from 'vue'
   import axios from 'axios'
 
   const indexProducts = ref([]);
@@ -117,6 +122,19 @@
     petPosts.value = response.data.list
     console.log(response.data)
   }
+
+  onUpdated(()=>{
+    const elements = document.querySelectorAll('a[data-bs-toggle="modal2"][data-bs-target="#toProduct"]');
+    elements.forEach(button =>{
+      button.addEventListener('click',function(){
+      const cardContainer = this.closest('.card');
+      const productId = cardContainer.querySelector('.card-number').innerText;
+      sessionStorage.setItem("productId", productId);
+      console.log(productId)
+  });  
+  });
+  });
+
   petPostfind();
   indexProduct();
 

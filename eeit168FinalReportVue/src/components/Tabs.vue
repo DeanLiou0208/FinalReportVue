@@ -9,7 +9,7 @@
       <a class="nav-link" href="/comorder">訂單管理</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">商品表現</a>
+      <a class="nav-link" href="/productanlysis">商品表現</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/comuinfo">修改資料</a>

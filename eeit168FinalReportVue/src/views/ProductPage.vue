@@ -204,7 +204,7 @@ import Swal from "sweetalert2";
 //從session中取得productId
 const productId = sessionStorage.getItem("productId");
 
-// console.log(productId)
+console.log(productId)
 
 const product = ref([]);
 const rate = ref([]);

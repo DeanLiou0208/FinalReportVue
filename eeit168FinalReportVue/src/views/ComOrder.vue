@@ -93,8 +93,8 @@
                 <a
                   class="dropdown-item"
                   href="#"
-                  @click="update(item.orderDetailsId, '出貨中')"
-                  >確認出貨</a
+                  @click="update(item.orderDetailsId, '訂單已完成')"
+                  >已完成</a
                 >
               </li>
               <li>
