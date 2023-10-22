@@ -40,8 +40,9 @@
               
               <a href="#" type="button" class="btn btn-link">
               <div class="centered-content" @click="toinfo" >
-                  <div class="gray-circle">   <img :src="`${img}`" alt="" id="img"></div>
-               
+                  <div class="gray-circle">
+                    <img :src="`${img}`" alt="" id="img" v-show="imgShow">
+                  </div>
               </div>
               </a>&nbsp
             
@@ -60,8 +61,10 @@
               </div>
             </a>
               &nbsp&nbsp
-              <router-link class="nav-link nav-link-small" to="/login">登入/註冊</router-link>
-        </div>
+              <span class="centered-content">
+                <router-link class="nav-link nav-link-small" to="/login">登入/註冊</router-link>
+              </span>
+              </div>
       </div>
     
   </nav>
@@ -71,6 +74,7 @@
     import { ref, inject, onMounted } from "vue";
     import Swal from "sweetalert2";
 
+    const imgShow = ref(false)
     const loginState = ref(false);
     const $cookies = inject("$cookies");
     const identity = ref("");
@@ -80,9 +84,20 @@
       identity.value = $cookies.get("identity");
       if(identity.value === "會員"){
         loginState.value = true;
+        img.value=localStorage.getItem('img');
+        if(img.value === null || img.value === "undefined"){
+          imgShow.value = false;
+        }else{
+          imgShow.value = true;
+        }
       }else if(identity.value === "廠商"){
         loginState.value = true;
         img.value=localStorage.getItem('img');
+        if(img.value === null || img.value === "undefined"){
+          imgShow.value = false;
+        }else{
+          imgShow.value = true;
+        }
       }else{
         loginState.value = false;
       }
@@ -173,5 +188,13 @@
     height: 40px;
     border-radius: 50%;
   }
+
+  .centered-content {
+  text-align: center; /* 水平居中对齐文本 */
+  display: flex;
+  justify-content: center; /* 水平方向上居中对齐内容 */
+  align-items: center; /* 垂直方向上居中对齐内容 */
+  /* 可以根据需要添加其他样式规则 */
+}
 
 </style>

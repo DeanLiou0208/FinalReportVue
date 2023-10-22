@@ -3,32 +3,32 @@
         <div class="sidebar routerborder">
             <ul>
                 <li>
-                    <router-link to="/memberInformation">
+                    <router-link class="nav-link text-primary" to="/memberInformation">
                         <h6>個人資料</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/personalPetView">
+                    <router-link class="nav-link text-primary" to="/personalPetView">
                         <h5>我的寵物</h5>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="/forumbymemberinf">
                         <h6>我的文章</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的收藏</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的訂單</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的任務</h6>
                     </router-link>
                 </li>

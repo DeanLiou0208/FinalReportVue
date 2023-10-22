@@ -3,32 +3,32 @@
         <div class="sidebar routerborder">
             <ul>
                 <li>
-                    <router-link to="/memberInformation">
+                    <router-link class="nav-link text-primary" to="/memberInformation">
                         <h5>個人資料</h5>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/personalPetView">
+                    <router-link class="nav-link text-primary" to="/personalPetView">
                         <h6>我的寵物</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="/forumbymemberinf">
                         <h6>我的文章</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的收藏</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的訂單</h6>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="">
+                    <router-link class="nav-link text-primary" to="">
                         <h6>我的任務</h6>
                     </router-link>
                 </li>
@@ -87,12 +87,12 @@
                     <div class="mb-3">
                         <label for="" class="form-label">頭貼 :　</label>
                         <br>
+                        <!-- 顯示資料庫的頭貼or上傳後的預覽圖 -->
                         <img :src="member.img" alt="">
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">更換頭貼 :　</label>
-                        <input class="form-control" type="file" id="formFile"/>
-                        <!-- <img :src="member.img" alt="">7 -->
+                        <input class="form-control" type="file" id="formFile" @change="handleFileUpload" accept="image/*"/>
                     </div>
 
                     <button class="btn btn-primary" type="button" @click="updateMember">
@@ -116,6 +116,9 @@ const account = reactive({
 const avatarInput = ref(null);
 const file = new FormData();
 const URL = import.meta.env.VITE_API_JAVAURL;
+//用於照片預覽
+const imageFile = ref("");
+// const imageData = ref("");
 
 async function selectInformation() {
     const API_URL = `${URL}pages/member/information`;
@@ -145,7 +148,6 @@ const updateMember = async () => {
     const json = JSON.stringify(member.value);
     file.append('file', avatarInput.value.files[0]);
     file.append('body', json);
-    console.log(json);
     const response = await axios.put(API_URL, file, {
         headers: {
             'Content-Type': 'multipart/form-data', // 必须设置正确的Content-Type
@@ -153,7 +155,9 @@ const updateMember = async () => {
     });
     if(response.data.success){
         console.log(response.data.message);
+        // localStorage.setItem('img', response.data.img);
         alert(response.data.message);
+        window.location.href = '/memberInformation';
     }else{
         console.log(response.data.message);
         alert(response.data.message);
@@ -185,6 +189,24 @@ const focusNextInput = (part) => {
         }
     }
 };
+
+//照片預覽
+    const handleFileUpload = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        imageFile.value = file;
+        previewImage();
+        }
+    };
+    const previewImage = async () => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+        member.value.img = event.target.result;
+        };
+        reader.readAsDataURL(imageFile.value);
+    };
+
+
 </script>
 
 <style scoped>

@@ -1,60 +1,66 @@
 <template>
-        <span v-if="showChat">
-            <ChatRoom></ChatRoom>
-        </span>
-        <span v-else>
-            <span class="tital">萌寵照片</span>
-        </span>
-        <br>
+    <span v-if="showChat">
+        <ChatRoom></ChatRoom>
+    </span>
+    <span v-else>
+        <span class="tital">萌寵照片</span>
+    </span>
+    <br>
+    <br>
     <div class="row">
-        <div class="col-md-12">
-            <span>物種選擇 : </span>&nbsp&nbsp
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="狗狗" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck1">狗狗</label>
-                &nbsp&nbsp
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="貓貓" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck2">貓貓</label>
-                &nbsp&nbsp
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" value="鳥類" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck3">鳥類</label>
-                &nbsp&nbsp
-                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" value="水族" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck4">水族</label>
-                &nbsp&nbsp
-                <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off" value="爬蟲" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck5">爬蟲</label>
-                &nbsp&nbsp
-                <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" value="小型" name="species"
-                    v-model="datas.species">
-                <label class="btn btn-outline-primary" for="btncheck6">小型</label>
+        <div class="d-flex justify-content-start">
+            <div>
+                <span>物種選擇 : </span>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="狗狗" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck1">狗狗</label>
+                    &nbsp&nbsp
+                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="貓貓" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck2">貓貓</label>
+                    &nbsp&nbsp
+                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" value="鳥類" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck3">鳥類</label>
+                    &nbsp&nbsp
+                    <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" value="水族" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck4">水族</label>
+                    &nbsp&nbsp
+                    <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off" value="爬蟲" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck5">爬蟲</label>
+                    &nbsp&nbsp
+                    <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" value="小型" name="species"
+                        v-model="datas.species">
+                    <label class="btn btn-outline-primary" for="btncheck6">小型</label>
+                </div>
             </div>
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            &nbsp&nbsp&nbsp&nbsp
+            <div>
+                <span>其他篩選 : </span>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
+                        v-model="datas.record" value="全部">
+                    <label class="btn btn-outline-primary" for="btnradio1">全部</label>
 
-            <span>其他篩選 : </span>&nbsp&nbsp
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
-                    v-model="datas.record" value="全部">
-                <label class="btn btn-outline-primary" for="btnradio1">全部</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
-                    v-model="datas.record" value="我的最愛">
-                <label class="btn btn-outline-primary" for="btnradio2">我的最愛</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                        v-model="datas.record" value="我的最愛">
+                    <label class="btn btn-outline-primary" for="btnradio2">我的最愛</label>
+                </div>
             </div>
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                <span>排序 :　</span>&nbsp&nbsp
+            &nbsp&nbsp&nbsp&nbsp
+            <div>
+                <span>排序 : </span>
                 <select class="form-select custom-select" aria-label="Default select example" v-model="sortOrder"
-                @change="selectSortOrder">
-                <option value="1">最新</option>
-                <option value="2">最舊</option>
-                <option value="3">愛心數最多</option>
-                <option value="4">愛心數最少</option>
-            </select>
+                    @change="selectSortOrder">
+                    <option value="1">最新</option>
+                    <option value="2">最舊</option>
+                    <option value="3">愛心數最多</option>
+                    <option value="4">愛心數最少</option>
+                </select>
+            </div>
         </div>
     </div>
     <!-- <span>搜尋總比數 : {{ count }}</span> -->
@@ -209,9 +215,9 @@ const clickHandler = page => {
 }
 
 const checkLogin = async () => {
-    if(check !== null){
+    if (check !== null) {
         showChat.value = true;
-    }else{
+    } else {
         showChat.value = false;
     }
 };
@@ -255,8 +261,10 @@ img {
     /* 设置所需的宽度，可以根据需要进行调整 */
     display: inline-block;
 }
-.tital{
-    font-size: 36px; /* 设置字体大小 */
+
+.tital {
+    font-size: 36px;
+    /* 设置字体大小 */
     justify-content: left;
 }
 </style>
