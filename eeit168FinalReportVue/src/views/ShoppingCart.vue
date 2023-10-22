@@ -97,14 +97,13 @@
     const whoShoppingCart = reactive({
         fkMemberId : $cookies.get("id"),
     });
-
+    //結帳時候傳出去的資料
     const payMent = reactive({
         fkMemberId : parseInt($cookies.get("id")),
         totalPrice : 0,
         bonus : null,
         productList : productList.value
     })
-
     //checkbox取得ID
     const handleCheckboxChange =async (event) =>{
         const itemId = event.target.value;
@@ -114,22 +113,19 @@
         forUpdataJson.id = parseInt(itemId);
         const itemObject = { id: parseInt(itemId) };
         idPackage.value.push(itemObject);
-        
-        
         // console.log(returnId.value);//接住點擊的id
         // console.log(forDeleteJson)//刪除的時候使用的ID
-        console.log(selectedItems.value)//觸發checkbox的時候紀錄
+        // console.log(selectedItems.value)//觸發checkbox的時候紀錄
         // console.log(idPackage.value)//勾選check的時候 計入每組的{id : }
-        // totalPrice();
+        totalPrice();
     }
-    
     // 總金額
     const totalPrice = async()=>{
         let price = 0;
-        console.log(1)
+        // console.log(1)
         if(selectedItems.value.length != 0){
             for(const id of selectedItems.value){
-                console.log(id)
+                // console.log(id)
                 const item = shoppingCartItems.value.find(item => item.id === id);
                 price += item.price * item.count;
                 allPrice.value = price;
@@ -138,7 +134,7 @@
         } else{
         allPrice.value= 0;
         }
-        console.log(allPrice.value)
+        // console.log(allPrice.value)
         }
     //減count
     const decrementCounting = async(id)=>{
@@ -148,10 +144,7 @@
             }
             forUpdataJson.count = parseInt(item.count)
             shoppingCartUpdate();
-            
-            
             // console.log(forUpdataJson)
-
     }
     //加count
     const incrementCounting = async(id) =>{
@@ -160,8 +153,7 @@
             item.count++;
             }
             forUpdataJson.count = parseInt(item.count)
-            shoppingCartUpdate();
-            
+            shoppingCartUpdate();   
     }
     //確認購物車是否是空的
     // const checkShoppingCart = async () =>{    
@@ -209,7 +201,10 @@
                 icon : "success",
                 title : "刪除成功!"
             })
+            selectedItems.value = [];
+            allPrice.value = 0;
             loadShoppingCart();
+
         }else{
             Swal.fire({
                 icon : "error",
@@ -237,13 +232,14 @@
                     message: '修改完成!',
                     type: 'success',
             })
+            totalPrice();
             loadShoppingCart();
             }
     }
     const URLPAYMENT = `${URL}shoppingcart/payment`
     const datajson = async()=>{
         for(const id  of selectedItems.value){
-                console.log(id)
+                console.log(shoppingCartItems)
                 const item = shoppingCartItems.value.find(item => item.id === id); 
                 // console.log(item)
                 payMent.totalPrice = allPrice.value
