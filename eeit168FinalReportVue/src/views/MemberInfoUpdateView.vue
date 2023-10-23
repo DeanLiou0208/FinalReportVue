@@ -88,7 +88,8 @@
                         <label for="" class="form-label">頭貼 :　</label>
                         <br>
                         <!-- 顯示資料庫的頭貼or上傳後的預覽圖 -->
-                        <img :src="member.img" alt="">
+                        <img :src="member.img" alt="" v-if="imgShow">
+                        <img src="../assets/img/notfoundimg.png" alt="" v-else>
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">更換頭貼 :　</label>
@@ -107,6 +108,7 @@
 <script setup>
 import { ref, reactive, inject, onMounted } from "vue";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const $cookies = inject("$cookies");
 const member = ref([]);
@@ -119,14 +121,19 @@ const URL = import.meta.env.VITE_API_JAVAURL;
 //用於照片預覽
 const imageFile = ref("");
 // const imageData = ref("");
+const imgShow = ref(true);
 
 async function selectInformation() {
     const API_URL = `${URL}pages/member/information`;
     account.account = $cookies.get("account");
     const response = await axios.post(API_URL, account);
     member.value = response.data;
-    console.log(response.data);
-    console.log(member.value.gender);
+
+    if(member.value.img === undefined || member.value.img === null){
+        imgShow.value = false;
+    }else{
+        imgShow.value = true;
+    }
     //如果結果查無資料則發出警告
     // if (response.data.success) {
     //     alert(response.data.message)
@@ -154,14 +161,21 @@ const updateMember = async () => {
         },
     });
     if(response.data.success){
-        console.log(response.data.message);
         // localStorage.setItem('img', response.data.img);
-        alert(response.data.message);
-        window.location.href = '/memberInformation';
+        const result = await Swal.fire({
+                title: '更新成功',
+                icon: 'success',
+                confirmButtonColor : '#3085d6',
+                confirmButtonText : 'OK',
+        });
+        if(result.isConfirmed){
+            window.location.href = '/memberInformation';
+        }
     }else{
-        console.log(response.data.message);
-        alert(response.data.message);
-        
+        Swal.fire({
+            icon: "error",
+            title: response.data.message,
+        });
     }
     if(member.value.gender===null){
         member.value.gender = "";

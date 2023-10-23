@@ -1,4 +1,7 @@
 <template>
+    <div class="container">
+        <h2>會員註冊</h2>
+    </div>
     <div class="main-content">
         <div class="content">
             <div class="row">
@@ -68,6 +71,7 @@
 import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import router from "../router";
+import Swal from "sweetalert2";
 
 const member = ref([]);
 const account = reactive({
@@ -106,10 +110,16 @@ const updateMember = async () => {
     });
     console.log(response.data.message)
     if(response.data.success){
-        alert(response.data.message);
-        router.push("/login");
+        Swal.fire({
+            icon: "success",
+            title: "註冊成功，跳轉至登入頁面",
+        });
+        router.push("/memberLogin");
     }else{
-        alert(response.data.message);
+        Swal.fire({
+            icon: "error",
+            title: "註冊失敗，請重新輸入",
+        });
     }
 };
 
@@ -175,8 +185,16 @@ const focusNextInput = (part) => {
     margin-right: 150px;
     padding: 30px 100px;
     height: 800px;
-    background-color: #f2fff2;
+    /* background-color: #f2fff2; */
     text-align: left;
     line-height: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto; /* 让容器占满整个视窗高度 */
 }
 </style>

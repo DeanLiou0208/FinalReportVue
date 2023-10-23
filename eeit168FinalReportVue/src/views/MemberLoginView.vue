@@ -1,4 +1,7 @@
 <template>
+  <div class="container">
+        <h2>會員登入</h2>
+    </div>
   <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
@@ -41,6 +44,7 @@
 import { reactive, inject } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import Swal from "sweetalert2";
 const $cookies = inject("$cookies");
 const router = useRouter();
 const loginbutton = false;
@@ -54,18 +58,30 @@ const addHandler = async () => {
   const API_URL = `${URL}pages/member/login`;
   const response = await axios.post(API_URL, member,);
   if (response.data.success) {
-    alert(response.data.message);
-    $cookies.set("id",response.data.id);
-    $cookies.set("account",response.data.account);
-    $cookies.set("identity",response.data.identity);
-    $cookies.set("username",response.data.username);
-    localStorage.setItem('img', response.data.img);
+    const result = await Swal.fire({
+            title: '登入成功',
+            icon: 'success',
+            confirmButtonColor : '#3085d6',
+            confirmButtonText : 'OK',
+    });
+    if(result.isConfirmed){
+      $cookies.set("id",response.data.id);
+      $cookies.set("account",response.data.account);
+      $cookies.set("identity",response.data.identity);
+      $cookies.set("username",response.data.username);
+      localStorage.setItem('img', response.data.img);
+      
+      window.location.href = '/';
+    }
+
     // document.cookie = `Account=${response.data.account}`;
     // document.cookie = `identity=${response.data.identity}`;
     // router.push('/');
-    window.location.href = '/';
   } else {
-    alert(response.data.message);
+    Swal.fire({
+          icon: "error",
+          title: response.data.message,
+    });
   }
 };
 
@@ -123,6 +139,8 @@ export default {
       }
       console.log(this.code);
       // 重新生成验证码时隐藏验证按钮
+      this.verifyCodeMessage = "請輸入驗證碼";
+      this.verifyCodeStyle = { color: "#393939" };
       this.showValidateButton = false;
     },
     validateCode() {
@@ -130,11 +148,11 @@ export default {
       if (inputCode.length <= 0) {
         alert("請輸入驗證碼！");
       } else if (inputCode !== this.code) {
-        alert("驗證碼輸入錯誤！@_@");
+        alert("驗證碼輸入錯誤！");
         this.createCode();
         this.inputCode = "";
       } else {
-        alert("^-^");
+        alert("");
         this.createCode();
         this.inputCode = "";
       }
@@ -179,7 +197,13 @@ export default {
   margin: 5px 50px;
 }
 
-  
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto; /* 让容器占满整个视窗高度 */
+}
 
       
 </style>

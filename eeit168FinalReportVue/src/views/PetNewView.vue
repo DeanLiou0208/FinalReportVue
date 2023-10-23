@@ -83,6 +83,7 @@
 <script setup>
 import { ref, reactive, inject, onMounted } from "vue";
 import axios from "axios";
+import Swal from "sweetalert2";
 const $cookies = inject("$cookies");
 const breeds = ref([]);
 const species = ref([]);
@@ -138,12 +139,20 @@ const insertPet = async () => {
         },
     });
     if(response.data.success){
-        console.log(response.data.message);
-        alert(response.data.message);
-        window.location.href = '/personalPetView';
+        const result = await Swal.fire({
+            title: '新增成功',
+            icon: 'success',
+            confirmButtonColor : '#3085d6',
+            confirmButtonText : 'OK',
+        });
+        if(result.isConfirmed){   
+            window.location.href = '/personalPetView';
+        }
     }else{
-        console.log(response.data.message);
-        alert(response.data.message);
+        Swal.fire({
+          icon: "error",
+          title: response.data.message,
+        });
     }
 
 

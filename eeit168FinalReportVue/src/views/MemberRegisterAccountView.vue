@@ -33,7 +33,7 @@
               <input
                 type="password"
                 id="confirm-password"
-                @input="secondCheckPassword()"
+                @blur="secondCheckPassword()"
                 v-model="secPassword"
                 maxlength="15"
               />
@@ -58,7 +58,9 @@
 <script setup>
       import axios from "axios";
       import { ref, reactive, inject } from "vue";
-import router from "../router";
+      import router from "../router";
+      import Swal from "sweetalert2";
+
       const username = ref("");
       const password = ref("");
       const secPassword = ref("");
@@ -71,6 +73,7 @@ import router from "../router";
       const URL = import.meta.env.VITE_API_JAVAURL;
       const URLAPI = `${URL}pages/member/existsaccount`;
       const URLRegister = `${URL}pages/member/register`;
+      
       
       // //註冊測試
       
@@ -171,6 +174,10 @@ import router from "../router";
           router.push("/memberRegisterinfo");
         }else{
           isSubmitDisabled.value = true;
+          Swal.fire({
+            icon: "error",
+            title: response.data.message,
+          });
         }
         
       };

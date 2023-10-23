@@ -62,7 +62,8 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <img :src="`${member.img}`" alt="" class="photosize">
+                    <img :src="`${member.img}`" alt="" class="photosize" v-if="imgShow">
+                    <img src="../assets/img/notfoundimg.png" alt="" class="photosize" v-else>
                 </fieldset>
             </div>
         </div>
@@ -70,7 +71,7 @@
 </template>
     
 <script setup>
-import { ref, reactive, inject, onMounted } from "vue";
+import { ref, reactive, inject } from "vue";
 import axios from "axios";
 
 const $cookies = inject("$cookies");
@@ -79,9 +80,8 @@ const account = reactive({
     account: "",
 });
 const resultGender = ref("");
-const avatarInput = ref(null);
-const file = new FormData();
 const URL = import.meta.env.VITE_API_JAVAURL;
+const imgShow = ref(true);
 
 async function selectInformation() {
     const API_URL = `${URL}pages/member/information`;
@@ -95,9 +95,13 @@ async function selectInformation() {
     } else {
         resultGender.value = "不透漏";
     }
-    member.value.gender
-    console.log(response.data);
-    // console.log(member.value.img);
+    // member.value.gender
+    // console.log(response.data);
+    if(member.value.img === undefined || member.value.img === null){
+        imgShow.value = false;
+    }else{
+        imgShow.value = true;
+    }
     //如果結果查無資料則發出警告
     // if (response.data.success) {
     //     alert(response.data.message)

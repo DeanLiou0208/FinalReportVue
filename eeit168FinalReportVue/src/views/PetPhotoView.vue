@@ -99,6 +99,7 @@
 import { ref, reactive, inject, watch } from "vue";
 import axios from "axios";
 import Paging from "../components/Paging.vue";
+import Swal from "sweetalert2";
 import ChatRoom from "../components/ChatRoom.vue";
 const $cookies = inject("$cookies");
 const likeState = ref([]);
@@ -154,7 +155,10 @@ const cancelClick = async (index) => {
 }
 const likeClick = async (index) => {
     if ($cookies.get("id") === null) {
-        alert("請先登入")
+        Swal.fire({
+        icon: "warning",
+        title: "請先登入!",
+      });
     } else {
         pets.value[index].likeRecord = !pets.value[index].likeRecord;
         pets.value[index].likeCount++;
