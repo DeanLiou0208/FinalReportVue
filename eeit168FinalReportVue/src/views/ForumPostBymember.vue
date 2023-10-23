@@ -10,10 +10,11 @@
                 <RouterLink class="btn btn-primary mb-3" to="/forum/add"><i class="bi bi-plus"></i> 新討論</RouterLink>
             </div>
         </div>
-
+        <div style="display: flex; justify-content: center;">
         <div class="card-list">
-            <div class="row row-cols-4 g-4 ">
-                <div class="card border-success mb-3" style="width: 18rem" v-for="(post, index) in posts" :key="index">
+            
+            <div class="row row-cols-1 row-cols-md-3 g-0">
+                <div class="card border-primary text-dark bg-light mb-3 border border-3" style="width: 18rem; margin: 10px;" v-for="(post, index) in posts" :key="index">
                     <img :src="post.main" class="card-img-top custom-image" alt="..." />
                     <div class="card-body">
                         <RouterLink to="/forumpost" class="custom-link">
@@ -26,9 +27,16 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">文章類型: {{ post.type }}</li>
                         <li class="list-group-item" style="text-align: centers">
-                            <div style="float: left;"><i class="bi bi-chat-dots"></i> {{ post.totalComments }}</div>
-                            <div style="float: right;"><i class="bi bi-hand-thumbs-up"></i> {{ post.likeCount }} &nbsp
-                                <i class="bi bi-hand-thumbs-down-fill"></i> {{ post.unLikeCount }}
+                            <div style="float: right;"><i class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i> {{ post.likeCount }} &nbsp
+                                <i class="bi bi-hand-thumbs-down-fill" style="font-size: 20px;"></i> {{ post.unLikeCount }}
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="text-align: centers">
+                            <div style="float: left;"><i class="bi bi-chat-dots" style="font-size: 22px; font-weight: bolder;"></i> {{ post.totalComments }}
+                            &nbsp
+                            <i class="bi bi-heart-fill" style="font-size: 18px;color:red"></i> <span>{{ post.commentLikeCount }}</span>
+                            &nbsp
+                            <i class="bi bi-heartbreak-fill" style="font-size: 18px;"></i> <span>{{ post.commentUnlikeCount }}</span>
                             </div>
                         </li>
                         <li class="list-group-item">最近更新時間: {{ post.createAt }}</li>
@@ -50,10 +58,12 @@
             </div>
         </div>
     </div>
-    <!-- <div class="paging-wrapper"> -->
+    </div>
+    
+    <div style="margin:auto;">
         <Paging :totalPages="totalPages" :thePage="datas.start / datas.rows + 1" @childClick="clickHandler"
             style="margin-left: 150px;"></Paging>
-    <!-- </div> -->
+    </div>
 </template>
     
 <script setup>
@@ -90,11 +100,8 @@ const isMember = ref(false);
 //     }
         
 //     }
-
-
-
 const totalPages = ref(0);
-console.log(localStorage.getItem("memberId"))
+// console.log(localStorage.getItem("memberId"))
 // datas.value.memberId = localStorage.getItem("memberId")
 const URL = import.meta.env.VITE_API_JAVAURL;
 const loadForumPostBymember = async () => {
@@ -107,15 +114,15 @@ const loadForumPostBymember = async () => {
 
     //計算總共幾頁
     totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
-    console.log(totalPages.value)
+    // console.log(totalPages.value)
     
     if ($cookies.get("identity") === "會員"){
         if($cookies.get("id") === datas.memberId) {
             isMember.value = true
-            console.log(isMember.value)
+            // console.log(isMember.value)
         }else{
             isMember.value = false;
-            console.log(isMember.value)
+            // console.log(isMember.value)
         }
     }else{
         isMember.value = false;
@@ -124,13 +131,13 @@ const loadForumPostBymember = async () => {
 }
 // 跳轉頁面
 function selectId(input) {
-    console.log(input);
+    // console.log(input);
     localStorage.setItem("petArticleId", input);
 }
 //paging 由子元件觸發
 const clickHandler = page => {
     datas.start = (page - 1) * datas.rows
-    console.log(page)
+    // console.log(page)
     loadForumPostBymember();
 }
 

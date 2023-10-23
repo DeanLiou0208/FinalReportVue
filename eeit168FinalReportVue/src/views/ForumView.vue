@@ -95,38 +95,42 @@
       </div>
     </div>
     <br />
-    <div class="card-list ">
-      <!-- <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center"> -->
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- <div class="col"> -->
-        <div class="card card border-secondary text-bg-light mb-3" style="width: 18rem height: 400px; overflow: hidden;" v-for="(post, index) in posts" :key="index">
-          <img :src="post.img" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <RouterLink to="/forumpost" class="custom-link">
-              <h5 class="card-title" @click="selectId(post.id)" style="height: 50px; overflow: hidden;">{{ post.title }}</h5>
-            </RouterLink>
-            <!-- <a href="#" to="/forumpost" >{{ post.title }} </a> -->
-            <p class="card-text" style="height: 100px; overflow: hidden;">{{ post.petArticleText }}</p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">文章類型: {{ post.type }}</li>
-            <li class="list-group-item" style="text-align: right">
-              <i class="bi bi-hand-thumbs-up"></i> {{ post.likeCount }}
-              <i class="bi bi-hand-thumbs-down-fill"></i> {{ post.unLikeCount }}
-            </li>
-            <li class="list-group-item">最近更新時間: {{ post.lastTime }}</li>
-          </ul>
-          <!-- <div class="card-body">
+    <div style="display: flex; justify-content: space-around;">
+      <div class="card-list ">
+        <div class="row row-cols-1 row-cols-md-3 g-0">
+          <div class="card border-secondary text-dark bg-light mb-3 border border-3"
+            style="width: 18rem; height: 600px; overflow: hidden; margin: 10px;" v-for="(post, index) in posts"
+            :key="index">
+            <!-- <div class="col"> -->
+            <img :src="post.img" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <RouterLink to="/forumpost" class="custom-link">
+                <h5 class="card-title" @click="selectId(post.id)" style="height: 50px; overflow: hidden;">{{ post.title }}
+                </h5>
+              </RouterLink>
+              <!-- <a href="#" to="/forumpost" >{{ post.title }} </a> -->
+              <p class="card-text" style="height: 100px; overflow: hidden;">{{ post.petArticleText }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">文章類型: {{ post.type }}</li>
+              <li class="list-group-item" style="text-align: right">
+                <i class="bi bi-hand-thumbs-up"></i> {{ post.likeCount }}
+                <i class="bi bi-hand-thumbs-down-fill"></i> {{ post.unLikeCount }}
+              </li>
+              <li class="list-group-item">最近更新時間: {{ post.lastTime }}</li>
+            </ul>
+            <!-- <div class="card-body">
         <a :href="card.link1" class="card-link">Card link</a>
         <a :href="card.link2" class="card-link">Another link</a>
       </div> -->
+          </div>
         </div>
       </div>
     </div>
-  
-    <div class="paging-wrapper">
-    <Paging :totalPages="totalPages" :thePage="datas.start /datas.rows + 1" @childClick="clickHandler" style="margin-left: 150px;"></Paging>
   </div>
+  <div style="margin-left: 200px;">
+    <Paging :totalPages="totalPages" :thePage="datas.start / datas.rows + 1" @childClick="clickHandler"
+      ></Paging>
   </div>
 </template>
 
@@ -163,14 +167,14 @@ const loadPosts = async () => {
 };
 // 跳轉頁面
 function selectId(input) {
-  console.log(input);
+  // console.log(input);
   localStorage.setItem("petArticleId", input);
 }
 
 //paging 由子元件觸發
 const clickHandler = page => {
   datas.start = (page - 1) * datas.rows
-  console.log(page)
+  // console.log(page)
   loadPosts();
 }
 
@@ -219,7 +223,7 @@ const sortArticles = (value) => {
 //模糊搜尋文章標題
 const inputHandler = (value) => {
   datas.title = value;
-  console.log("value:" + value);
+  // console.log("value:" + value);
   loadPosts();
 };
 
@@ -256,12 +260,4 @@ loadPosts();
   margin-top: 10px;
   /* 添加底部外边距 */
 }
-
-.paging-wrapper {
-  display: flex;
-  justify-content: left;
-  margin-top: 20px; /* 调整上方间距 */
-  
-}
-
 </style>

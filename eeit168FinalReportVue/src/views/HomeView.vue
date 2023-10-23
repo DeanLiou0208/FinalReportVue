@@ -25,14 +25,14 @@
       <div class="card mb-3" style="max-width: 635px;">
         <div class="row g-0">
           <div class="col-md-4">
-            <img :src="`${img}`" class="img-fluid rounded-start" alt="" style="height: 280px; width: 100%;">
+            <img :src="`${img}`" class="img-fluid rounded-start" alt="" style="object-fit: cover; width: 100%; height: 260px;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">{{title}}</h5>
               <br>
               <div class="container" style="display: flex;">
-                <p class="card-text"><i class="bi bi-heart"></i>{{ likeCount }}</p>&nbsp&nbsp
+                <p class="card-text"><i class="bi bi-heart-fill" style="color: red;"></i>{{ likeCount }}</p>&nbsp&nbsp
                 <p class="card-text"><i class="bi bi-heartbreak-fill"></i>{{ unLikeCount }}</p>
               </div>
               <p class="card-text">內文預覽:</p>

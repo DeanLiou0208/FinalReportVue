@@ -6,7 +6,7 @@
             </span>
             &nbsp
             <RouterLink to="/forumpostbymember" class="custom-link">
-            <span style="font-size: 16px;font-weight: lighter; " @click="selectMemberId(post.memberId)">{{ post.userName }}</span>
+            <span style="font-size: 16px;font-weight: bold;" class="custom-link" @click="selectMemberId(post.memberId)">{{ post.userName }}</span>
             </RouterLink>
             <p style="font-size: 22px; font-weight: bolder; margin-bottom: 0px;">{{ post.title }}</p>
             <div style="margin-top: 0px;">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="py-4 text-center " style="width: 66.66%;">
-                    <div class="row">
+                    <div class="row mx-2">
                         <!-- <div class="d-flex justify-content-center"> -->
                         <div class="col-md-4" v-for="(item, index) in post.photo" :key="index" style="margin-bottom: 20px;">
                             <img :src="item.img" class="img-thumbnail custom-image-size d-block mx-auto" alt="...">
@@ -115,7 +115,7 @@
             <hr>
             <div class="container ml-3">
                 <div v-for="(commentPost, index) in commentPosts" :key="index">
-                    <span class="profile-picture">
+                    <span class="profile-picture-com">
                         <img :src="commentPost.img" alt="Profile Picture" class="rounded-circle"
                             style="margin-top: 10px;" />
                     </span>
@@ -181,7 +181,7 @@ const articleId = localStorage.getItem("petArticleId")
 const postComment = ref({
     fkMemberId:$cookies.get("id"),
     fkPetArticleId:articleId,
-    commentsText:null,
+    commentsText:"",
 })
 // const petArticleId =  route.params.petArticleId;
 // console.log(articleId);
@@ -189,6 +189,17 @@ const datas = ref({
     fkMemberId: $cookies.get("id"),
     petArticleId: articleId,
     // petArticleId: 10,
+})
+
+const likeUse = ref({
+    fkMemberId: $cookies.get("id"),
+    petArticleId: articleId,
+    likeOrUnlike: null
+})
+const commentLikeUse = ref({
+    fkMemberId: $cookies.get("id"),
+    fkCommentId: 0,
+    likeOrUnlike:null
 })
 const unPressLike = ref(false);
 const unPressUnlike = ref(false);
@@ -212,7 +223,7 @@ const loadPost = async () => {
     //   console.log(item.species); // 分别输出 "小型動物" 和 "水族兩棲"
     // });
     post.value = response.data;
-    console.log(post.value)
+    // console.log(post.value)
     // console.log("post:"+post.value.img);
 
     if (response.data.likeRecord) {
@@ -232,7 +243,7 @@ const loadPost = async () => {
 
 // 跳轉頁面
 function selectMemberId(input) {
-  console.log(input);
+//   console.log(input);
   localStorage.setItem("memberId", input);
 //   console.log(localStorage.getItem(input));
   
@@ -240,10 +251,35 @@ function selectMemberId(input) {
 
 // 新增留言
 const addComment = async () => {
+    if(postComment.value.commentsText===""){
+        Swal.fire({
+            icon: "warning",
+            title: "請輸入留言!",
+          });
+    }else{   
+        
     const API_URL = `${URL}pages/ajax/CommentsCreate`;
     const response = await axios.post(API_URL,postComment.value);
     newComment.value = response.data;
-    console.log("newComment:"+response.data.message);
+    // console.log("newComment:"+newComment.value.commentsText);
+    
+    if (response.data.success) {
+      Swal.fire({
+        icon: "success",
+        title: "留言新增成功!"
+      });
+      // router.push('/forumpost');
+      loadPost();
+      loadCommentPosts();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "留言新增失敗!",
+      });
+    
+    }
+}
+}   
 //     const json = JSON.stringify(post.value);
 //   if (fileInput.value && fileInput.value.files.length > 0) {
 //     // 添加所有文件到 FormData 对象中
@@ -259,52 +295,59 @@ const addComment = async () => {
 //     },
 
 //   })
-  if (response.data.success) {
-    Swal.fire({
-      icon: "success",
-      title: "留言新增成功!"
-    });
-    // router.push('/forumpost');
-    loadCommentPosts();
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "留言新增失敗!",
-    });
 
-  }
-   
-}
+
 
 // 文章按讚按鈕功能
-function increamentLike() {
+const increamentLike = async () => {
     post.value.likeRecord = !post.value.likeRecord; /* false ->true */
     post.value.likeCount++;
     if (post.value.likeRecord) {
         unPressUnlike.value = !unPressUnlike.value;
     }
+    const API_URL = `${URL}pages/ajax/articleLikesCreate`;
+    likeUse.value.likeOrUnlike = true;
+    console.log(likeUse.value.fkMemberId);
+    console.log(likeUse.value.petArticleId)
+    const response = await axios.post(API_URL,likeUse.value);
+    console.log(response.data)
 }
-function cancelLike() {
+const cancelLike = async () => {
     post.value.likeRecord = !post.value.likeRecord;
     post.value.likeCount--;
     if (!post.value.likeRecord) {
         unPressUnlike.value = !unPressUnlike.value;
     }
+    const API_URL = `${URL}pages/ajax/dislike/${likeUse.value.fkMemberId}/${likeUse.value.petArticleId}`;
+    // console.log(123)
+    const response = await axios.delete(API_URL);
+    console.log(response.data)
+    
 }
 //文章倒讚按鈕功能
-function increamentUnlike() {
+const increamentUnlike = async () => {
     post.value.unlikeRecord = !post.value.unlikeRecord;
     post.value.unlikeCount++;
     if (post.value.unlikeRecord) {
         unPressLike.value = !unPressLike.value;
     }
+    const API_URL = `${URL}pages/ajax/articleLikesCreate`;
+    likeUse.value.likeOrUnlike = false;
+    console.log(likeUse.value.fkMemberId);
+    console.log(likeUse.value.petArticleId)
+    const response = await axios.post(API_URL,likeUse.value);
+    console.log(response.data)
 }
-function cancelUnlike() {
+const cancelUnlike = async () => {
     post.value.unlikeRecord = !post.value.unlikeRecord;
     post.value.unlikeCount--;
     if (!post.value.unlikeRecord) {
         unPressLike.value = !unPressLike.value;
     }
+    const API_URL = `${URL}pages/ajax/dislike/${likeUse.value.fkMemberId}/${likeUse.value.petArticleId}`;
+    // console.log(123)
+    const response = await axios.delete(API_URL);
+    console.log(response.data)
 }
 
 // 顯示該篇文章留言
@@ -316,7 +359,9 @@ const loadCommentPosts = async () => {
     const response = await axios.post(API_URL, datas.value);
 
     commentPosts.value = response.data.list;
-    // console.log("commentPosts:"+response.data.list);
+     console.log("commentPosts:"+response.data.list[0].id);
+     console.log("id:"+commentPosts.value[0].id);
+
     // commentPosts.value = response.data.list.map(item => reactive(item))
 
     for (let i = 0; i < response.data.list.length; i++) {
@@ -335,38 +380,76 @@ const loadCommentPosts = async () => {
         // console.log(unPressCommentUnlike.value[i])
     }
 }
-
-function increamentCommentLike(index) {
+//留言倒讚按鈕功能
+const increamentCommentLike = async (index) => {
     commentPosts.value[index].likeCommentRecord = !commentPosts.value[index].likeCommentRecord;
     /* false->true */
-    console.log(commentPosts.value[index].likeCommentRecord);
+    // console.log(commentPosts.value[index].likeCommentRecord);
     commentPosts.value[index].likeCount++;
     if (commentPosts.value[index].likeCommentRecord) {
         unPressCommentUnlike.value[index] = !unPressCommentUnlike.value[index];
     }
+    const API_URL = `${URL}pages/ajax/commentsLikes`;
+    commentLikeUse.value.likeOrUnlike = true;
+    console.log(commentLikeUse.value.fkMemberId);
+    commentLikeUse.value.fkCommentId = commentPosts.value[index].fkCommentId;
+    console.log(commentLikeUse.value.fkCommentId);
+    const response = await axios.post(API_URL,commentLikeUse.value);
+    console.log(response.data)
+
 }
-function cancelCommentLike(index) {
+
+
+
+
+const cancelCommentLike = async (index) => {
     commentPosts.value[index].likeCommentRecord = !commentPosts.value[index].likeCommentRecord;
     commentPosts.value[index].likeCount--;
     if (!commentPosts.value[index].likeCommentRecord) {
         unPressCommentUnlike.value[index] = !unPressCommentUnlike.value[index];
     }
+    commentLikeUse.value.fkCommentId = commentPosts.value[index].fkCommentId;
+    console.log(commentLikeUse.value.fkMemberId);
+    console.log(commentLikeUse.value.fkCommentId);
+    const API_URL = `${URL}pages/ajax/commentDislike/${commentLikeUse.value.fkCommentId}/${commentLikeUse.value.fkMemberId}`;
+    // console.log(123)
+    const response = await axios.delete(API_URL);
+    console.log(response.data)
 }
-function decreamentCommentUnLike(index) {
+
+
+
+
+
+const decreamentCommentUnLike = async (index) =>  {
     commentPosts.value[index].unlikeCommentRecord = !commentPosts.value[index].unlikeCommentRecord;
     /* false->true */
-    console.log(commentPosts.value[index].unlikeCommentRecord);
+    // console.log(commentPosts.value[index].unlikeCommentRecord);
     commentPosts.value[index].unlikeCount++;
     if (commentPosts.value[index].unlikeCommentRecord) {
         unPressCommentLike.value[index] = !unPressCommentLike.value[index];
     }
+    const API_URL = `${URL}pages/ajax/commentsLikes`;
+    commentLikeUse.value.likeOrUnlike = false;
+    console.log(likeUse.value.fkMemberId);
+    commentLikeUse.value.fkCommentId = commentPosts.value[index].fkCommentId;
+    console.log(commentLikeUse.value.fkCommentId);
+    const response = await axios.post(API_URL,commentLikeUse.value);
+    console.log(response.data)
 }
-function cancelcommentUnlike(index) {
+const cancelcommentUnlike = async (index) => {
     commentPosts.value[index].unlikeCommentRecord = !commentPosts.value[index].unlikeCommentRecord;
     commentPosts.value[index].unlikeCount--;
     if (!commentPosts.value[index].unlikeCommentRecord) {
         unPressCommentLike.value[index] = !unPressCommentLike.value[index];
     }
+    commentLikeUse.value.fkCommentId = commentPosts.value[index].fkCommentId;
+    console.log(commentLikeUse.value.fkMemberId);
+    console.log(commentLikeUse.value.fkCommentId);
+    const API_URL = `${URL}pages/ajax/commentDislike/${commentLikeUse.value.fkCommentId}/${commentLikeUse.value.fkMemberId}`;
+    // console.log(123)
+    const response = await axios.delete(API_URL);
+    console.log(response.data)
 }
 
 loadPost();
@@ -376,12 +459,20 @@ loadCommentPosts();
 </script>
     
 <style scoped>
+.custom-link {
+  text-decoration: none;
+}
 .profile-picture img {
-    width: 40px;
+    width: 70px;
     /* 自定义宽度 */
-    height: 40px;
+    height: 70px;
     /* 自定义高度 */
     /* 可以添加其他样式属性，例如边框、边距等 */
+}
+.profile-picture-com img{
+    width: 50px;
+    /* 自定义宽度 */
+    height: 50px;
 }
 
 .profile-picture img {
@@ -397,4 +488,11 @@ loadCommentPosts();
 
 .like-color {
     color: blue;
-}</style>
+}
+
+.custom-image-size {
+  border: 3px solid MediumTurquoise; /* 定義外框的樣式 */
+  border-radius: 5px; /* 定義外框的圓角 */
+  padding: 5px; /* 定義外框內的填充 */
+}
+</style>
