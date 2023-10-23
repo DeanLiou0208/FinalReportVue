@@ -122,7 +122,7 @@ const datas = reactive({
 })
 
 const isMember = ref(false);
-
+localStorage.setItem("memberId",datas.memberId);
 // function changeAdd (){
 //     if ($cookies.get("identity") === "會員"){
 //         if($cookies.get("id") === datas.memberId) {

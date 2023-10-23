@@ -111,6 +111,7 @@ const loadForumPostBymember = async () => {
     console.log(response.data.list);
     //取得篩選文章放進posts變數
     posts.value = response.data.list;
+    
 
     //計算總共幾頁
     totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)

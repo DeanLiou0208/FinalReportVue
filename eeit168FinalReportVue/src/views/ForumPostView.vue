@@ -359,8 +359,8 @@ const loadCommentPosts = async () => {
     const response = await axios.post(API_URL, datas.value);
 
     commentPosts.value = response.data.list;
-     console.log("commentPosts:"+response.data.list[0].id);
-     console.log("id:"+commentPosts.value[0].id);
+    //  console.log("commentPosts:"+response.data.list[0].id);
+    //  console.log("id:"+commentPosts.value[0].id);
 
     // commentPosts.value = response.data.list.map(item => reactive(item))
 
