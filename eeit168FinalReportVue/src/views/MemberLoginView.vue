@@ -15,6 +15,7 @@
         <br>
         <div class="box mb-3">
           <input type="text" class="form-control" v-model="inputCode" placeholder="請輸入驗證碼" @blur="validateOnBlur" @input="check()"/>
+          &nbsp
           <p @click="createCode" :style="codeStyle">{{ code }}</p>
         </div>
         <div class="box mb-3">
