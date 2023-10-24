@@ -7,16 +7,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-const mainAddress = ref('106台北市北投區'); // 主地址
+const mainAddress = ref('106台北市大安區復興南路一段390號2樓'); // 主地址
 const otherAddresses = ref([]); // 其他地址
 
 let map;
 const geocoder = new google.maps.Geocoder();
 
 onMounted(() => {
-  getwhere();
-  select();
-
+ 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
       const latitude = position.coords.latitude;
@@ -29,12 +27,14 @@ onMounted(() => {
       // ...
     }, function(error) {
       console.error("Error getting user's location: " + error.message);
-    });
+    }, { enableHighAccuracy: true });
   } else {
     console.error("Geolocation is not supported by this browser.");
   }
 
- 
+  getwhere();
+  select();
+
 });
 
 function getwhere(){
@@ -63,12 +63,19 @@ function initializeMap(mainLocation) {
   });
 
   otherAddresses.value.forEach((hospital) => {
-    // 使用 .value 訪問內部的陣列
-    const { address } = hospital;
+    const { address, name ,phone} = hospital;
+    // console.log(address, name ,phone)
+
     geocoder.geocode({ address: address }, (results, status) => {
       if (status === "OK" && results.length > 0) {
         const location = results[0].geometry.location;
-        createMarker(location, address);
+        // console.log(location)
+        // console.log(name)
+        // console.log(phone)
+        
+
+        createMarker(location, name, phone,address);
+        
       } else {
         console.error(
           "Geocode for the address was not successful for the following reason: " +
@@ -89,11 +96,30 @@ function createMainMarker(location, name) {
 }
 
 
-function createMarker(location, name) {
-  new google.maps.Marker({
+// function createMarker(location, name) {
+//   new google.maps.Marker({
+//     map: map,
+//     position: location,
+//     title: name,
+//   });
+// }
+function createMarker(location, name, phone,address) {
+  // console.log(location)
+  //       console.log(name)
+  //       console.log(phone)
+  const marker = new google.maps.Marker({
     map: map,
     position: location,
     title: name,
+  });
+  const link = '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '" target="_blank">查看地图</a>';
+
+  const infoWindow = new google.maps.InfoWindow({
+    content: '院名: '+name+'<br>'+'電話: '+phone+'<br>'+'地址: '+address+link, // 这里的 info 参数是显示在弹出窗口中的内容
+  });
+
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
   });
 }
 
@@ -102,7 +128,29 @@ const URLAPI = `${URL}pet_web/hospital`;
 const select = async () => {
   const response = await axios.get(URLAPI);
   otherAddresses.value = response.data;
-  console.log(otherAddresses.value);
+// console.log(otherAddresses.value )
+  otherAddresses.value.forEach((hospital) => {
+    const { address, name ,phone} = hospital;
+    // console.log(address, name ,phone)
+
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK" && results.length > 0) {
+        const location = results[0].geometry.location;
+        // console.log(location)
+        // console.log(name)
+        // console.log(phone)
+        
+
+        createMarker(location, name, phone,address);
+        
+      } else {
+        console.error(
+          "Geocode for the address was not successful for the following reason: " +
+            status
+        );
+      }
+    });
+  });
 };
 
 const darkMapStyle=[
