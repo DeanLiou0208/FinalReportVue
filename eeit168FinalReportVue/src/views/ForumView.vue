@@ -84,7 +84,7 @@
     </div>
 
     <br />
-    <div class="row mb-3">
+    <div class="row mb-4" style="display: flex; justify-content: space-between;">
       <div class="col-3">
         <SelectedSort @sortChange="sortArticles"></SelectedSort>
 

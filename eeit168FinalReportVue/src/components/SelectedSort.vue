@@ -1,6 +1,6 @@
 <template>
         <select class="form-select" v-model="selectedSort" @change="sortArticles">
-        <option value="null" selected disabled hidden>選擇</option>
+        <option value="" selected disabled hidden>請選擇</option>
         <option value="likeCount">按讚數</option>
         <option value="unLikeCount">倒讚數</option>
         <option value="createAt">由新至舊</option>
