@@ -20,7 +20,7 @@ onMounted(() => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       const locationString = latitude + "," + longitude;
-      mainAddress.value = locationString; // 在這裡修改 mainAddress 的值
+      mainAddress.value = '106台北市大安區復興南路一段390號2樓'; // 在這裡修改 mainAddress 的值
       console.log("Updated mainAddress: " + mainAddress.value);
       getwhere();
       // 其他代碼不變
