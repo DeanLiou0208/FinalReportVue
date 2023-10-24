@@ -10,14 +10,14 @@
           >
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img :src="`${photomain.img}`" class="d-block auto" alt="..." />
+                <img :src="`${photomain.img}`" class="d-block auto imgsize" alt="..." />
               </div>
               <div
                 class="carousel-item"
                 v-for="{ img, id } in photoList"
                 :key="id"
               >
-                <img :src="`${img}`" class="d-block auto" alt="..." />
+                <img :src="`${img}`" class="d-block auto imgsize" alt="..." />
               </div>
             </div>
 
@@ -326,5 +326,9 @@ onMounted(() => {
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
+}
+.imgsize{
+  width: 400px;
+  height: 400px;
 }
 </style>

@@ -21,7 +21,7 @@
         :key="productId"
       >
         <div class="card container ml-2 size" style="width: 100%">
-          <img :src="`${img}`" class="card-img-top" alt="無法顯示圖片" />
+          <img :src="`${img}`" class="card-img-top imgsize" alt="無法顯示圖片" />
           <div class="card-body">
             <div class="container ml-3" style="display: flex">
               <p>ItemNo:</p>
@@ -196,5 +196,10 @@ img {
 
 .right-content {
   text-align: right; /* 文本右对齐，即在右侧 */
+}
+
+.imgsize{
+  width: 300px;
+  height: 300px;
 }
 </style>

@@ -121,7 +121,7 @@ export default {
         fkCompanyId: this.$cookies.get("id"),
         name: this.productTitle,
         type: this.productCategory,
-        description: this.productDescription,
+        description: `"`+this.productDescription+`"`,
         sizeArray: this.inputsArray,
       };
       const productDataJSON = JSON.stringify(productData);
@@ -154,7 +154,7 @@ export default {
       this.productDescription = "";
      
       // 跳转到其他页面
-      this.$router.push("/comshop");
+      window.location.href = "comshop";
     },
     fileChange1() {
       let file = document.getElementById("picFile1").files[0];

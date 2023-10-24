@@ -75,7 +75,7 @@
   <div class="row">
     <div class="col-12 col-md-6 col-lg-4" v-for="{ img, price, name, description, productId } in products" :key="productId">
       <div class="card container ml-2" style="width: 100%;">
-        <img :src="`${img}`" class="card-img-top" alt="Image">
+        <img :src="`${img}`" class="card-img-top imgsize" alt="Image">
         <div class="card-body">
             <div class="container ml-3 " style="display: flex;">
                 <p>ItemNo:</p><p class="card-number">{{ productId }}</p>
@@ -121,7 +121,7 @@
     <div class="row">
       <div class="col-12 ">
         <div class="card-add container ml-2" style="width: 100%;" >
-          <img :src="`${productDetails.img}`" class="card-img-top" alt="Image">
+          <img :src="`${productDetails.img}`" class="card-img-top imgsize" alt="Image">
           <div class="card-body container ml-3">
 
             <div class="container ml-3 " style="display: flex;">
@@ -462,6 +462,9 @@ const addToShoppingCart = async () => {
   text-overflow: ellipsis;  /* 显示省略号 */
   max-width: 250px;         /* 指定最大宽度，根据需要调整 */
 }
-
+.imgsize{
+  width: 300px;
+  height: 300px;
+}
 
 </style>
