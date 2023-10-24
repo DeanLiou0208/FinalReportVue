@@ -18,7 +18,7 @@
         <span></span>
       </div>
     </div>
-   
+
     <div id="responseMessage"></div>
 
     <div><button id="submit" @click="submit">送出</button></div>
@@ -28,13 +28,27 @@
 <script>
 import { ref, onMounted, inject } from "vue";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 export default {
   setup() {
     const shouldMove = ref(false);
     const pass = ref(false);
     const $cookies = inject("$cookies"); // 注入$cookies
     const URL = import.meta.env.VITE_API_JAVAURL;
+    const backgroundUrls = [
+      "url(https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2700&q=80)",
+      "url(https://pic.pimg.tw/juojou/1502296015-3046965360.png)",
+      "url(https://cdn.pixabay.com/photo/2023/09/30/05/06/mallard-8284909_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2023/08/08/15/37/landscape-8177622_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2023/08/11/08/11/cold-8183087_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2018/04/20/09/49/sky-3335585_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2023/05/21/16/03/mosque-8008801_1280.png)",
+      "url(https://cdn.pixabay.com/photo/2023/05/14/17/46/ducklings-7993465_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2023/08/30/12/37/leaves-8223213_1280.jpg)",
+      "url(https://cdn.pixabay.com/photo/2023/07/08/11/40/cows-8114279_1280.jpg)",
+      // 添加更多URL
+    ];
+
     const submit = () => {
       if (pass.value) {
         const account = document.getElementById("accountInput").value;
@@ -52,21 +66,33 @@ export default {
             // responseMessage.innerHTML = response.data.message;
             if (response.data.success) {
               // alert(response.data.message);
-              window.location.href = '/cominformation';
+              window.location.href = "/cominformation";
               $cookies.set("id", response.data.id);
-              $cookies.set("account",response.data.account);
-              $cookies.set("username",response.data.username);
-              $cookies.set("identity",response.data.identity);
-              localStorage.setItem('img', response.data.img);
-             console.log($cookies.get("id")) 
-             console.log($cookies.get("account")) 
-             console.log($cookies.get("shopname")) 
-             console.log($cookies.get("identity")) 
-            }else{
-              pass.value=false;
+              $cookies.set("account", response.data.account);
+              $cookies.set("username", response.data.username);
+              $cookies.set("identity", response.data.identity);
+              localStorage.setItem("img", response.data.img);
+              console.log($cookies.get("id"));
+              console.log($cookies.get("account"));
+              console.log($cookies.get("shopname"));
+              console.log($cookies.get("identity"));
+            } else {
+              pass.value = false;
+              const randomBackgroundElement =
+                document.getElementById("captcha"); // 选择id为captcha的元素
+
+              // 从数组中选择一个随机URL
+              const randomUrl =
+                backgroundUrls[
+                  Math.floor(Math.random() * backgroundUrls.length)
+                ];
+
+              // 将随机URL应用为背景图像
+              randomBackgroundElement.style.backgroundImage = randomUrl;
               captcha.classList.remove("passed");
-               document.querySelector("#captcha").style.setProperty("--moved", "0px");
-              
+              document
+                .querySelector("#captcha")
+                .style.setProperty("--moved", "0px");
             }
           })
           .catch((error) => {
@@ -76,11 +102,20 @@ export default {
         alert("請完成拼圖");
       }
     };
-   
+
     onMounted(() => {
       const captcha = document.querySelector("#captcha");
       const handle = document.querySelector("#handle");
       const button = document.querySelector("#handle span");
+
+      const randomBackgroundElement = document.getElementById("captcha"); // 选择id为captcha的元素
+
+      // 从数组中选择一个随机URL
+      const randomUrl =
+        backgroundUrls[Math.floor(Math.random() * backgroundUrls.length)];
+
+      // 将随机URL应用为背景图像
+      randomBackgroundElement.style.backgroundImage = randomUrl;
 
       button.addEventListener("mousedown", (e) => {
         shouldMove.value = true;
@@ -102,7 +137,7 @@ export default {
         if (shouldMove.value) {
           const finalOffset = e.clientX - handle.getBoundingClientRect().left;
           console.log(finalOffset);
-          if (finalOffset >= 405 && finalOffset <=425) {
+          if (finalOffset >= 405 && finalOffset <= 425) {
             captcha.classList.add("passed");
             pass.value = true;
           } else {
@@ -143,7 +178,7 @@ export default {
   width: var(--width);
   height: var(--height);
   border-radius: 4px;
-  background-image: url(https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2700&q=80);
+  /* background-image: url(https://cdn.pixabay.com/photo/2018/04/20/09/49/sky-3335585_1280.jpg); */
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -283,8 +318,8 @@ export default {
   color: red;
   font-size: 5px;
 }
-#passwordInput,#accountInput{
-  width: 350px
-
+#passwordInput,
+#accountInput {
+  width: 350px;
 }
 </style>
