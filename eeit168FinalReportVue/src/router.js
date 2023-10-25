@@ -39,14 +39,15 @@ import ForumBymemberInf from './views/ForumBymemberInf.vue';
 
 
 const routes = [
-  {
-    path: "/",
-    component: Home,
-  },
+  // {
+  //   path: "/",
+  //   component: Home,
+  // },
   // 讓home頁面擁有兩個路徑,這樣首頁也會有
   {
     path: "/home",
     component: Home,
+    alias: "/"
   },
   {
     path: "/login",

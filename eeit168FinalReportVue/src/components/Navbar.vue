@@ -76,6 +76,7 @@
 <script setup>
     import { ref, inject, onMounted } from "vue";
     import Swal from "sweetalert2";
+    import router from "../router"
 
     const imgShow = ref(false)
     const loginState = ref(false);
@@ -84,76 +85,110 @@
     const img = ref("");
     //登入確認身分
     const loginCheck = async () => {
-      identity.value = $cookies.get("identity");
-      if(identity.value === "會員"){
-        loginState.value = true;
-        img.value=localStorage.getItem('img');
-        if(img.value === null || img.value === "undefined"){
-          imgShow.value = false;
-        }else{
-          imgShow.value = true;
-        }
-      }else if(identity.value === "廠商"){
-        loginState.value = true;
-        img.value=localStorage.getItem('img');
-        if(img.value === null || img.value === "undefined"){
-          imgShow.value = false;
-        }else{
-          imgShow.value = true;
-        }
-      }else{
-        loginState.value = false;
+
+      try {
+        
+        
+              identity.value = $cookies.get("identity");
+              if(identity.value === "會員"){
+                loginState.value = true;
+                img.value=localStorage.getItem('img');
+                if(img.value === null || img.value === "undefined"){
+                  imgShow.value = false;
+                }else{
+                  imgShow.value = true;
+                }
+              }else if(identity.value === "廠商"){
+                loginState.value = true;
+                img.value=localStorage.getItem('img');
+                if(img.value === null || img.value === "undefined"){
+                  imgShow.value = false;
+                }else{
+                  imgShow.value = true;
+                }
+              }else{
+                loginState.value = false;
+              }
+      } catch (error) {
+        console.log('loginCheck',error);
       }
+
     }
     //跳轉到購物車畫面
     const gotoshopping = async () =>{
-      if($cookies.get("identity") != null){
-        if(identity.value === "會員"){
-          if($cookies.get("id") !=null){
-            document.location.href = "/membershoppingcart";
+
+      try {
+        
+        if($cookies.get("identity") != null){
+          if(identity.value === "會員"){
+            if($cookies.get("id") !=null){
+              router.push("/membershoppingcart")
+              // document.location.href = "/membershoppingcart";
+            }else{
+              Swal.fire({
+                icon : "error",
+                title : "查無此帳號!"
+              })
+              
+            }
           }else{
             Swal.fire({
-              icon : "error",
-              title : "查無此帳號!"
+              icon : "warning",
+              title : "請使用非廠商帳號登入!"
             })
             
           }
         }else{
           Swal.fire({
-            icon : "warning",
-            title : "請使用非廠商帳號登入!"
+            icon: "error",
+            title: "請先登入!",
           })
           
         }
-      }else{
-        Swal.fire({
-          icon: "error",
-          title: "請先登入!",
-        })
-        
+      } catch (error) {
+        console.log('gotoshopping',error);
       }
+
+
     }
 
     //點擊頭像跳轉頁面
     const toinfo = async () => {
-      identity.value = $cookies.get("identity");
-      if(identity.value === "會員"){
-        document.location.href = "/memberInformation";
-      }else if(identity.value === "廠商"){
-        document.location.href = "/cominformation";
-      }else{
-        document.location.href = "/";
+
+      try {
+        
+        identity.value = $cookies.get("identity");
+        if(identity.value === "會員"){
+          router.push("/memberInformation")
+          // document.location.href = "/memberInformation";
+        }else if(identity.value === "廠商"){
+          router.push("/cominformation")
+          // document.location.href = "/cominformation";
+        }else{
+          router.push("/")
+          // document.location.href = "/";
+        }
+      } catch (error) {
+        console.log('toinfo',error);
       }
     }
 
     //登出移除cookie
     const logout = async () => {
-      $cookies.remove("id");
-      $cookies.remove("account");
-      $cookies.remove("identity");
-      $cookies.remove("username");
-      localStorage.removeItem('img');
-      document.location.href = "/";
+
+
+      try {
+        
+        $cookies.remove("id");
+        $cookies.remove("account");
+        $cookies.remove("identity");
+        $cookies.remove("username");
+        localStorage.removeItem('img');
+        // router.push("/")
+        document.location.href = "/";
+      } catch (error) {
+        console.log('logout',error);
+      }
     }
 
     loginCheck();

@@ -245,7 +245,7 @@
   
   //取得產品分類
   const loadType = async () =>{
-    const response = await axios.get(URLTYPE,types);
+    const response = await axios.post(URLTYPE,types);
     types.value = response.data;
   }
   

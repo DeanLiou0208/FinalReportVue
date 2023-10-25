@@ -6,10 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server :{
-    host : '0.0.0.0',
-    port : 5173
-  },
+
   plugins: [
     vue(),
     vueJsx({
@@ -21,4 +18,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
+  
 })
