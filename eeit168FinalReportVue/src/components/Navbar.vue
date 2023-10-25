@@ -181,16 +181,16 @@
 }
 
   .gray-circle {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-color: gray; /* 设置背景颜色为灰色 */
     border-radius: 50%; /* 设置边框半径为50%，使其呈圆形 */
 
   }
   #img{
 
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
   }
 
@@ -203,7 +203,7 @@
 }
 
 .navbarimg{
-  width: 80px;
+  width: 100px;
   height: 80px;
 }
 

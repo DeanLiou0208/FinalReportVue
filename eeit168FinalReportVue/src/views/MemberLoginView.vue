@@ -47,7 +47,6 @@ import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
 const $cookies = inject("$cookies");
 const router = useRouter();
-const loginbutton = false;
 const member = reactive({
   "account": "",
   "password": "",
@@ -143,20 +142,20 @@ export default {
       this.verifyCodeStyle = { color: "#393939" };
       this.showValidateButton = false;
     },
-    validateCode() {
-      const inputCode = this.inputCode.toUpperCase();
-      if (inputCode.length <= 0) {
-        alert("請輸入驗證碼！");
-      } else if (inputCode !== this.code) {
-        alert("驗證碼輸入錯誤！");
-        this.createCode();
-        this.inputCode = "";
-      } else {
-        alert("");
-        this.createCode();
-        this.inputCode = "";
-      }
-    },
+    // validateCode() {
+    //   const inputCode = this.inputCode.toUpperCase();
+    //   if (inputCode.length <= 0) {
+    //     alert("請輸入驗證碼！");
+    //   } else if (inputCode !== this.code) {
+    //     alert("驗證碼輸入錯誤！");
+    //     this.createCode();
+    //     this.inputCode = "";
+    //   } else {
+    //     alert("");
+    //     this.createCode();
+    //     this.inputCode = "";
+    //   }
+    // },
     validateOnBlur() {
       const inputCode = this.inputCode.toUpperCase();
       if (inputCode.length <= 0) {
