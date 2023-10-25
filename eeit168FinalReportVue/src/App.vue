@@ -1,7 +1,7 @@
 <template>
     <div >
-        <header style="height: 200px;">
-        <div id="header" style="height: 120px;" >
+        <header style="height: 150px;">
+        <!-- <div id="header" style="height: 120px;" >
             <figure class="text-center container ml-1">
                 <blockquote class="blockquote">
                     <p>ABOUT PET ALL YOU LOVE.</p>
@@ -10,7 +10,7 @@
                     <cite title="Source Title">it has a dog.”</cite>
                 </figcaption>
             </figure>
-        </div>
+        </div> -->
             <div >
             <navbar></navbar>
             </div>
@@ -48,10 +48,10 @@ import Navbar from "./components/navbar.vue"
 </script>
   
 <style scoped>
-    #header{
+    /* #header{
         background-color: rgb(255, 253, 127);
         height: 80px;
-    }
+    } */
     #footer{
         background-color: rgb(255, 253, 127);
         display: flex;

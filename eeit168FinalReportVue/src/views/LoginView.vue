@@ -5,7 +5,10 @@
         <div class="card-body">
             <h5 class="card-title">廠商登入</h5>
             <p class="card-text"></p>
-            <router-link class="btn btn-primary" to="/companyLogin">登入</router-link>
+            <div class="flexbutton">
+                <router-link class="btn btn-primary" to="/companyLogin">登入</router-link>
+                <router-link class="btn btn-warning" to="/comr">註冊</router-link>
+            </div>
         </div>
     </div>
 
@@ -14,7 +17,10 @@
         <div class="card-body">
             <h5 class="card-title">會員登入</h5>
             <p class="card-text"></p>
-            <router-link class="btn btn-warning" to="/memberLogin">登入</router-link>
+            <div class="flexbutton">
+                <router-link class="btn btn-primary" to="/memberLogin">登入</router-link>
+                <router-link class="btn btn-warning" to="/memberregisteraccount">註冊</router-link>
+            </div>
         </div>
     </div>
     </div>
@@ -28,9 +34,13 @@
 <style scoped>
     .cantainer{
         width: 800px;
-        height: 600px;
+        height: 400px;
         display: flex; /*使用Flex布局*/
         justify-content: space-between; /*在父容器中均匀分布子元素 */
-        margin: 25%;
+        margin: 3% 20%;
+    }
+    .flexbutton{
+        display: flex;
+        justify-content: space-between;
     }
 </style>

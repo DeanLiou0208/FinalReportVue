@@ -72,11 +72,11 @@
                     </div>
 
                     <div class="buttomstyle">
-                        <button type="button" class="btn btn-warning">修改</button>
+                        <!-- <button type="button" class="btn btn-warning">修改</button>
                         <br>
                         <br>
                         <br>
-                        <button type="button" class="btn btn-danger">刪除</button>
+                        <button type="button" class="btn btn-danger">刪除</button> -->
                     </div>
                 </fieldset>
                 

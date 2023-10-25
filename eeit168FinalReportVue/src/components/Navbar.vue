@@ -1,26 +1,29 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light header">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"></a>
+      <img src="../assets/img/finalreportlogo.png" alt="" class="navbarimg">
+      <!-- <a class="navbar-brand" href="#"></a> -->
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link active nav-link-title" to="/home">首頁</router-link>
+            <router-link class="nav-link active nav-link-title" to="/home"><h4>首頁</h4></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-con" to="/shop">寵物商城</router-link>
+            <router-link class="nav-link nav-link-con" to="/shop"><h4>寵物商城</h4></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-con" to="/forum">寵物論壇</router-link>
+            <router-link class="nav-link nav-link-con" to="/forum"><h4>寵物論壇</h4></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-con" to="/petphoto">萌寵照片</router-link>
+            <router-link class="nav-link nav-link-con" to="/petphoto"><h4>萌寵照片</h4></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-con ml-3 "  to="/hos">寵物醫院</router-link>
+            <router-link class="nav-link nav-link-con ml-3 " to="/hos"><h4>寵物醫院</h4></router-link>
           </li>
         </ul>
         </div>
@@ -170,9 +173,11 @@
 }
 .nav-link-con{
   font-size: 1.2rem;
+  background-color: rgb(255, 253, 127);
 }
 .nav-link-title{
   font-size: 1.2rem;
+  background-color: rgb(255, 253, 127);
 }
 
   .gray-circle {
@@ -197,4 +202,18 @@
   /* 可以根据需要添加其他样式规则 */
 }
 
+.navbarimg{
+  width: 80px;
+  height: 80px;
+}
+
+.navbar{
+  background-color: rgb(255, 253, 127);
+  height: 90px;
+  z-index: 1000; /* 设置一个足够高的z-index值，以确保导航栏位于其他元素上方 */
+}
+
+.navbar-collapse{
+  flex-grow: 0;
+}
 </style>
