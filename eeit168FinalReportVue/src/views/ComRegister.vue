@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>註冊</h2>
+    <h2>廠商註冊</h2>
     
     <div class="form-group">
       <label for="username">帳號:</label>

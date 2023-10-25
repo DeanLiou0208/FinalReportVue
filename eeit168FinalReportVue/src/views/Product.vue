@@ -1,4 +1,6 @@
 <template>
+  <div style="text-align: center;"><h2>新增商品</h2></div>
+  <br>
   <div class="container">
     <div id="box">
       <div id="skin">

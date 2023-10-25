@@ -1,4 +1,6 @@
 <template>
+  <div style="text-align: center;"><h2>廠商資訊</h2></div>
+  <br>
   <div style="display: flex">
     <!-- 左侧的 Tabs -->
     <div style="flex: 1">

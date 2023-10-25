@@ -1,4 +1,6 @@
 <template>
+  <div style="text-align: center;"><h2>動物醫院地圖</h2></div>
+<br>
   <div>
     <div id="map" style="height: 400px; width: 100%"></div>
   </div>

@@ -1,4 +1,6 @@
 <template>
+  <div style="text-align: center;"><h2>廠商資訊修改</h2></div>
+  <br>
   <div class="row g-3 align-items-center">
     <div class="col-4"></div>
     <div class="col-auto">

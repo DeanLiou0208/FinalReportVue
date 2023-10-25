@@ -1,5 +1,7 @@
 <template>
+  <div style="text-align: center;"><h2>廠商登入</h2></div>
   <div class="login">
+    
     <div id="account">
       帳號：<input type="text" id="accountInput" />
       <!-- onblur="checkAccount()" -->

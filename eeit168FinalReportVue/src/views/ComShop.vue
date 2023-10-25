@@ -1,6 +1,6 @@
 <template>
 
-
+<div style="text-align: center;"><h2>廠商賣場</h2></div>
   <div class="container ml-1">
     <div class="row">
       <div>
