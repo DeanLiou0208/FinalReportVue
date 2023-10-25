@@ -48,7 +48,7 @@
           <div class="container ml-3">
             <label for="customRange2" class="form-label"><p>請客官選擇要的評分</p></label>
             <div class="demo-rate-block">
-              <span class="demonstration">1星~5星你要幾星</span>
+              <span class="demonstration">1星~5星你要幾星</span>&nbsp
               <el-rate @click="chioseRate" v-model="avgRateScore" :colors="colors" />
             </div>
           </div>
@@ -84,7 +84,7 @@
                 <h4 class="card-name">{{ name }}</h4>
             </div>    
             <div class="container ml-3 " style="display: flex;">
-              <span style="border:1px red solid; height: 0%; color: red;">15天鑑賞期</span>&nbsp&nbsp<p>售價:</p><p class="card-price">{{ price }}</p><p>元</p>
+              <span style="border:1px red solid; height: 0%; color: red;">15天鑑賞期</span>&nbsp&nbsp&nbsp&nbsp <span style="font-size: 24px;">售價:</span><span class="card-price" style="font-size: 24px; color: red;">{{ price }}</span><span style="font-size: 24px;">元</span>
             </div>
             <div class="container ml-3 " style="display: flex;">
                 <p>商品簡介:</p><p class="card-text">{{ description }}</p>

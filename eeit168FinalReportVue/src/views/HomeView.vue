@@ -102,9 +102,9 @@
   avgRateScore : null,
   companyShopName : null,
   start : 0,
-  rows : 20,
-  order: "asc",
-  sort: "id"
+  rows : 5,
+  order: "desc",
+  sort: "price"
 
 });
 
