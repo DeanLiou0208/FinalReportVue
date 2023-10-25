@@ -185,7 +185,7 @@
     height: 40px;
     background-color: gray; /* 设置背景颜色为灰色 */
     border-radius: 50%; /* 设置边框半径为50%，使其呈圆形 */
- 
+
   }
   #img{
 

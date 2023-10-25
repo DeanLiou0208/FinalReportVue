@@ -62,21 +62,36 @@ export default {
           })
           .then((response) => {
             console.log(response.data);
-            alert(response.data.message);
+            // alert(response.data.message);
+            console.log(response.data.success);
             // responseMessage.innerHTML = response.data.message;
             if (response.data.success) {
               // alert(response.data.message);
-              window.location.href = "/cominformation";
-              $cookies.set("id", response.data.id);
-              $cookies.set("account", response.data.account);
-              $cookies.set("username", response.data.username);
-              $cookies.set("identity", response.data.identity);
-              localStorage.setItem("img", response.data.img);
-              console.log($cookies.get("id"));
-              console.log($cookies.get("account"));
-              console.log($cookies.get("shopname"));
-              console.log($cookies.get("identity"));
+              Swal.fire({
+                title: response.data.message,
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  console.log(123);
+                  $cookies.set("id", response.data.id);
+                  $cookies.set("account", response.data.account);
+                  $cookies.set("username", response.data.username);
+                  $cookies.set("identity", response.data.identity);
+                  localStorage.setItem("img", response.data.img);
+                  console.log($cookies.get("id"));
+                  console.log($cookies.get("account"));
+                  console.log($cookies.get("shopname"));
+                  console.log($cookies.get("identity"));
+                  window.location.href = "/cominformation";
+                }
+              });
             } else {
+              Swal.fire({
+                title: response.data.message,
+                icon: "error",
+              });
               pass.value = false;
               const randomBackgroundElement =
                 document.getElementById("captcha"); // 选择id为captcha的元素
@@ -99,7 +114,10 @@ export default {
             console.error(error);
           });
       } else {
-        alert("請完成拼圖");
+        Swal.fire({
+          icon: "error",
+          title: "請先完成拼圖",
+        });
       }
     };
 
@@ -162,7 +180,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
   flex-direction: column;
 }
 

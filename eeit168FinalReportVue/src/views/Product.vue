@@ -56,7 +56,7 @@
 
 <script>
 import axios from "axios";
-
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -70,8 +70,7 @@ export default {
       fileInput1: null,
       fileInput2: null,
       fileInput3: null,
-       URL : import.meta.env.VITE_API_JAVAURL
-      
+      URL: import.meta.env.VITE_API_JAVAURL,
     };
   },
   created() {
@@ -90,10 +89,9 @@ export default {
       this.productDescription = this.productObject[0].productDescription;
     }
     console.log(this.productObject);
-    console.log(this.$cookies.get("id"))
+    console.log(this.$cookies.get("id"));
   },
   methods: {
-    
     clearSessionStorage() {
       // 清空 sessionStorage 中的数据
       sessionStorage.removeItem("type");
@@ -119,14 +117,16 @@ export default {
       const productData = {
         //可能需加入抓fkcompanyid的資訊
         fkCompanyId: this.$cookies.get("id"),
-        name: this.productTitle,
-        type: this.productCategory,
-        description: `"`+this.productDescription+`"`,
+        name: `"` + this.productTitle + `"`,
+        type: `"` + this.productCategory + `"`,
+        description: `"` + this.productDescription + `"`,
         sizeArray: this.inputsArray,
       };
+      productData.name = productData.name.replace(/[\n,]/g, " ");
+      productData.description = productData.description.replace(/[\n,]/g, " ");
       const productDataJSON = JSON.stringify(productData);
       console.log("保存商品信息1:", productDataJSON);
-      
+
       axios
         .post(`${this.URL}pet_web/product/insert`, productData)
         .then((response) => {
@@ -137,24 +137,33 @@ export default {
             }
             console.log(this.productId);
             this.uploadImages();
-            alert(response.data.message)
+
+            // alert(response.data.message)
+            Swal.fire({
+              title: response.data.message,
+              icon: "success",
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // 清空 sessionStorage 中的数据
+                sessionStorage.removeItem("type");
+                sessionStorage.removeItem("product");
+                // 清空本地数据
+                this.inputsArray = [];
+                this.productTitle = "";
+                this.productCategory = "";
+                this.productDescription = "";
+
+                // 跳转到其他页面
+                window.location.href = "comshop";
+              }
+            });
           }
         })
         .catch((error) => {
           console.error(error);
         });
-
-      // 清空 sessionStorage 中的数据
-      sessionStorage.removeItem("type");
-      sessionStorage.removeItem("product");
-      // 清空本地数据
-      this.inputsArray = [];
-      this.productTitle = "";
-      this.productCategory = "";
-      this.productDescription = "";
-     
-      // 跳转到其他页面
-      window.location.href = "comshop";
     },
     fileChange1() {
       let file = document.getElementById("picFile1").files[0];
@@ -202,17 +211,16 @@ export default {
     },
     uploadImages() {
       console.log(1);
-      
+
       for (let i = 0; i < this.productId.length; i++) {
         console.log(2);
         console.log(this.fileInput1);
         console.log(this.fileInput2);
         console.log(this.fileInput3);
 
-
         if (this.fileInput1) {
           const data = { productId: this.productId[i], main: true };
-          const body=JSON.stringify(data);
+          const body = JSON.stringify(data);
           const formData = new FormData();
           formData.append("body", body);
           formData.append("file", this.fileInput1.files[0]);
@@ -222,17 +230,16 @@ export default {
           axios
             .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
-              console.log( response.data);
+              console.log(response.data);
             })
             .catch((error) => {
               console.error(error);
             });
-         
         }
 
         if (this.fileInput2) {
           const data = { productId: this.productId[i], main: null };
-          const body=JSON.stringify(data);
+          const body = JSON.stringify(data);
           const formData = new FormData();
           formData.append("body", body);
           formData.append("file", this.fileInput2.files[0]);
@@ -242,17 +249,16 @@ export default {
           axios
             .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
-              console.log( response.data);
+              console.log(response.data);
             })
             .catch((error) => {
               console.error(error);
             });
-         
         }
 
         if (this.fileInput3) {
           const data = { productId: this.productId[i], main: null };
-          const body=JSON.stringify(data);
+          const body = JSON.stringify(data);
           const formData = new FormData();
           formData.append("body", body);
           formData.append("file", this.fileInput3.files[0]);
@@ -262,18 +268,14 @@ export default {
           axios
             .post(`${this.URL}pet_web/product-photo/insert`, formData)
             .then((response) => {
-              console.log( response.data);
+              console.log(response.data);
             })
             .catch((error) => {
               console.error(error);
             });
-         
         }
-
-
       }
       this.productId = [];
-      
     },
   },
 };

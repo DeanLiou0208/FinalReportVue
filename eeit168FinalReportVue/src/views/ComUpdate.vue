@@ -105,6 +105,8 @@
 <script setup>
 import axios from "axios";
 import { ref, reactive, inject } from "vue";
+
+import Swal from "sweetalert2";
 const $cookies = inject("$cookies");
 const shopName = ref($cookies.get("registershopname"));
 const id = ref($cookies.get("registerid"));
@@ -154,6 +156,9 @@ function fileChange() {
   readFile.readAsDataURL(file);
   readFile.addEventListener("load", function () {
     let img = new Image();
+    if ((readFile = null)) {
+      img.src = localStorage.getItem("img");
+    }
     img.src = readFile.result;
     img.style.width = "100%"; // 设置图片的最大宽度
     img.style.height = "100%"; // 设置图片的最大高度
@@ -189,11 +194,18 @@ function submit() {
   axios
     .put(updateURL, formData)
     .then((response) => {
-      alert(response.data.message2);
-
-      $cookies.remove("registershopname", response.data.registershopname);
-      $cookies.remove("registerid", response.data.registerid);
-      window.location.href = "login";
+      Swal.fire({
+        title: response.data.message2,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $cookies.remove("registershopname", response.data.registershopname);
+          $cookies.remove("registerid", response.data.registerid);
+          window.location.href = "login";
+        }
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -218,7 +230,7 @@ input {
 #addressHelpInline,
 #emailHelpInline {
   color: red;
-  font-size: 5px;
+  font-size: 15px;
   margin: 0px;
   padding: 0%;
 }

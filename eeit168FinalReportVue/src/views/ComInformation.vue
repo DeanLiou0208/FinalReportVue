@@ -5,7 +5,17 @@
       <Tabs></Tabs>
     </div>
  
-<div style="flex: 2"><img :src="`${img}`" alt="無法顯示圖片"></div>
+<div style="flex: 2"> <img
+        v-if="img" 
+        :src="img"
+        alt="無法顯示圖片"
+      />
+
+      <img
+        v-else  
+        src="../assets/img/notfoundimg.png"
+        alt="無法顯示圖片"
+      /></div>
     <!-- 中间的信息 -->
     <div style="flex: 3">
       <div class="mb-3 row">
@@ -97,6 +107,7 @@ img.value=response.data.img
 onMounted(() => {
   // console.log($cookies.get("id"));
   select();
+
 });
 </script>
 

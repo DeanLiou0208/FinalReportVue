@@ -29,7 +29,7 @@
       />
     </div>
     <div class="col-auto">
-      <span id="phoneHelpInline" class="form-text">  </span>
+      <span id="phoneHelpInline" class="form-text"> </span>
     </div>
     <div></div>
     <div class="col-4"></div>
@@ -103,8 +103,9 @@
 </template>
 
 <script setup>
+import Swal from "sweetalert2";
 import axios from "axios";
-import { ref, reactive, inject,onMounted } from "vue";
+import { ref, reactive, inject, onMounted } from "vue";
 const $cookies = inject("$cookies");
 const shopName = ref($cookies.get("username"));
 const id = ref($cookies.get("id"));
@@ -189,10 +190,18 @@ function submit() {
   axios
     .put(updateURL, formData)
     .then((response) => {
-      alert(response.data.message);
-      localStorage.setItem('img', response.data.img);
-     
-      window.location.href = "cominformation";
+      Swal.fire({
+        title: response.data.message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.setItem("img", response.data.img);
+
+          window.location.href = "cominformation";
+        }
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -204,12 +213,11 @@ const URLAPI = `${URL}pet_web/companys/information/${id.value}`;
 const select = async () => {
   const response = await axios.get(URLAPI);
 
-  inputTax.value=response.data.taxIdNumber
-  inputPhone.value=response.data.phone
-  inputAdderss.value=response.data.address
- inputEmail.value=response.data.email
+  inputTax.value = response.data.taxIdNumber;
+  inputPhone.value = response.data.phone;
+  inputAdderss.value = response.data.address;
+  inputEmail.value = response.data.email;
   console.log(response.data);
-  
 };
 onMounted(() => {
   console.log($cookies.get("id"));
@@ -234,7 +242,7 @@ input {
 #addressHelpInline,
 #emailHelpInline {
   color: red;
-  font-size: 5px;
+  font-size: 15px;
   margin: 0px;
   padding: 0%;
 }

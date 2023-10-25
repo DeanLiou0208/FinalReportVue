@@ -258,7 +258,7 @@ input {
 #responseSecPassword,
 #responseShopname {
   color: red;
-  font-size: 5px;
+  font-size: 15px;
   margin: 0px;
   padding: 0%;
 }

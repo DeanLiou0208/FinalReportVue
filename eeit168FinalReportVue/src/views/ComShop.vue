@@ -21,7 +21,25 @@
         :key="productId"
       >
         <div class="card container ml-2 size" style="width: 100%">
-          <img :src="`${img}`" class="card-img-top imgsize" alt="無法顯示圖片" />
+          <!-- <img :src="`${img}`" class="card-img-top imgsize" alt="無法顯示圖片" /> -->
+          <img
+        v-if="img" 
+        :src="img"
+
+        class="card-img-top imgsize"
+        alt="無法顯示圖片"
+      />
+
+      <img
+        v-else  
+
+        class="card-img-top imgsize"
+        src="../assets/img/productnotfound.png"
+        alt="無法顯示圖片"
+      />
+
+
+
           <div class="card-body">
             <div class="container ml-3" style="display: flex">
               <p>ItemNo:</p>
