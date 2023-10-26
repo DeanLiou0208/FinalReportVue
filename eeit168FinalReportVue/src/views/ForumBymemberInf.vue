@@ -23,16 +23,6 @@
             </ul>
         </div>
 
-
-
-
-
-
-
-
-
-
-
         <div class="container">
             <div style="margin-top: 0px; display: flex; justify-content:space-between; align-items: center;">
                 <div>

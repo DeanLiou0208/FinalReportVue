@@ -1,5 +1,5 @@
 <template>
-  <h1>寵物論壇</h1>
+  <h1></h1>
 
   <div class="container">
     <div class="d-flex justify-content-center">
@@ -95,7 +95,7 @@
       </div>
     </div>
     <br />
-    <div style="display: flex; justify-content: space-around;">
+    <div style="display: flex; justify-content: space-around; margin-top: -20px;">
       <div class="card-list ">
         <div class="row row-cols-1 row-cols-md-3 g-0">
           <div class="card border-secondary text-dark bg-light mb-3 border border-3"
@@ -109,7 +109,7 @@
                 </h5>
               </RouterLink>
               <!-- <a href="#" to="/forumpost" >{{ post.title }} </a> -->
-              <p class="card-text" style="height: 100px; overflow: hidden;">{{ post.petArticleText }}</p>
+              <p class="card-text" style="height: 99px; overflow: hidden;">{{ post.petArticleText }}</p>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">文章類型: {{ post.type }}</li>

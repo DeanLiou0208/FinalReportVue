@@ -186,7 +186,7 @@ loadForumPostBymember();
 
 .custom-image {
     width: 100%;
-    height: 10rem;
+    height: 15.5rem;
     /* 根據您的需求設置高度 */
     object-fit: cover;
     /* 或 contain，取決於您的需求 */
