@@ -102,7 +102,7 @@ const payMent = reactive({
   }
 
   const URL = import.meta.env.VITE_API_JAVAURL;
-  const URLMEMBER = `${URL}paymentmember`
+  const URLMEMBER = `${URL}pet_web/paymentmember`
   const loadMember = async()=>{
       const response = await axios.post(URLMEMBER, payMent);
       console.log(response.data)
@@ -110,7 +110,7 @@ const payMent = reactive({
       console.log(member.value)
   }
   //直接完成訂單的方法(寫入orderlist&orderdetils)
-  const URLPAYBYCASH = `${URL}shoppingcart/payment`
+  const URLPAYBYCASH = `${URL}pet_web/shoppingcart/payment`
   const orderfinish = async()=>{
   
   const response = await axios.post(URLPAYBYCASH, payMent)
@@ -144,7 +144,7 @@ const payMent = reactive({
             await orderfinish();
         }
   }
-  const URLCREADUTCARD = `${URL}paybycredit`
+  const URLCREADUTCARD = `${URL}pet_web/paybycredit`
   const clickPayByCreaditCard = async()=>{
     await axios.post(URLPAYBYCASH,payMent)
     const response = await axios.post(URLCREADUTCARD,payMent)
