@@ -74,6 +74,7 @@
     import { ElMessage  } from 'element-plus'
     import Swal from "sweetalert2";
     import axios from "axios";
+    import router from "../router";
 
     // const shoppingCartNull = ref(true); //判斷v-if &v-else
     const shoppingCartItems = ref([]);
@@ -250,7 +251,8 @@
         console.log(payMent)
         $cookies.set("payment",payMent)
         // const response = await axios.post(URLPAYMENT, payMent)
-        document.location.href = "/payment"
+        router.push("/payment")
+        // document.location.href = "/payment"
         // console.log(response.data)
 
     }
