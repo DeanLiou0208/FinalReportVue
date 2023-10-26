@@ -161,7 +161,7 @@ const updateMember = async () => {
         },
     });
     if(response.data.success){
-        // localStorage.setItem('img', response.data.img);
+        localStorage.setItem('img', response.data.img);
         const result = await Swal.fire({
                 title: '更新成功',
                 icon: 'success',
