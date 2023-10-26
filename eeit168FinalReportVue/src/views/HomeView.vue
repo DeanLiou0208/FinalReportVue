@@ -24,10 +24,10 @@
     <div class="container col-12 col-md-6"  v-for="{ id, img, title, likeCount, unLikeCount, petArticleText } in petPosts" :key="id" >
       <div class="card mb-3" style="max-width: 635px;">
         <div class="row g-0">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <img :src="`${img}`" class="img-fluid rounded-start" alt="" style="object-fit: cover; width: 100%; height: 260px;">
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div class="card-body">
               <h5 class="card-title">{{title}}</h5>
               <br>

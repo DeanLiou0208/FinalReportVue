@@ -68,7 +68,11 @@
     </div>
   </div>
 </div>
-
+<br>
+        <div class="container">
+          <img src="../assets/img/品牌推薦.PNG" alt="" style="width: 1280px;">
+        </div>
+<br>
   <hr>
 <div class="container ml-1">
 
