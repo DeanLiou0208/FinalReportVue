@@ -38,8 +38,8 @@
                         <div :id="'carouselExampleControls' + index" class="carousel slide" data-bs-ride="false">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img :src="pet.firstPhoto.img" class="d-block w-100 size" alt="這是第一個" v-if="imgShow[index]">
-                                    <img src="../assets/img/notfoundimg.png" class="d-block w-100 size" alt="這是第一個" v-else>
+                                    <img :src="pet.firstPhoto.img" class="d-block w-100 size" alt="" v-if="imgShow[index]">
+                                    <img src="../assets/img/notfoundimg.png" class="d-block w-100 size" alt="" v-else>
                                 </div>
                                 <div class="carousel-item" v-for="(img, imgIndex) in pet.imgList" :key="imgIndex">
                                     <img :src="img.img" class="d-block w-100 
@@ -101,12 +101,11 @@ const loadPets = async () => {
     const response = await axios.post(API_URL, owner);
     pets.value = response.data.petList;
     for(let i = 0; i < pets.value.length; i++){
-        if(pets.value[i].img === undefined || pets.value[i].img === null){
+        if(pets.value[i].firstPhoto.img === undefined || pets.value[i].firstPhoto.img === null || pets.value[i].firstPhoto.img === "undefined"){
             imgShow.value[i] = false;
         }else{
             imgShow.value[i] = true;
-        }
-
+        }      
     }
 
 };
