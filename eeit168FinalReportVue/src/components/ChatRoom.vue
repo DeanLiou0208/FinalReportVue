@@ -90,7 +90,7 @@ import axios from "axios";
             },
             initWebSocket: function () {
                 // WebSocket与普通的请求所用协议有所不同，ws等同于http，wss等同于https
-                const url = "ws://192.168.34.74:8080/FinalReoprt-0.0.1-SNAPSHOT/websocket/"+this.fromUserName;
+                const url = "ws://192.168.34.74:8080/websocket/"+this.fromUserName;
                 this.websock = new WebSocket(url);
                 this.websock.onopen = this.websocketonopen;
                 this.websock.onerror = this.websocketonerror;
