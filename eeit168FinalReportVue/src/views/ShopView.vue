@@ -57,7 +57,8 @@
             <div class="form-group container ml-1">
               <div><p>請客官選擇要的分類</p></div>
               <select class="form-control" @change="changeType" v-model="datas.type" >
-                  <option value="null" selected disabled hidden>請選擇分類</option>
+                  <option value="null" selected disabled hidden>請選擇分類</option>                  
+                  <option value="" >所有分類</option>        
                   <option v-for="{type} in types" :key="types.id" :value="`${type}`">{{ type }}</option>
               </select>
             </div>

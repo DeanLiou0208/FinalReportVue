@@ -29,7 +29,7 @@
                                 v-model="member.gender" /><span>男</span>
                             <input type="radio" name="gender" value="false" id="gender"
                                 v-model="member.gender" /><span>女</span>
-                            <input type="radio" name="gender" value="null" id="gender"
+                            <input type="radio" name="gender" value="" id="gender"
                                 v-model="member.gender" /><span>不公開</span>
                         </div>
                         <div class="mb-3">
@@ -110,6 +110,9 @@ selectInformation();
 const updateMember = async () => {
     const API_URL = `${URL}pages/member/information`;
     member.value.img = null;
+    if(member.value.gender===""){
+        member.value.gender = null;
+    }
     const json = JSON.stringify(member.value);
     file.append('file', avatarInput.value.files[0]);
     file.append('body', json);
@@ -131,6 +134,9 @@ const updateMember = async () => {
             icon: "error",
             title: "註冊失敗，請重新輸入",
         });
+    }
+    if(member.value.gender===""){
+        member.value.gender = null;
     }
 };
 
