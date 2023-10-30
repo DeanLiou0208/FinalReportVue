@@ -251,6 +251,7 @@ function selectMemberId(input) {
 
 // 新增留言
 const addComment = async () => {
+    if($cookies.get("identity") ==="會員"){
     if(postComment.value.commentsText===""){
         Swal.fire({
             icon: "warning",
@@ -278,6 +279,12 @@ const addComment = async () => {
       });
     
     }
+}
+}else{
+    Swal.fire({
+        icon: "error",
+        title: "請先登入會員!",
+      });
 }
 }   
 //     const json = JSON.stringify(post.value);
